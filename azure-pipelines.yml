@@ -9,7 +9,7 @@ pool:
 
 steps:
 - task: AzureCLI@2
-  displayName: Set Environment Variables
+  displayName: List Foler Content
   inputs:
     azureSubscription: 'AzDevOPS'
     scriptType: 'bash'
@@ -32,10 +32,10 @@ steps:
 #           --resource-type Microsoft.VirtualMachineImages/imageTemplates \
 #           -n helloImageTemplateWin10Desktop01
 
-# - task: AzureCLI@2
-#   displayName: Create the Image Template
-#   inputs:
-#     azureSubscription: 'AzDevOPS'
-#     scriptType: 'bash'
-#     scriptLocation: 'scriptPath'
-#     scriptPath: 'create-image.azcli'
+- task: AzureCLI@2
+  displayName: Create the Image Template
+  inputs:
+    azureSubscription: 'AzDevOPS'
+    scriptType: 'bash'
+    scriptLocation: 'scriptPath'
+    scriptPath: 'create-image.azcli'
