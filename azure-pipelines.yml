@@ -16,4 +16,17 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: |
       imageResourceGroup=aib-sig-rg
-      echo $imageResourceGroup
+
+- task: AzureCLI@2
+  displayName: Set Environment Variables
+  inputs:
+    azureSubscription: 'AzDevOPS'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az resource create --verbose \
+          --resource-group $imageResourceGroup \
+          --properties @helloImageTemplateWin.json \
+          --is-full-object \
+          --resource-type Microsoft.VirtualMachineImages/imageTemplates \
+          -n helloImageTemplateWin10Desktop01
