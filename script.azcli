@@ -96,13 +96,14 @@ az resource invoke-action \
      --action Run
 
 # Create VM from Image
-# testVmResourceGroup=mk-test-vm-rg
+testVmResourceGroup=mk-test-vm-rg
 # az group create -n $testVmResourceGroup -l $location
+
+echo $testVmResourceGroup
 
 # az vm create \
 #   --resource-group $testVmResourceGroup \
-#   --name aibImgWinVm00 \
+#   --name aibImgWinVm01 \
 #   --admin-username aibuser \
 #   --admin-password 11ZX84ghjb!! \
-#   --image /subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourceGroups/aib-sig-rg/providers/Microsoft.Compute/galleries/myIBSIG/images/aibWin10365Image/versions/latest \
-#   --location $location
+  #--image /subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourceGroups/aib-sig-rg/providers/Microsoft.Compute/galleries/myIBSIG/images/aibWin10365Image/versions/latest
