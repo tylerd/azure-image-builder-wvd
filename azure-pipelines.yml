@@ -8,26 +8,34 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- task: AzureCLI@2
+  displayName: Set Environment Variables
+  inputs:
+    azureSubscription: 'AzDevOPS'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      ls -al
+
 # - task: AzureCLI@2
-#   displayName: Set Environment Variables
+#   displayName: Create the Image Template
 #   inputs:
 #     azureSubscription: 'AzDevOPS'
 #     scriptType: 'bash'
 #     scriptLocation: 'inlineScript'
 #     inlineScript: |
 #       imageResourceGroup=aib-sig-rg
+#       az resource create --verbose \
+#           --resource-group $imageResourceGroup \
+#           --properties @helloImageTemplateWin.json \
+#           --is-full-object \
+#           --resource-type Microsoft.VirtualMachineImages/imageTemplates \
+#           -n helloImageTemplateWin10Desktop01
 
-- task: AzureCLI@2
-  displayName: Create the Image Template
-  inputs:
-    azureSubscription: 'AzDevOPS'
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    inlineScript: |
-      imageResourceGroup=aib-sig-rg
-      az resource create --verbose \
-          --resource-group $imageResourceGroup \
-          --properties @helloImageTemplateWin.json \
-          --is-full-object \
-          --resource-type Microsoft.VirtualMachineImages/imageTemplates \
-          -n helloImageTemplateWin10Desktop01
+# - task: AzureCLI@2
+#   displayName: Create the Image Template
+#   inputs:
+#     azureSubscription: 'AzDevOPS'
+#     scriptType: 'bash'
+#     scriptLocation: 'scriptPath'
+#     scriptPath: 'create-image.azcli'
