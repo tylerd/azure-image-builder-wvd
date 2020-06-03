@@ -1,0 +1,52 @@
+{
+    "type": "Microsoft.VirtualMachineImages/imageTemplates",
+    "apiVersion": "2019-05-01-preview",
+    "location": "eastus2",
+    "dependsOn": [],
+    "tags": {
+        "imagebuilderTemplate": "MicrosoftWindows10Desktop",
+        "userIdentity": "enabled"
+    },
+    "identity": {
+        "type": "UserAssigned",
+                "userAssignedIdentities": {
+                "/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourceGroups/aib-sig-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aibIdentity1591080187": {}
+                    
+        }
+    },
+    "properties": {
+    
+        "buildTimeoutInMinutes" : 100,
+    
+        "vmProfile": 
+                {
+                "vmSize": "Standard_D2_v2",
+                "osDiskSizeGB": 127
+                },
+        
+        "source": {
+            "type": "PlatformImage",
+                "publisher": "MicrosoftWindowsDesktop",
+                "offer": "office-365",
+                "sku": "19h2-evd-o365pp",
+                "version": "latest"
+            
+        },
+        "customize": [
+        ],
+        "distribute": 
+            [
+                {   "type":"SharedImage",
+                    "galleryImageId": "/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourceGroups/aib-sig-rg/providers/Microsoft.Compute/galleries/myIBSIG/images/aibWin10365Image",
+                    "runOutputName": "aibMicrosoftWindows10Desktop",
+                    "artifactTags": {
+                        "source": "azVmImageBuilder",
+                        "baseosimg": "MicrosoftWindows10Desktop"
+                    },
+                    "replicationRegions": [
+                      "eastus2"
+                    ]
+                }
+            ]
+        }
+    }

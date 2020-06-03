@@ -1,0 +1,110 @@
+# Login to Azure CLI
+az login
+az account list --output table
+
+# Nataliak K - Visual Studio Ultimate with MSDN  AzureCloud   1965c25a-b7fd-48b5-a393-c9e785c1c4d9
+az account set --subscription 1965c25a-b7fd-48b5-a393-c9e785c1c4d9
+
+# To use Azure Image Builder during the preview, you need to register the new feature.
+az feature register --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview
+
+# Check the status of the feature registration.
+az feature show --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview | grep state
+
+# Check your registration.
+az provider show -n Microsoft.VirtualMachineImages | grep registrationState
+az provider show -n Microsoft.Storage | grep registrationState
+
+# If they do not say registered, run the following:
+az provider register -n Microsoft.VirtualMachineImages
+az provider register -n Microsoft.Storage
+
+# Set variables
+# We will be using some pieces of information repeatedly, so we will create some variables to store that information.
+# Resource group name - we are using myImageBuilderRG in this example
+imageResourceGroup=aib-sig-rg
+# Region location 
+location=eastus2
+# Name for the image 
+imageName=myWinBuilderImage
+# Run output name
+runOutputName=aibWindows
+# name of the image to be created
+imageName=aibWinImage
+
+# Create a variable for your subscription ID. You can get this using
+az account show | grep id
+subscriptionID=1965c25a-b7fd-48b5-a393-c9e785c1c4d9
+
+# Create the resource group
+az group create -n $imageResourceGroup -l $location
+
+# Give Image Builder 'contributor' permission to create the image in the resource group. Without this, the image build will fail.
+# The --assignee value is the app registration ID for the Image Builder service.
+
+# Download sample template
+# curl https://raw.githubusercontent.com/danielsollondon/azvmimagebuilder/master/quickquickstarts/0_Creating_a_Custom_Windows_Managed_Image/helloImageTemplateWin.json -o helloImageTemplateWin.json
+
+# curl https://raw.githubusercontent.com/danielsollondon/azvmimagebuilder/master/quickquickstarts/0_Creating_a_Custom_Linux_Managed_Image/helloImageTemplateLinux.json -o helloImageTemplateLinux.json
+
+# curl https://raw.githubusercontent.com/danielsollondon/azvmimagebuilder/master/quickquickstarts/1_Creating_a_Custom_Linux_Shared_Image_Gallery_Image/helloImageTemplateforSIG.json -o helloImageTemplateforSIG.json
+
+# sed -i -e "s/<subscriptionID>/$subscriptionID/g" helloImageTemplateWin.json
+# sed -i -e "s/<rgName>/$imageResourceGroup/g" helloImageTemplateWin.json
+# sed -i -e "s/<region>/$location/g" helloImageTemplateWin.json
+# sed -i -e "s/<imageName>/$imageName/g" helloImageTemplateWin.json
+# sed -i -e "s/<runOutputName>/$runOutputName/g" helloImageTemplateWin.json
+
+# Create the SIG
+sigResourceGroup=$imageResourceGroup
+sigName=myIBSIG
+imageDefName=aibWin10365Image
+
+az sig create \
+    -g $sigResourceGroup \
+    --gallery-name $sigName
+
+# Create the image definition
+az sig image-definition create \
+   -g $sigResourceGroup \
+   --gallery-name $sigName \
+   --gallery-image-definition $imageDefName \
+   --publisher MicrosoftWindowsDesktop \
+   --offer office-365 \
+   --sku 19h2-evd-o365pp \
+   --os-type Windows
+
+
+
+# create the image template
+az resource create --verbose \
+    --resource-group $imageResourceGroup \
+    --properties @helloImageTemplateWin.json \
+    --is-full-object \
+    --resource-type Microsoft.VirtualMachineImages/imageTemplates \
+    -n helloImageTemplateWin10Desktop01
+
+# delete the image template
+az resource delete \
+    --resource-group $sigResourceGroup \
+    --resource-type Microsoft.VirtualMachineImages/imageTemplates \
+    -n helloImageTemplateWin10Desktop01
+
+# Start the image build
+az resource invoke-action \
+     --resource-group $imageResourceGroup \
+     --resource-type  Microsoft.VirtualMachineImages/imageTemplates \
+     -n helloImageTemplateWin10Desktop01 \
+     --action Run
+
+# Create VM from Image
+# testVmResourceGroup=mk-test-vm-rg
+# az group create -n $testVmResourceGroup -l $location
+
+# az vm create \
+#   --resource-group $testVmResourceGroup \
+#   --name aibImgWinVm00 \
+#   --admin-username aibuser \
+#   --admin-password 11ZX84ghjb!! \
+#   --image /subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourceGroups/aib-sig-rg/providers/Microsoft.Compute/galleries/myIBSIG/images/aibWin10365Image/versions/latest \
+#   --location $location
