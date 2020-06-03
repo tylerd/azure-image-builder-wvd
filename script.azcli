@@ -56,7 +56,7 @@ az group create -n $imageResourceGroup -l $location
 # sed -i -e "s/<runOutputName>/$runOutputName/g" helloImageTemplateWin.json
 
 # Create the SIG
-sigResourceGroup=$imageResourceGroup
+sigResourceGroup=aib-sig-rg
 sigName=myIBSIG
 imageDefName=aibWin10365Image
 
@@ -73,8 +73,6 @@ az sig image-definition create \
    --offer office-365 \
    --sku 19h2-evd-o365pp \
    --os-type Windows
-
-
 
 # create the image template
 az resource create --verbose \
