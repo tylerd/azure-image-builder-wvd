@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Set variables
 imageResourceGroup=aib-sig-rg
 
