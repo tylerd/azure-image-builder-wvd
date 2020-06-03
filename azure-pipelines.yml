@@ -1,19 +1,33 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- master
+  - none
+
+pr:
+  - none
 
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+# - task: AzureCLI@2
+#   displayName: Set Environment Variables
+#   inputs:
+#     azureSubscription: 'AzDevOPS'
+#     scriptType: 'bash'
+#     scriptLocation: 'inlineScript'
+#     inlineScript: |
+#       imageResourceGroup=aib-sig-rg
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: AzureCLI@2
+  displayName: Create the Image Template
+  inputs:
+    azureSubscription: 'AzDevOPS'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      imageResourceGroup=aib-sig-rg
+      az resource create --verbose \
+          --resource-group $imageResourceGroup \
+          --properties @helloImageTemplateWin.json \
+          --is-full-object \
+          --resource-type Microsoft.VirtualMachineImages/imageTemplates \
+          -n helloImageTemplateWin10Desktop01
