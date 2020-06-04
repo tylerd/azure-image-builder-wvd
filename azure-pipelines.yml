@@ -22,6 +22,18 @@ steps:
       ls -al
 
 - task: AzureCLI@2
+  displayName: Test Variables
+  inputs:
+    azureSubscription: 'AzDevOPS'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+        echo '1 - '${{ variables.image_resource_group }} # one
+        echo '2 - '$(image_resource_group) # two
+        echo '3 - '$image_resource_group # three
+    failOnStandardError: true
+
+- task: AzureCLI@2
   displayName: Create Image Template
   inputs:
     azureSubscription: 'AzDevOPS'
@@ -30,17 +42,6 @@ steps:
     scriptPath: '01-create-image-template.sh'
     failOnStandardError: true
 
-# - task: AzureCLI@2
-#   displayName: Create Image Template
-#   inputs:
-#     azureSubscription: 'AzDevOPS'
-#     scriptType: 'bash'
-#     scriptLocation: 'inlineScript'
-#     inlineScript: |
-#         echo '1 - '${{ variables.imageResourceGroup }} # one
-#         echo '2 - '$(imageResourceGroup) # two
-#         echo '3 - '$imageResourceGroup # three
-#     failOnStandardError: true
 
 # - task: AzureCLI@2
 #   displayName: Create the Image Template
