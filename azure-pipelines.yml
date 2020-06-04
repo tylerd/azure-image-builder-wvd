@@ -20,6 +20,10 @@ steps:
     inlineScript: |
       ls -al
 
+- task: Bash@3
+  inputs:
+    filePath: 'test-variables.sh'
+
 - task: AzureCLI@2
   displayName: Test Variables inline
   inputs:
