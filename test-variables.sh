@@ -1,9 +1,9 @@
 #!/bin/bash
-# printenv
-# echo '-----------------------------'
+printenv
+echo '-----------------------------'
 # echo $1
 # echo 'Hello World!'
-# echo $IMAGERESOURCEGROUP #four
+echo $IMAGERESOURCEGROUP
 # echo $imageresourcegroup
 # ${{ variables.imageresourcegroup }}
 # echo '2 - ' $(imageresourcegroup) # two
