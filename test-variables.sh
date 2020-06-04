@@ -1,4 +1,5 @@
 #!/bin/bash
+echo $1
 echo 'Hello World!'
 echo $IMAGERESORUCEGROUP #four
 echo $imageresourcegroup
