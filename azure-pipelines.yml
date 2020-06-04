@@ -38,7 +38,7 @@ steps:
       echo '1 - ' ${{ variables.imageresourcegroup }} # one
       echo '2 - ' $(imageresourcegroup) # two
       echo '3 - ' $imageresourcegroup # three
-      echo '4 - ' $IMAGERESORUCEGROUP #four
+      echo '4 - ' $IMAGERESOURCEGROUP #four
     failOnStandardError: true
 
 - task: AzureCLI@2
