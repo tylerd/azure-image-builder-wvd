@@ -20,26 +20,26 @@ steps:
     inlineScript: |
       ls -al
 
-- task: Bash@3
-  inputs:
-    filePath: 'test-variables.sh'
-    noProfile: false
-    noRc: false
+# - task: Bash@3
+#   inputs:
+#     filePath: 'test-variables.sh'
+#     noProfile: false
+#     noRc: false
 
-- task: AzureCLI@2
-  displayName: Test Variables inline
-  inputs:
-    azureSubscription: 'AzDevOPS'
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    inlineScript: |
-      printenv
-      echo '-----------------'
-      echo '1 - ' ${{ variables.imageresourcegroup }} # one
-      echo '2 - ' $(imageresourcegroup) # two
-      echo '3 - ' $imageresourcegroup # three
-      echo '4 - ' $IMAGERESOURCEGROUP #four
-    failOnStandardError: true
+# - task: AzureCLI@2
+#   displayName: Test Variables inline
+#   inputs:
+#     azureSubscription: 'AzDevOPS'
+#     scriptType: 'bash'
+#     scriptLocation: 'inlineScript'
+#     inlineScript: |
+#       printenv
+#       echo '-----------------'
+#       echo '1 - ' ${{ variables.imageresourcegroup }} # one
+#       echo '2 - ' $(imageresourcegroup) # two
+#       echo '3 - ' $imageresourcegroup # three
+#       echo '4 - ' $IMAGERESOURCEGROUP #four
+#     failOnStandardError: true
 
 - task: AzureCLI@2
   displayName: Test Variables in Script
