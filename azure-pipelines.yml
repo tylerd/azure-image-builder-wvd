@@ -17,6 +17,26 @@ steps:
     inlineScript: |
       ls -al
 
+- task: AzureCLI@2
+  displayName: Create and Set Configuration Variables
+  inputs:
+    azureSubscription: 'AzDevOPS'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      echo "##vso[task.setvariable variable=imageResourceGroup]aib-sig-rg"
+    failOnStandardError: true
+
+- task: AzureCLI@2
+  displayName: Test Variables
+  inputs:
+    azureSubscription: 'AzDevOPS'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      echo $imageResourceGroup
+    failOnStandardError: true
+
 # - task: AzureCLI@2
 #   displayName: Create the Image Template
 #   inputs:
@@ -32,10 +52,10 @@ steps:
 #           --resource-type Microsoft.VirtualMachineImages/imageTemplates \
 #           -n helloImageTemplateWin10Desktop01
 
-- task: AzureCLI@2
-  displayName: Create the Image Template
-  inputs:
-    azureSubscription: 'AzDevOPS'
-    scriptType: 'bash'
-    scriptLocation: 'scriptPath'
-    scriptPath: 'create-image.sh'
+# - task: AzureCLI@2
+#   displayName: Create the Image Template
+#   inputs:
+#     azureSubscription: 'AzDevOPS'
+#     scriptType: 'bash'
+#     scriptLocation: 'scriptPath'
+#     scriptPath: 'create-image.sh'
