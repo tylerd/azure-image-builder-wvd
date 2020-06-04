@@ -8,12 +8,12 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-- name: imageResourceGroup
-  value: aib-sig-rg
+- name: image_resource_group
+  value: aib_sig_rg
 
 steps:
 - task: AzureCLI@2
-  displayName: List Foler Content
+  displayName: List Git Repo Content
   inputs:
     azureSubscription: 'AzDevOPS'
     scriptType: 'bash'
@@ -21,40 +21,26 @@ steps:
     inlineScript: |
       ls -al
 
+- task: AzureCLI@2
+  displayName: Create Image Template
+  inputs:
+    azureSubscription: 'AzDevOPS'
+    scriptType: 'bash'
+    scriptLocation: 'scriptPath'
+    scriptPath: '01-create-image-template.sh'
+    failOnStandardError: true
+
 # - task: AzureCLI@2
-#   displayName: Create and Set Configuration Variables
+#   displayName: Create Image Template
 #   inputs:
 #     azureSubscription: 'AzDevOPS'
 #     scriptType: 'bash'
 #     scriptLocation: 'inlineScript'
 #     inlineScript: |
-#       echo "##vso[task.setvariable variable=imageResourceGroup]aib-sig-rg"
-#       echo $imageResourceGroup
+#         echo '1 - '${{ variables.imageResourceGroup }} # one
+#         echo '2 - '$(imageResourceGroup) # two
+#         echo '3 - '$imageResourceGroup # three
 #     failOnStandardError: true
-
-- task: AzureCLI@2
-  displayName: Test Variables
-  inputs:
-    azureSubscription: 'AzDevOPS'
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    inlineScript: |
-        echo '1 - '${{ variables.imageResourceGroup }} # one
-        echo '2 - '$(imageResourceGroup) # two
-        echo '3 - '$imageResourceGroup # three
-    failOnStandardError: true
-
-- task: AzureCLI@2
-  displayName: Test Variables
-  inputs:
-    azureSubscription: 'AzDevOPS'
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    inlineScript: |
-        echo '1 - '${{ variables.imageResourceGroup }} # one
-        echo '2 - '$(imageResourceGroup) # two
-        echo '3 - '$imageResourceGroup # three
-    failOnStandardError: true
 
 # - task: AzureCLI@2
 #   displayName: Create the Image Template
@@ -71,10 +57,3 @@ steps:
 #           --resource-type Microsoft.VirtualMachineImages/imageTemplates \
 #           -n helloImageTemplateWin10Desktop01
 
-# - task: AzureCLI@2
-#   displayName: Create the Image Template
-#   inputs:
-#     azureSubscription: 'AzDevOPS'
-#     scriptType: 'bash'
-#     scriptLocation: 'scriptPath'
-#     scriptPath: 'create-image.sh'
