@@ -8,7 +8,8 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  imageresourcegroup: aib_sig_rg
+  - name: imageresourcegroup
+    value: aib_sig_rg
 
 steps:
 - task: AzureCLI@2
