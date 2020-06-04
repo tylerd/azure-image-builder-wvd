@@ -39,7 +39,9 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
-      echo $imageResourceGroup
+        echo '1 - '${{ variables.imageResourceGroup }} # one
+        echo '2 - '$(imageResourceGroup) # two
+        echo '3 - '$imageResourceGroup # three
     failOnStandardError: true
 
 # - task: AzureCLI@2
