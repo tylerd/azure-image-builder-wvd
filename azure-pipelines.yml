@@ -23,6 +23,8 @@ steps:
 - task: Bash@3
   inputs:
     filePath: 'test-variables.sh'
+    noProfile: false
+    noRc: false
 
 - task: AzureCLI@2
   displayName: Test Variables inline
