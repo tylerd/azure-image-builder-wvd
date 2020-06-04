@@ -42,20 +42,20 @@ steps:
 #       echo '4 - ' $IMAGERESOURCEGROUP #four
 #     failOnStandardError: true
 
-- task: AzureCLI@2
-  displayName: Test Variables in Script
-  inputs:
-    azureSubscription: 'AzDevOPS'
-    scriptType: 'bash'
-    scriptLocation: 'scriptPath'
-    scriptPath: 'test-variables.sh'
-    failOnStandardError: true
-
 # - task: AzureCLI@2
-#   displayName: Create Image Template
+#   displayName: Test Variables in Script
 #   inputs:
 #     azureSubscription: 'AzDevOPS'
 #     scriptType: 'bash'
 #     scriptLocation: 'scriptPath'
-#     scriptPath: '01-create-image-template.sh'
+#     scriptPath: 'test-variables.sh'
 #     failOnStandardError: true
+
+- task: AzureCLI@2
+  displayName: Create Image Template
+  inputs:
+    azureSubscription: 'AzDevOPS'
+    scriptType: 'bash'
+    scriptLocation: 'scriptPath'
+    scriptPath: '01-create-image-template.sh'
+    failOnStandardError: true
