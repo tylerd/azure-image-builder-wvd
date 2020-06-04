@@ -1,6 +1,6 @@
 #!/bin/bash
-echo $image_resource_group
-echo '1 - ' ${{ variables.image_resource_group }} # one
-echo '2 - ' $(image_resource_group) # two
-echo '3 - ' $image_resource_group # three
-echo '4 - ' $IMAGE_RESORUCE_GROUP #four
+echo $imageresourcegroup
+echo '1 - ' ${{ variables.imageresourcegroup }} # one
+echo '2 - ' $(imageresourcegroup) # two
+echo '3 - ' $imageresourcegroup # three
+echo '4 - ' $IMAGERESORUCEGROUP #four
