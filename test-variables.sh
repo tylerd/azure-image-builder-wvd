@@ -10,4 +10,4 @@ echo $IMAGERESOURCEGROUP
 # echo '3 - ' $imageresourcegroup # three
 echo '4 - ' $IMAGERESORUCEGROUP #four
 
-az group show --name $(echo IMAGERESORUCEGROUP)
+az group show --name $IMAGERESORUCEGROUP
