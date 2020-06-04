@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Create the image template
-az resource create --verbose \
+az resource create \
+    --verbose \
     --resource-group ${IMAGERESORUCEGROUP} \
     --properties @helloImageTemplateWin.json \
     --is-full-object \
