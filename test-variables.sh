@@ -1,4 +1,6 @@
 #!/bin/bash
+echo 'Hello World!'
+echo $IMAGERESORUCEGROUP #four
 echo $imageresourcegroup
 echo '1 - ' ${{ variables.imageresourcegroup }} # one
 echo '2 - ' $(imageresourcegroup) # two
