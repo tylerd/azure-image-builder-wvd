@@ -25,6 +25,7 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: |
       echo "##vso[task.setvariable variable=imageResourceGroup]aib-sig-rg"
+      echo $imageResourceGroup
     failOnStandardError: true
 
 - task: AzureCLI@2
