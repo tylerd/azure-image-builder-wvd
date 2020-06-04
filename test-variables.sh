@@ -9,10 +9,19 @@ echo '-----------------------------'
 echo $IMAGERESOURCEGROUP
 echo '-----------------------------'
 echo ${IMAGERESOURCEGROUP}
+echo '-----------------------------'
+echo $(IMAGERESOURCEGROUP)
+echo '-----------------------------'
+echo ${{IMAGERESOURCEGROUP}}
+echo '-----------------------------'
 # echo $imageresourcegroup
 # ${{ variables.imageresourcegroup }}
 # echo '2 - ' $(imageresourcegroup) # two
 # echo '3 - ' $imageresourcegroup # three
 echo '4 - ' $IMAGERESORUCEGROUP #four
-
+# echo '-----------------------------'
+az group show --name ${IMAGERESORUCEGROUP}
+echo '-----------------------------'
+az group show --name ${IMAGERESORUCEGROUP}
+echo '-----------------------------'
 az group show --name ${IMAGERESORUCEGROUP}
