@@ -21,13 +21,22 @@ steps:
       ls -al
 
 - task: AzureCLI@2
-  displayName: Test Variables
+  displayName: Test Variables inline
   inputs:
     azureSubscription: 'AzDevOPS'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
         echo $(image_resource_group)
+    failOnStandardError: true
+
+- task: AzureCLI@2
+  displayName: Test Variables in Script
+  inputs:
+    azureSubscription: 'AzDevOPS'
+    scriptType: 'bash'
+    scriptLocation: 'scriptPath'
+    scriptPath: 'test-variables.sh'
     failOnStandardError: true
 
 # - task: AzureCLI@2
@@ -38,20 +47,3 @@ steps:
 #     scriptLocation: 'scriptPath'
 #     scriptPath: '01-create-image-template.sh'
 #     failOnStandardError: true
-
-
-# - task: AzureCLI@2
-#   displayName: Create the Image Template
-#   inputs:
-#     azureSubscription: 'AzDevOPS'
-#     scriptType: 'bash'
-#     scriptLocation: 'inlineScript'
-#     inlineScript: |
-#       imageResourceGroup=aib-sig-rg
-#       az resource create --verbose \
-#           --resource-group $imageResourceGroup \
-#           --properties @helloImageTemplateWin.json \
-#           --is-full-object \
-#           --resource-type Microsoft.VirtualMachineImages/imageTemplates \
-#           -n helloImageTemplateWin10Desktop01
-
