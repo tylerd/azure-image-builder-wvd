@@ -8,8 +8,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-- name: image_resource_group
-  value: aib_sig_rg
+  image_resource_group: aib_sig_rg
 
 steps:
 - task: AzureCLI@2
@@ -28,19 +27,17 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
-        echo '1 - '${{ variables.image_resource_group }} # one
-        echo '2 - '$(image_resource_group) # two
-        echo '3 - '$image_resource_group # three
+        echo $(image_resource_group)
     failOnStandardError: true
 
-- task: AzureCLI@2
-  displayName: Create Image Template
-  inputs:
-    azureSubscription: 'AzDevOPS'
-    scriptType: 'bash'
-    scriptLocation: 'scriptPath'
-    scriptPath: '01-create-image-template.sh'
-    failOnStandardError: true
+# - task: AzureCLI@2
+#   displayName: Create Image Template
+#   inputs:
+#     azureSubscription: 'AzDevOPS'
+#     scriptType: 'bash'
+#     scriptLocation: 'scriptPath'
+#     scriptPath: '01-create-image-template.sh'
+#     failOnStandardError: true
 
 
 # - task: AzureCLI@2
