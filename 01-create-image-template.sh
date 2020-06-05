@@ -4,7 +4,7 @@
 az resource create \
     --verbose \
     --resource-group ${IMAGERESORUCEGROUP} \
-    --properties @helloImageTemplateWin.json \
+    --properties @image-template-win-10.json \
     --is-full-object \
     --resource-type Microsoft.VirtualMachineImages/imageTemplates \
-    -n helloImageTemplateWin10Desktop01
+    -n 01-image-template-win-10-desktop

@@ -28,3 +28,11 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'scriptPath'
     scriptPath: '01-create-image-template.sh'
+
+- task: AzureCLI@2
+  displayName: Build Image
+  inputs:
+    azureSubscription: 'AzDevOPS'
+    scriptType: 'bash'
+    scriptLocation: 'scriptPath'
+    scriptPath: '02-build-image.sh'

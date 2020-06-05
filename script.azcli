@@ -43,17 +43,17 @@ az group create -n $imageResourceGroup -l $location
 # The --assignee value is the app registration ID for the Image Builder service.
 
 # Download sample template
-# curl https://raw.githubusercontent.com/danielsollondon/azvmimagebuilder/master/quickquickstarts/0_Creating_a_Custom_Windows_Managed_Image/helloImageTemplateWin.json -o helloImageTemplateWin.json
+# curl https://raw.githubusercontent.com/danielsollondon/azvmimagebuilder/master/quickquickstarts/0_Creating_a_Custom_Windows_Managed_Image/image-template-win-10.json -o image-template-win-10.json
 
 # curl https://raw.githubusercontent.com/danielsollondon/azvmimagebuilder/master/quickquickstarts/0_Creating_a_Custom_Linux_Managed_Image/helloImageTemplateLinux.json -o helloImageTemplateLinux.json
 
 # curl https://raw.githubusercontent.com/danielsollondon/azvmimagebuilder/master/quickquickstarts/1_Creating_a_Custom_Linux_Shared_Image_Gallery_Image/helloImageTemplateforSIG.json -o helloImageTemplateforSIG.json
 
-# sed -i -e "s/<subscriptionID>/$subscriptionID/g" helloImageTemplateWin.json
-# sed -i -e "s/<rgName>/$imageResourceGroup/g" helloImageTemplateWin.json
-# sed -i -e "s/<region>/$location/g" helloImageTemplateWin.json
-# sed -i -e "s/<imageName>/$imageName/g" helloImageTemplateWin.json
-# sed -i -e "s/<runOutputName>/$runOutputName/g" helloImageTemplateWin.json
+# sed -i -e "s/<subscriptionID>/$subscriptionID/g" image-template-win-10.json
+# sed -i -e "s/<rgName>/$imageResourceGroup/g" image-template-win-10.json
+# sed -i -e "s/<region>/$location/g" image-template-win-10.json
+# sed -i -e "s/<imageName>/$imageName/g" image-template-win-10.json
+# sed -i -e "s/<runOutputName>/$runOutputName/g" image-template-win-10.json
 
 # Create the SIG
 sigResourceGroup=aib-sig-rg
@@ -77,22 +77,22 @@ az sig image-definition create \
 # create the image template
 az resource create --verbose \
     --resource-group $imageResourceGroup \
-    --properties @helloImageTemplateWin.json \
+    --properties @image-template-win-10.json \
     --is-full-object \
     --resource-type Microsoft.VirtualMachineImages/imageTemplates \
-    -n helloImageTemplateWin10Desktop01
+    -n image-template-win-1010Desktop01
 
 # delete the image template
 az resource delete \
     --resource-group $sigResourceGroup \
     --resource-type Microsoft.VirtualMachineImages/imageTemplates \
-    -n helloImageTemplateWin10Desktop01
+    -n image-template-win-1010Desktop01
 
 # Start the image build
 az resource invoke-action \
      --resource-group $imageResourceGroup \
      --resource-type  Microsoft.VirtualMachineImages/imageTemplates \
-     -n helloImageTemplateWin10Desktop01 \
+     -n image-template-win-1010Desktop01 \
      --action Run
 
 # Create VM from Image
