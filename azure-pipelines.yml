@@ -10,6 +10,10 @@ pool:
 variables:
   - name: IMAGERESORUCEGROUP
     value: aib-sig-rg
+  - name: IMAGETEMPLATEFILENAME
+    value: image-template-win-10.json
+  - name: IMAGERESOURCENAME
+    value: 01-image-template-win-10-desktop
 
 steps:
 - checkout: self
