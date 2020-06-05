@@ -12,6 +12,9 @@ variables:
     value: aib-sig-rg
 
 steps:
+- checkout: self
+  displayName: Clone Git Repo
+
 - task: AzureCLI@2
   displayName: List Git Repo Content
   inputs:
@@ -36,3 +39,11 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'scriptPath'
     scriptPath: '02-build-image.sh'
+
+- task: AzureCLI@2
+  displayName: Delete Image Template
+  inputs:
+    azureSubscription: 'AzDevOPS'
+    scriptType: 'bash'
+    scriptLocation: 'scriptPath'
+    scriptPath: '03-delete-image-template.sh'
