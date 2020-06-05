@@ -27,14 +27,16 @@ steps:
 - checkout: self
   displayName: Clone Git Repo
 
-- task: AzureCLI@2
+- task: Bash@3
   displayName: List Git Repo Content
   inputs:
-    azureSubscription: 'AzDevOPS'
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    inlineScript: |
-      ls -al
+    targetType: 'inline'
+    script: 'ls -al'
+
+- task: Bash@3
+  displayName: Configure Image Template
+  inputs:
+    filePath: '00-configure-image-template.sh'
 
 - task: AzureCLI@2
   displayName: Create Image Template
