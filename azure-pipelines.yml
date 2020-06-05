@@ -1,5 +1,13 @@
 trigger:
-  - master
+  - none
+
+schedules:
+- cron: "0 0 * * *"
+  displayName: Daily Midnight Build
+  branches:
+    include:
+    - master
+  always: true
 
 pr:
   - none
