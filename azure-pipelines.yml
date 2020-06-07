@@ -80,7 +80,7 @@ stages:
           targetType: 'inline'
           script: 'echo "TODO: Write script to deploy VM based on built image to test its deployment"'
 
-# Test Image Stage
+# Cleanup Resources Stage
 - stage: Cleanup_Resources_Stage
   displayName: Cleanup Resources Stage
   jobs:
