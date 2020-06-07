@@ -67,7 +67,6 @@ stages:
           scriptLocation: 'scriptPath'
           scriptPath: '02-build-image.sh'
 
-
 # Test Image Stage
 - stage: Test_Image_Stage
   displayName: Test Image Stage
