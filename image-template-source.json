@@ -46,7 +46,7 @@
                         "baseosimg": "MicrosoftWindows10Desktop"
                     },
                     "replicationRegions": [
-                      "eastus2"
+                      "<SIGREGION>"
                     ]
                 }
             ]
