@@ -20,7 +20,7 @@
         "vmProfile": 
                 {
                 "vmSize": "Standard_D2_v2",
-                "osDiskSizeGB": 127,
+                "osDiskSizeGB": 0,
                 "vnetConfig": {
                     "subnetId": "/subscriptions/<VNETSUBSRCIPTIONID>/resourceGroups/<VNETRGNAME>/providers/Microsoft.Network/virtualNetworks/<VNETNAME>/subnets/<SUBNETNAME>"
                     }
