@@ -86,7 +86,7 @@ az resource create --verbose \
 az resource delete \
     --resource-group $sigResourceGroup \
     --resource-type Microsoft.VirtualMachineImages/imageTemplates \
-    -n image-template-win-1010Desktop01
+    -n 01-image-template-win-10-desktop
 
 # Start the image build
 az resource invoke-action \
@@ -107,3 +107,13 @@ az identity create -g $sigResourceGroup -n $identityName
 # get identity id
 imgBuilderCliId=$(az identity show -g $sigResourceGroup -n $identityName | grep "clientId" | cut -c16- | tr -d '",')
 echo $imgBuilderCliId
+
+#Disable Private Service Policy on subnet
+subnetName=default
+vnetRgName=aib-sig-rg
+vnetName=aib-proxyvm-vnet
+az network vnet subnet update \
+  --name $subnetName \
+  --resource-group $vnetRgName \
+  --vnet-name $vnetName \
+  --disable-private-link-service-network-policies true 
