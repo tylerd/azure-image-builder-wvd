@@ -117,11 +117,10 @@ echo $imgBuilderCliId
 #Disable Private Service Policy on subnet
 subnetName=default
 vnetRgName=aib-sig-rg
-vnetName=aib-proxyvm-vnet
+vnetName=aib-vnet-backup
+
 az network vnet subnet update \
   --name $subnetName \
   --resource-group $vnetRgName \
   --vnet-name $vnetName \
-  --disable-private-link-service-network-policies true 
-
-
+  --disable-private-link-service-network-policies true
