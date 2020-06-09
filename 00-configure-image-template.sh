@@ -12,7 +12,7 @@ SIGREGION=eastus2
 RUNOUTPUTNAME=aibMicrosoftWindows10Desktop
 VNETSUBSRCIPTIONID=1965c25a-b7fd-48b5-a393-c9e785c1c4d9
 VNETRGNAME=aib-sig-rg
-VNETNAME=aib-proxyvm-vnet
+VNETNAME=aib-vnet-backup
 SUBNETNAME=default
 
 sed -i -e "s/<APIVERSION>/$APIVERSION/g" $TEMPLATEFILE
