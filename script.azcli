@@ -95,6 +95,12 @@ az resource invoke-action \
      -n image-template-win-1010Desktop01 \
      --action Run
 
+# Check Status
+az resource show \
+    --resource-group $sigResourceGroup \
+    --resource-type Microsoft.VirtualMachineImages/imageTemplates \
+    -n 01-image-template-win-10-desktop
+
 # Create VM from Image
 testVmResourceGroup=mk-test-vm-rg
 # az group create -n $testVmResourceGroup -l $location
@@ -117,3 +123,5 @@ az network vnet subnet update \
   --resource-group $vnetRgName \
   --vnet-name $vnetName \
   --disable-private-link-service-network-policies true 
+
+
