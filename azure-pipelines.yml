@@ -83,6 +83,7 @@ stages:
 # Cleanup Resources Stage
 - stage: Cleanup_Resources_Stage
   displayName: Cleanup Resources Stage
+  dependsOn: []
   jobs:
     - job: Cleanup_Resources_Job
       displayName: Cleanup Resources Job
