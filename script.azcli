@@ -124,3 +124,6 @@ az network vnet subnet update \
   --resource-group $vnetRgName \
   --vnet-name $vnetName \
   --disable-private-link-service-network-policies true
+
+  # CHMOD the files for ADO
+  chmod a+x filname
