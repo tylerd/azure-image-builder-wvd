@@ -13,13 +13,14 @@ location=eastus2
 # template URI
 uri="https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/compute-availabilitysets.json"
 uri="https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/network-publicipaddresses.json"
+uri="https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/network-networkinterfaces.json"
 echo $uri
 
 # Create the resource group
 az group create -n $imageResourceGroup -l $location
 
-az deployment group what-if --verbose --resource-group $imageResourceGroup --template-uri $uri
-az deployment group create --verbose --resource-group $imageResourceGroup --template-uri $uri
+az deployment group what-if --verbose --resource-group $imageResourceGroup --template-uri $uri --parameters use-public-ip='true'
+az deployment group create --verbose --resource-group $imageResourceGroup --template-uri $uri --parameters use-public-ip='true'
 
 az deployment group what-if --verbose --resource-group $imageResourceGroup --template-file main-template.json
 az deployment group create --verbose --resource-group $imageResourceGroup --template-file main-template.json
