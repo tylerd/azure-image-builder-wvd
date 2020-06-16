@@ -40,9 +40,6 @@
             "name": "[variables('public-ip-addresses-deployment-name')]",
             "properties": {
                 "mode": "Incremental",
-                "parameters": {
-                   "subnet-id":{"value": "[parameters('subnet-id')]"} 
-                },
                 "templateLink": {
                     "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/network-publicipaddresses.json",
                     "contentVersion":"1.0.0.0"
@@ -56,9 +53,12 @@
             "name": "[variables('network-iterfaces-deployment-name')]",
             "dependsOn": [
                 "[variables('public-ip-addresses-deployment-name')]"
-                ],
+            ],
             "properties": {
                 "mode": "Incremental",
+                "parameters": {
+                   "subnet-id":{"value": "[parameters('subnet-id')]"} 
+                },
                 "templateLink": {
                     "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/network-networkinterfaces.json",
                     "contentVersion":"1.0.0.0"
