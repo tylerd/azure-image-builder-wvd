@@ -8,7 +8,7 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "linkedTemplate",
+            "name": "compute-availabilitysets",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -20,7 +20,7 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "linkedTemplate",
+            "name": "network-publicipaddresses",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
