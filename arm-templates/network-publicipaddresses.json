@@ -14,7 +14,7 @@
             "metadata": {
                 "description": "Whether to use a Public IP"
             },
-            "defaultValue": true
+            "defaultValue": false
         },
         "rdsh-prefix": {
             "type": "string",

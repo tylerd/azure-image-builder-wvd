@@ -1,0 +1,140 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "instance-count": {
+            "type": "int",
+            "metadata": {
+                "description": "Number of session hosts that will be created and added to the hostpool."
+            },
+            "defaultValue": 1
+        },
+        "rdsh-prefix": {
+            "type": "string",
+            "metadata": {
+                "description": "This prefix will be used in combination with the VM number to create the VM name. This value includes the dash, so if using “rdsh” as the prefix, VMs would be named “rdsh-0”, “rdsh-1”, etc. You should use a unique prefix to reduce name collisions in Active Directory."
+            },
+            "defaultValue": "rdsh"
+        },
+        "vm-size": {
+            "type": "string",
+            "metadata": {
+            "description": "The size of the session host VMs."
+            },
+            "defaultValue": "Standard_A2"
+        },
+        "administrator-account-username": {
+            "type": "string",
+            "metadata": {
+                "description": "The username for the admin."
+            }
+        },
+        "administrator-account-password": {
+            "type": "securestring",
+            "metadata": {
+                "description": "The password that corresponds to the existing domain username."
+            },
+            "defaultValue": "124325678!@#$%^&*asdfgASDFASD"
+        },
+        "domain": {
+            "type": "string",
+            "metadata": {
+                "description": "Domain to join"
+            },
+            "defaultValue": ""
+        },
+        "vm-gallery-image-offer": {
+            "type": "string",
+            "metadata": {
+                "description": "(Required when vmImageType = Gallery) Gallery image Offer."
+            },
+            "defaultValue": ""
+        },
+        "vm-gallery-image-publisher": {
+            "type": "string",
+            "metadata": {
+                "description": "(Required when vmImageType = Gallery) Gallery image Publisher."
+            },
+            "defaultValue": ""
+        },
+        "vm-gallery-image-sku": {
+            "type": "string",
+            "metadata": {
+                "description": "(Required when vmImageType = Gallery) Gallery image SKU."
+            },
+            "defaultValue": ""
+        },
+        "vm-disk-type": {
+            "type": "string",
+            "allowedValues": [
+                "Premium_LRS",
+                "StandardSSD_LRS",
+                "Standard_LRS"
+            ],
+            "metadata": {
+            "description": "The VM disk type for the VM: HDD or SSD."
+            }
+        }
+    },
+    "functions": [],
+    "variables": {
+        "existing-domain-username": "[first(split(parameters('administrator-account-username'), '@'))]",
+        "domain": "[if(equals(parameters('domain'), ''), last(split(parameters('administrator-account-username'), '@')), parameters('domain'))]"
+    },
+    "resources": [
+        {
+            "apiVersion": "2019-07-01",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[concat(parameters('rdsh-prefix'), add(copyindex(), parameters('instance-count')), '-vm')]",
+            "location": "[resourceGroup().location]",
+            "copy": {
+                "name": "rdsh-vm-loop",
+                "count": "[parameters('instance-count')]"
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Network/networkInterfaces/', parameters('rdsh-prefix'), add(copyindex(), parameters('instance-count')), '-nic')]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('vm-size')]"
+            },
+            "availabilitySet": {
+                "id": "[resourceId('Microsoft.Compute/availabilitySets/', concat(parameters('rdsh-prefix'), 'availabilitySet-', resourceGroup().location))]"
+            },
+            "osProfile": {
+                "computerName": "[concat(parameters('rdsh-prefix'), add(copyindex(), parameters('instance-count')))]",
+                "adminUsername": "[variables('existing-domain-username')]",
+                "adminPassword": "[parameters('administrator-account-password')]"
+            },
+            "storageProfile": {
+                "imageReference": {
+                    "publisher": "[parameters('vm-gallery-image-publisher')]",
+                    "offer": "[parameters('vm-gallery-image-offer')]",
+                    "sku": "[parameters('vm-gallery-image-sku')]",
+                    "version": "latest"
+                },
+            "osDisk": {
+                "createOption": "FromImage",
+                "managedDisk": {
+                    "storageAccountType": "[parameters('vm-disk-type')]"
+                }
+            }
+            },
+            "networkProfile": {
+                "networkInterfaces": [
+                    {
+                        "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('rdsh-prefix'), add(copyindex(), parameters('instance-count')), '-nic'))]"
+                    }
+                ]
+            },
+            "diagnosticsProfile": {
+                "bootDiagnostics": {
+                    "enabled": false
+                }
+            },
+            "licenseType": "Windows_Client"
+            }
+        }    
+    ],
+    "outputs": {}
+}
