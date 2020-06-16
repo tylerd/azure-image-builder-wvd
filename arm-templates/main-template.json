@@ -12,7 +12,19 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri":"https://mystorageaccount.blob.core.windows.net/AzureTemplates/newStorageAccount.json",
+                    "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/compute-availabilitysets.json",
+                    "contentVersion":"1.0.0.0"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "linkedTemplate",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/network-.json",
                     "contentVersion":"1.0.0.0"
                 }
             }

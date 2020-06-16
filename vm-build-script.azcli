@@ -7,14 +7,17 @@ az account set --subscription 1965c25a-b7fd-48b5-a393-c9e785c1c4d9
 #az account set --subscription 5aec60e9-f535-4bd7-a951-2833f043e918
 
 # Resource group name - we are using myImageBuilderRG in this example
-imageResourceGroup=wvd-vmpool-rg
+imageResourceGroup=aib-wvd-vmpool-rg
 # Region location 
 location=eastus2
 # template URI
-uri="https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/compute-availiblitysets.json"
+uri="https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/compute-availabilitysets.json"
 
+echo $uri
 
 # Create the resource group
 az group create -n $imageResourceGroup -l $location
 
-az deployment group create --resource-group $imageResourceGroup --template-uri 
+az deployment group what-if --resource-group $imageResourceGroup --template-uri $uri
+az deployment group create --resource-group $imageResourceGroup --template-uri $uri
+az deployment group create --resource-group $imageResourceGroup --template-file main-template.json
