@@ -20,4 +20,6 @@ az group create -n $imageResourceGroup -l $location
 
 az deployment group what-if --resource-group $imageResourceGroup --template-uri $uri
 az deployment group create --resource-group $imageResourceGroup --template-uri $uri
+
+az deployment group what-if --resource-group $imageResourceGroup --template-file main-template.json
 az deployment group create --resource-group $imageResourceGroup --template-file main-template.json
