@@ -1,14 +1,19 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {},
+    "parameters": {
+        "utc-value": {
+            "type": "string",
+            "defaultValue": "[utcNow()]"
+        }
+    },
     "functions": [],
     "variables": {},
     "resources": [
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "compute-availabilitysets",
+            "name": "[concat('compute-availabilitysets-',parameters('utc-value'))]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -20,7 +25,7 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "network-publicipaddresses",
+            "name": "[concat('network-publicipaddresses-',parameters('utc-value'))]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
