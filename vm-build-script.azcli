@@ -22,5 +22,10 @@ az group create -n $imageResourceGroup -l $location
 az deployment group what-if --verbose --resource-group $imageResourceGroup --template-uri $uri --parameters use-public-ip='true'
 az deployment group create --verbose --resource-group $imageResourceGroup --template-uri $uri --parameters use-public-ip='true'
 
-az deployment group what-if --verbose --resource-group $imageResourceGroup --template-file main-template.json
+az deployment group what-if \
+--verbose \
+--resource-group $imageResourceGroup \
+--template-file main-template.json \
+--parameters subnet-id='/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourceGroups/aib-sig-rg/providers/Microsoft.Network/virtualNetworks/aib-proxyvm-vnet/subnets/default'
+
 az deployment group create --verbose --resource-group $imageResourceGroup --template-file main-template.json
