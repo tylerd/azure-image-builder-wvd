@@ -2,7 +2,7 @@
 az login
 az account list --output table
 
-# Nataliak K - Visual Studio Ultimate with MSDN  AzureCloud   1965c25a-b7fd-48b5-a393-c9e785c1c4d9
+# NK - Visual Studio Ultimate with MSDN  AzureCloud   1965c25a-b7fd-48b5-a393-c9e785c1c4d9
 az account set --subscription 1965c25a-b7fd-48b5-a393-c9e785c1c4d9
 
 # To use Azure Image Builder during the preview, you need to register the new feature.

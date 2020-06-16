@@ -1,0 +1,20 @@
+# Login to Azure CLI
+az login
+az account list --output table
+
+# NK- Visual Studio Ultimate with MSDN  AzureCloud   1965c25a-b7fd-48b5-a393-c9e785c1c4d9
+az account set --subscription 1965c25a-b7fd-48b5-a393-c9e785c1c4d9
+#az account set --subscription 5aec60e9-f535-4bd7-a951-2833f043e918
+
+# Resource group name - we are using myImageBuilderRG in this example
+imageResourceGroup=wvd-vmpool-rg
+# Region location 
+location=eastus2
+# template URI
+uri="https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/compute-availiblitysets.json"
+
+
+# Create the resource group
+az group create -n $imageResourceGroup -l $location
+
+az deployment group create --resource-group $imageResourceGroup --template-uri 
