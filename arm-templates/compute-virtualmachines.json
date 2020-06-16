@@ -86,7 +86,6 @@
     "functions": [],
     "variables": {
         "availability-set-id": "[resourceId('Microsoft.Compute/availabilitySets/', parameters('availability-set-name'))]",
-        "network-interface-id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('rdsh-prefix'), add(copyindex(), parameters('instance-count')), '-nic'))]",
         "existing-domain-username": "[first(split(parameters('administrator-account-username'), '@'))]",
         "domain": "[if(equals(parameters('domain'), ''), last(split(parameters('administrator-account-username'), '@')), parameters('domain'))]"
     },
@@ -130,7 +129,7 @@
             "networkProfile": {
                 "networkInterfaces": [
                     {
-                        "id": "[variables('network-interface-id')]"
+                        "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('rdsh-prefix'), add(copyindex(), parameters('instance-count')), '-nic'))]"
                     }
                 ]
             },
