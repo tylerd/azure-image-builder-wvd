@@ -125,5 +125,13 @@ az network vnet subnet update \
   --vnet-name $vnetName \
   --disable-private-link-service-network-policies true
 
-  # CHMOD the files for ADO
-  chmod a+x filname
+# CHMOD the files for ADO
+chmod a+x filname
+
+# Update region to replicate
+az sig image-version update \
+--resource-group aib-sig-rg \
+--gallery-name myIBSIG \
+--gallery-image-definition aibWin10365Image \
+--gallery-image-version 0.24294.62837 \
+--add publishingProfile.targetRegions  name=canadacentral
