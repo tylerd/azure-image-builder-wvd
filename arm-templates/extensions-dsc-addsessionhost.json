@@ -1,0 +1,74 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "instance-count": {
+            "type": "int",
+            "metadata": {
+                "description": "Number of session hosts that will be created and added to the hostpool."
+            },
+            "defaultValue": 1
+        },
+        "rdsh-prefix": {
+            "type": "string",
+            "metadata": {
+                "description": "This prefix will be used in combination with the VM number to create the VM name. This value includes the dash, so if using “rdsh” as the prefix, VMs would be named “rdsh-0”, “rdsh-1”, etc. You should use a unique prefix to reduce name collisions in Active Directory."
+            },
+            "defaultValue": "rdsh"
+        },
+        "artifacts-location": {
+            "type": "string",
+            "metadata": {
+                "description": "The base URI where artifacts required by this template are located."
+            },
+            "defaultValue": "https://wvdportalstorageblob.blob.core.windows.net/galleryartifacts/Configuration.zip"
+        },
+        "host-pool-name": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the hostpool."
+            },
+            "defaultValue": "aib-wvd-vmpool"
+        },
+        "host-pool-token": {
+            "type": "securestring",
+            "metadata": {
+                "description": "The token for adding VMs to the hostpool."
+            },
+            "defaultValue": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjFCOUNENjgwRUZFN0M3ODhEQjExMDQ0Qjk0M0Y5MjMwRUZEOUVDRDYiLCJ0eXAiOiJKV1QifQ.eyJSZWdpc3RyYXRpb25JZCI6IjUxOTE4Y2Y4LWJiMjEtNGJiYS05MTQ1LTM5OTUzYTg1YmUxYSIsIkJyb2tlclVyaSI6Imh0dHBzOi8vcmRicm9rZXItZy11cy1yMC53dmQubWljcm9zb2Z0LmNvbS8iLCJEaWFnbm9zdGljc1VyaSI6Imh0dHBzOi8vcmRkaWFnbm9zdGljcy1nLXVzLXIwLnd2ZC5taWNyb3NvZnQuY29tLyIsIkVuZHBvaW50UG9vbElkIjoiM2QwMTRhOWQtMDRkYS00Mjg2LWI1YTMtN2IzZDIwZmM4NTE1IiwiR2xvYmFsQnJva2VyVXJpIjoiaHR0cHM6Ly9yZGJyb2tlci53dmQubWljcm9zb2Z0LmNvbS8iLCJHZW9ncmFwaHkiOiJVUyIsIm5iZiI6MTU5MjM2ODIyMywiZXhwIjoxNTkyNDU0NjAzLCJpc3MiOiJSREluZnJhVG9rZW5NYW5hZ2VyIiwiYXVkIjoiUkRtaSJ9.X76Of_qv4iD4kb7WFR4iSxo0B-NT4zFIQWi6hkMjrhOwj6ypTea_91vkb5cZnPdQWWo25JyqoB6DkratBah5-x2ShvVwEBzu2Xlfxu_JYxwMFijdjDU3xjADHdHt2QCjPVQNQQhlnAeSstnDJPnR39CKxvDqdpF6oa_BR-02mHiYiqOK_YnqS7P55S0A4QVxG7h8OAoora-l1O7ATnCIhHCgy8pNoGZMEo2fcz5J6GAMV07UZvkG93iY1nHB_cLJaT4kFN4KC4sr4bnaIOIZbmcl2ZHI1Vbil25ekq7_cTzquD7nQ74qlcmGGB-8la_Mk4I-78jAOjbLP-hsDLtZgg"
+        } 
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "apiVersion": "2018-10-01",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(parameters('rdsh-prefix'), add(copyindex(), parameters('instance-count')), '-vm/', 'dscextension')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "rdsh-domain-join-loop"
+            ],
+            "copy": {
+                "name": "rdsh-dsc-loop",
+                "count": "[parameters('instance-count')]"
+            },
+            "properties": {
+                "publisher": "Microsoft.Powershell",
+                "type": "DSC",
+                "typeHandlerVersion": "2.73",
+                "autoUpgradeMinorVersion": true,
+                "protectedSettings": {},
+                "settings": {
+                    "modulesUrl": "[parameters('artifacts-location')]",
+                    "configurationFunction": "Configuration.ps1\\AddSessionHost",
+                    "properties": {
+                            "hostPoolName": "[parameters('host-pool-name')]",
+                            "registrationInfoToken": "[parameters('host-pool-token')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}
