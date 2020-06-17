@@ -81,7 +81,8 @@
             "type": "string",
             "metadata": {
                 "description": "The name of the avaliblity set."
-            }
+            },
+            "defaultValue": "availabilitySet1"
         }
     },
     "functions": [],
