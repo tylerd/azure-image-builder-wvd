@@ -28,6 +28,9 @@ az deployment group create --verbose --resource-group $imageResourceGroup --temp
 az deployment group create --verbose --resource-group $imageResourceGroup --template-file compute-availabilitysets.json
 az deployment group what-if --verbose --resource-group $imageResourceGroup --template-uri $uri 
 
+az deployment group what-if --verbose --resource-group $imageResourceGroup --template-file extensions-jsonaddomainextension.json
+az deployment group create --verbose --resource-group $imageResourceGroup --template-file extensions-jsonaddomainextension.json
+
 az deployment group what-if \
 --verbose \
 --resource-group $imageResourceGroup \
