@@ -40,7 +40,7 @@
         "admin-account-password": {
             "type": "securestring",
             "metadata": {
-                "description": "Admin account username."
+                "description": "Admin account password for domain join."
             }
         }
     },

@@ -11,6 +11,12 @@
             "metadata": {
                 "description": "The unique id of the subnet for the nics."
             }
+        },
+        "admin-account-password": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Admin account passoword for domain join."
+            }
         }
     },
     "functions": [],
@@ -95,7 +101,9 @@
             ],
             "properties": {
                 "mode": "Incremental",
-                "parameters": {},
+                "parameters": {
+                    "admin-account-password":{"value": "[parameters('admin-account-password')]"}
+                },
                 "templateLink": {
                     "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/extensions-jsonaddomainextension.json",
                     "contentVersion":"1.0.0.0"
