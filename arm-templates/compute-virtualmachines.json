@@ -37,13 +37,6 @@
             },
             "defaultValue": "124325678!@#$%^&*asdfgASDFASD"
         },
-        "domain": {
-            "type": "string",
-            "metadata": {
-                "description": "Domain to join"
-            },
-            "defaultValue": ""
-        },
         "shared-image-gallery-name": {
             "type": "string",
             "metadata": {
@@ -88,8 +81,7 @@
     "functions": [],
     "variables": {
         "availability-set-id": "[resourceId('Microsoft.Compute/availabilitySets/', parameters('availability-set-name'))]",
-        "existing-domain-username": "[first(split(parameters('administrator-account-username'), '@'))]",
-        "domain": "[if(equals(parameters('domain'), ''), last(split(parameters('administrator-account-username'), '@')), parameters('domain'))]"
+        "existing-domain-username": "[first(split(parameters('administrator-account-username'), '@'))]"
     },
     "resources": [
         {
