@@ -81,7 +81,7 @@
                    "subnet-id":{"value": "[parameters('subnet-id')]"} 
                 },
                 "templateLink": {
-                    "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/compute-virtualmachines.json.json",
+                    "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/compute-virtualmachines.json",
                     "contentVersion":"1.0.0.0"
                 }
             }
