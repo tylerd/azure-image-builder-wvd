@@ -21,7 +21,7 @@
             "metadata": {
                 "description": "Domain to join"
             },
-            "defaultValue": ""
+            "defaultValue": "azureminilab.com"
         },
         "ou-path": {
             "type": "string",
