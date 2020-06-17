@@ -43,26 +43,26 @@
             },
             "defaultValue": ""
         },
-        "vm-gallery-image-offer": {
+        "shared-image-gallery-name": {
             "type": "string",
             "metadata": {
-                "description": "(Required when vmImageType = Gallery) Gallery image Offer."
+                "description": "The name of the Azure SIG for your images."
             },
-            "defaultValue": ""
+            "defaultValue": "myIBSIG"
         },
-        "vm-gallery-image-publisher": {
+        "shared-image-gallery-definition": {
             "type": "string",
             "metadata": {
-                "description": "(Required when vmImageType = Gallery) Gallery image Publisher."
+                "description": "Defnition of the image to use from SIG."
             },
-            "defaultValue": ""
+            "defaultValue": "aibWin10365Image"
         },
-        "vm-gallery-image-sku": {
+        "shared-image-gallery-version": {
             "type": "string",
             "metadata": {
-                "description": "(Required when vmImageType = Gallery) Gallery image SKU."
+                "description": "The version of the image definition"
             },
-            "defaultValue": ""
+            "defaultValue": "latest"
         },
         "vm-disk-type": {
             "type": "string",
@@ -114,11 +114,7 @@
             },
             "storageProfile": {
                 "imageReference": {
-                    "id": "[resourceId('Microsoft.Compute/galleries/images/versions', 'myIBSIG', 'aibWin10365Image', 'latest')]"
-                    //"publisher": "[parameters('vm-gallery-image-publisher')]",
-                    //"offer": "[parameters('vm-gallery-image-offer')]",
-                    //"sku": "[parameters('vm-gallery-image-sku')]",
-                    //"version": "latest"
+                    "id": "[resourceId('Microsoft.Compute/galleries/images/versions', parameters('shared-image-gallery-name'), parameters('shared-image-gallery-definition'), parameters('shared-image-gallery-version'))]"
                 },
             "osDisk": {
                 "createOption": "FromImage",
