@@ -64,7 +64,7 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "name": "[parameters('domain')]",
-                    "ouPath": "[parameters('ou-path')]",
+                    //"ouPath": "[parameters('ou-path')]",
                     "user": "[parameters('admin-account-user')]",
                     "restart": "true",
                     "options": "3"
