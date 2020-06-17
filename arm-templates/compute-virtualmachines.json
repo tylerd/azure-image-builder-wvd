@@ -114,10 +114,11 @@
             },
             "storageProfile": {
                 "imageReference": {
-                    "publisher": "[parameters('vm-gallery-image-publisher')]",
-                    "offer": "[parameters('vm-gallery-image-offer')]",
-                    "sku": "[parameters('vm-gallery-image-sku')]",
-                    "version": "latest"
+                    "id": "[resourceId('Microsoft.Compute/galleries/images/versions', 'myIBSIG', 'aibWin10365Image', 'latest')]"
+                    //"publisher": "[parameters('vm-gallery-image-publisher')]",
+                    //"offer": "[parameters('vm-gallery-image-offer')]",
+                    //"sku": "[parameters('vm-gallery-image-sku')]",
+                    //"version": "latest"
                 },
             "osDisk": {
                 "createOption": "FromImage",

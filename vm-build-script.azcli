@@ -23,7 +23,11 @@ az group create -n $imageResourceGroup -l $location
 az deployment group what-if --verbose --resource-group $imageResourceGroup --template-uri $uri --parameters use-public-ip='true'
 az deployment group create --verbose --resource-group $imageResourceGroup --template-uri $uri --parameters use-public-ip='true'
 
-az deployment group what-if --verbose --resource-group $imageResourceGroup --template-uri $uri
+az deployment group what-if --verbose --resource-group $imageResourceGroup --template-file compute-virtualmachines.json
+az deployment group create --verbose --resource-group $imageResourceGroup --template-file compute-virtualmachines.json
+az deployment group create --verbose --resource-group $imageResourceGroup --template-file compute-availabilitysets.json
+az deployment group what-if --verbose --resource-group $imageResourceGroup --template-uri $uri \
+--parameters vm-gallery-image-offer='myIBSIG' vm-gallery-image-publisher='MicrosoftWindowsDesktop' vm-gallery-image-sku='19h2-evd-o365pp'
 
 az deployment group what-if \
 --verbose \
