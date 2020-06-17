@@ -17,7 +17,8 @@
     "variables": {
         "availability-set-deployment-name": "[concat('compute-availabilitysets-',parameters('utc-value'))]",
         "public-ip-addresses-deployment-name": "[concat('network-publicipaddresses-',parameters('utc-value'))]",
-        "network-iterfaces-deployment-name":"[concat('network-interfaces-',parameters('utc-value'))]"
+        "network-iterfaces-deployment-name":"[concat('network-interfaces-',parameters('utc-value'))]",
+        "virtual-machines-deployment-name":"[concat('virtual-machines-',parameters('utc-value'))]"
     },
     "resources": [
         // Deploy Availability Set
@@ -61,6 +62,26 @@
                 },
                 "templateLink": {
                     "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/network-networkinterfaces.json",
+                    "contentVersion":"1.0.0.0"
+                }
+            }
+        },
+        // Deploy Virtual Machines
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "[variables('virtual-machines-deployment-name')]",
+            "dependsOn": [
+                "[variables('network-iterfaces-deployment-name')]",
+                "[variables('availability-set-deployment-name')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "parameters": {
+                   "subnet-id":{"value": "[parameters('subnet-id')]"} 
+                },
+                "templateLink": {
+                    "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/compute-virtualmachines.json.json",
                     "contentVersion":"1.0.0.0"
                 }
             }

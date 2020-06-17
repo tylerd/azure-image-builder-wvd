@@ -27,7 +27,8 @@
             "type": "string",
             "metadata": {
                 "description": "The username for the admin."
-            }
+            },
+            "defaultValue": "superuser"
         },
         "administrator-account-password": {
             "type": "securestring",
