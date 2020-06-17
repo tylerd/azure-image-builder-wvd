@@ -31,6 +31,9 @@ az deployment group what-if --verbose --resource-group $imageResourceGroup --tem
 az deployment group what-if --verbose --resource-group $imageResourceGroup --template-file extensions-jsonaddomainextension.json
 az deployment group create --verbose --resource-group $imageResourceGroup --template-file extensions-jsonaddomainextension.json
 
+az deployment group what-if --verbose --resource-group $imageResourceGroup --template-file extensions-dsc-addsessionhost.json
+az deployment group create --verbose --resource-group $imageResourceGroup --template-file extensions-dsc-addsessionhost.json
+
 subnetid="/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourceGroups/aib-sig-rg/providers/Microsoft.Network/virtualNetworks/aib-proxyvm-vnet/subnets/default"
 echo $subnetid
 az deployment group what-if \
