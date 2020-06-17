@@ -1,0 +1,122 @@
+[
+    {
+        "code": "ComponentStatus/DscConfigurationLog/succeeded",
+        "level": "Info",
+        "displayStatus": "Provisioning succeeded",
+        "message": "[2020-06-17 17:14:39Z] [VERBOSE] [rdsh1]: LCM:  [ Start  Test     ]  [[Script]ExecuteRdAgentInstallClient]
+        [2020-06-17 17:14:40Z] [VERBOSE] [rdsh1]: LCM:  [ End    Test     ]  [[Script]ExecuteRdAgentInstallClient]  in 0.2650 seconds.
+        [2020-06-17 17:14:40Z] [VERBOSE] [rdsh1]: LCM:  [ Skip   Set      ]  [[Script]ExecuteRdAgentInstallClient]
+        [2020-06-17 17:14:40Z] [VERBOSE] [rdsh1]: LCM:  [ End    Resource ]  [[Script]ExecuteRdAgentInstallClient]
+        [2020-06-17 17:14:40Z] [VERBOSE] [rdsh1]: LCM:  [ End    Set      ]
+        [2020-06-17 17:14:40Z] [VERBOSE] [rdsh1]: LCM:  [ End    Set      ]    in  1.2660 seconds.
+        [2020-06-17 17:14:40Z] [VERBOSE] Operation 'Invoke CimMethod' complete.
+        [2020-06-17 17:14:40Z] [VERBOSE] Time taken for configuration job to complete is 1.505 seconds
+        [2020-06-17 17:14:44Z] [VERBOSE] Performing the operation \"Start-DscConfiguration: SendMetaConfigurationApply\" on target \"MSFT_DSCLocalConfigurationManager\".
+        [2020-06-17 17:14:44Z] [VERBOSE] Perform operation 'Invoke CimMethod' with following parameters, ''methodName' = SendMetaConfigurationApply,'className' = MSFT_DSCLocalConfigurationManager,'namespaceName' = root/Microsoft/Windows/DesiredStateConfiguration'.
+        [2020-06-17 17:14:44Z] [VERBOSE] An LCM method call arrived from computer rdsh1 with user sid S-1-5-18.
+        [2020-06-17 17:14:44Z] [VERBOSE] [rdsh1]: LCM:  [ Start  Set      ]
+        [2020-06-17 17:14:44Z] [VERBOSE] [rdsh1]: LCM:  [ Start  Resource ]  [MSFT_DSCMetaConfiguration]
+        [2020-06-17 17:14:44Z] [VERBOSE] [rdsh1]: LCM:  [ Start  Set      ]  [MSFT_DSCMetaConfiguration]
+        [2020-06-17 17:14:44Z] [VERBOSE] [rdsh1]: LCM:  [ End    Set      ]  [MSFT_DSCMetaConfiguration]  in 0.0630 seconds.
+        [2020-06-17 17:14:44Z] [VERBOSE] [rdsh1]: LCM:  [ End    Resource ]  [MSFT_DSCMetaConfiguration]
+        [2020-06-17 17:14:44Z] [VERBOSE] [rdsh1]: LCM:  [ End    Set      ]
+        [2020-06-17 17:14:44Z] [VERBOSE] [rdsh1]: LCM:  [ End    Set      ]    in  0.2030 seconds.
+        [2020-06-17 17:14:44Z] [VERBOSE] Operation 'Invoke CimMethod' complete.
+        [2020-06-17 17:14:44Z] [VERBOSE] Set-DscLocalConfigurationManager finished in 0.459 seconds."
+    },
+    {
+        "code": "ComponentStatus/DscExtensionLog/succeeded",
+        "level": "Info",
+        "displayStatus": "Provisioning succeeded",
+        "message": "[2020-06-17 17:06:57Z] Downloading https://wvdportalstorageblob.blob.core.windows.net/galleryartifacts/Configuration.zip to C:\\Packages\\Plugins\\Microsoft.Powershell.DSC\\2.80.0.0\\bin\\..\\DSCWork\\Configuration.0\\Configuration.zip
+        [2020-06-17 17:12:16Z] Download failed: The operation has timed out.
+        [2020-06-17 17:12:16Z] Will retry after a short delay...
+        [2020-06-17 17:14:28Z] Extracting Configuration.zip
+        [2020-06-17 17:14:29Z] Looking for the definition of the configuration function.
+        [2020-06-17 17:14:30Z] Executing C:\\Packages\\Plugins\\Microsoft.Powershell.DSC\\2.80.0.0\\bin\\..\\DSCWork\\Configuration.0\\Configuration.ps1
+        [2020-06-17 17:14:30Z] Preparing configuration arguments and configuration data.
+        [2020-06-17 17:14:30Z] Creating MOF files.
+        [2020-06-17 17:14:30Z] Executing the configuration function to generate the MOF files.
+        [2020-06-17 17:14:32Z] Verifying metaconfiguration for reboot information...
+        [2020-06-17 17:14:32Z] Backing up C:\\Packages\\Plugins\\Microsoft.Powershell.DSC\\2.80.0.0\\DSCWork\\Configuration.0\\AddSessionHost\\localhost.meta.mof
+        [2020-06-17 17:14:32Z] No match for RegistrationKey found in the meta mof file
+        [2020-06-17 17:14:32Z] WMF 5 or newer, Injecting RebootNodeIfNeeded = False and ActionAfterReboot = \"StopConfiguration\"
+            [2020-06-17 17:14:32Z] Executing Set-DscLocalConfigurationManager...
+            [2020-06-17 17:14:33Z] Settings handler status to 'transitioning' (C:\\Packages\\Plugins\\Microsoft.Powershell.DSC\\2.80.0.0\\Status\\0.status)
+            [2020-06-17 17:14:36Z] Settings handler status to 'transitioning' (C:\\Packages\\Plugins\\Microsoft.Powershell.DSC\\2.80.0.0\\Status\\0.status)
+            [2020-06-17 17:14:37Z] Get-DscLocalConfigurationManager:
+            ActionAfterReboot              : StopConfiguration
+            AgentId                        : 1EA045B1-B0B8-11EA-B85A-000D3A847864
+            AllowModuleOverWrite           : False
+            CertificateID                  : 
+            ConfigurationDownloadManagers  : {}
+            ConfigurationID                : 
+            ConfigurationMode              : ApplyOnly
+            ConfigurationModeFrequencyMins : 15
+            Credential                     : 
+            DebugMode                      : {NONE}
+            DownloadManagerCustomData      : 
+            DownloadManagerName            : 
+            LCMCompatibleVersions          : {1.0, 2.0}
+            LCMState                       : Idle
+            LCMStateDetail                 : 
+            LCMVersion                     : 2.0
+            StatusRetentionTimeInDays      : 10
+            SignatureValidationPolicy      : NONE
+            SignatureValidations           : {}
+            MaximumDownloadSizeMB          : 500
+            PartialConfigurations          : 
+            RebootNodeIfNeeded             : False
+            RefreshFrequencyMins           : 30
+            RefreshMode                    : PUSH
+            ReportManagers                 : {}
+            ResourceModuleManagers         : {}
+            PSComputerName                 : 
+            [2020-06-17 17:14:37Z] Executing Start-DscConfiguration...
+            [2020-06-17 17:14:37Z] Settings handler status to 'transitioning' (C:\\Packages\\Plugins\\Microsoft.Powershell.DSC\\2.80.0.0\\Status\\0.status)
+            [2020-06-17 17:14:42Z] Settings handler status to 'transitioning' (C:\\Packages\\Plugins\\Microsoft.Powershell.DSC\\2.80.0.0\\Status\\0.status)
+            [2020-06-17 17:14:42Z] Updating execution status (HKLM:\\SOFTWARE\\Microsoft\\Azure\\DSC\\2.80.0.0\\Status)
+            [2020-06-17 17:14:42Z] LCM state is Idle
+            [2020-06-17 17:14:42Z] DSC configuration completed.
+            [2020-06-17 17:14:42Z] Resetting metaconfiguration...
+            [2020-06-17 17:14:42Z] Restoring C:\\Packages\\Plugins\\Microsoft.Powershell.DSC\\2.80.0.0\\DSCWork\\Configuration.0\\AddSessionHost\\localhost.meta.mof.bk...
+            [2020-06-17 17:14:42Z] Executing Set-DscLocalConfigurationManager...
+            [2020-06-17 17:14:42Z] Settings handler status to 'transitioning' (C:\\Packages\\Plugins\\Microsoft.Powershell.DSC\\2.80.0.0\\Status\\0.status)
+            [2020-06-17 17:14:46Z] Settings handler status to 'transitioning' (C:\\Packages\\Plugins\\Microsoft.Powershell.DSC\\2.80.0.0\\Status\\0.status)\
+            [2020-06-17 17:14:46Z] Get-DscLocalConfigurationManager: 
+            ActionAfterReboot              : ContinueConfiguration
+            AgentId                        : 1EA045B1-B0B8-11EA-B85A-000D3A847864
+            AllowModuleOverWrite           : False
+            CertificateID                  : 
+            ConfigurationDownloadManagers  : {}
+            ConfigurationID                : 
+            ConfigurationMode              : ApplyOnly
+            ConfigurationModeFrequencyMins : 15
+            Credential                     : 
+            DebugMode                      : {NONE}
+            DownloadManagerCustomData      : 
+            DownloadManagerName            : 
+            LCMCompatibleVersions          : {1.0, 2.0}
+            LCMState                       : Idle
+            LCMStateDetail                 : 
+            LCMVersion                     : 2.0
+            nStatusRetentionTimeInDays      : 10
+            SignatureValidationPolicy      : NONE
+            SignatureValidations           : {}
+            MaximumDownloadSizeMB          : 500
+            PartialConfigurations          : 
+            RebootNodeIfNeeded             : True
+            RefreshFrequencyMins           : 30
+            RefreshMode                    : PUSH
+            ReportManagers                 : {}
+            ResourceModuleManagers         : {}
+            PSComputerName                 : 
+            [2020-06-17 17:14:46Z] Settings handler status to 'success' (C:\\Packages\\Plugins\\Microsoft.Powershell.DSC\\2.80.0.0\\Status\\0.status)"
+    },
+    {
+        "code": "ComponentStatus/Metadata/succeeded",
+        "level": "Info",
+        "displayStatus": "Provisioning succeeded",
+        "message": "VMUUId=346DC0A5-120B-402A-9AA5-3CC7B9381084;AgentId=1EA045B1-B0B8-11EA-B85A-000D3A847864;"
+    }
+]

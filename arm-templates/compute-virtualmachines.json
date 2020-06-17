@@ -102,7 +102,7 @@
                 "id": "[variables('availability-set-id')]"
             },
             "osProfile": {
-                "computerName": "[concat(parameters('rdsh-prefix'), add(copyindex(), parameters('instance-count')))]",
+                "computerName": "[concat(parameters('rdsh-prefix'), add(copyindex(), parameters('instance-count')),'-vm')]",
                 "adminUsername": "[variables('existing-domain-username')]",
                 "adminPassword": "[parameters('administrator-account-password')]"
             },
