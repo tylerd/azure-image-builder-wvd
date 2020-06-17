@@ -32,7 +32,7 @@
         "network-iterfaces-deployment-name":"[concat('network-interfaces-',parameters('utc-value'))]",
         "virtual-machines-deployment-name":"[concat('virtual-machines-',parameters('utc-value'))]",
         "domain-join-ext-deployment-name":"[concat('domain-join-ext-',parameters('utc-value'))]",
-        "add-sesion-host-ext-deployment-name":"[concat('add-sesion-host-',parameters('utc-value'))]"
+        "add-session-host-ext-deployment-name":"[concat('add-session-host-',parameters('utc-value'))]"
     },
     "resources": [
         // Deploy Availability Set
@@ -121,7 +121,7 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "[variables('add-sesion-host-ext-deployment-name')]",
+            "name": "[variables('add-session-host-ext-deployment-name')]",
             "dependsOn": [
                 "[variables('domain-join-ext-deployment-name')]"
             ],
@@ -131,7 +131,7 @@
                     "host-pool-token":{"value": "[parameters('host-pool-token')]"}
                 },
                 "templateLink": {
-                    "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/extensions-jsonaddomainextension.json",
+                    "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/extensions-dsc-addsessionhost.json",
                     "contentVersion":"1.0.0.0"
                 }
             }
