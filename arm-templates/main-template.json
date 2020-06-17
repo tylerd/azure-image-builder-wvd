@@ -17,6 +17,12 @@
             "metadata": {
                 "description": "Admin account passoword for domain join."
             }
+        },
+        "host-pool-token": {
+            "type": "securestring",
+            "metadata": {
+                "description": "The token for adding VMs to the hostpool."
+            }
         }
     },
     "functions": [],
@@ -25,7 +31,8 @@
         "public-ip-addresses-deployment-name": "[concat('network-publicipaddresses-',parameters('utc-value'))]",
         "network-iterfaces-deployment-name":"[concat('network-interfaces-',parameters('utc-value'))]",
         "virtual-machines-deployment-name":"[concat('virtual-machines-',parameters('utc-value'))]",
-        "domain-join-ext-deployment-name":"[concat('domain-join-ext-',parameters('utc-value'))]"
+        "domain-join-ext-deployment-name":"[concat('domain-join-ext-',parameters('utc-value'))]",
+        "add-sesion-host-ext-deployment-name":"[concat('add-sesion-host-',parameters('utc-value'))]"
     },
     "resources": [
         // Deploy Availability Set
@@ -103,6 +110,25 @@
                 "mode": "Incremental",
                 "parameters": {
                     "admin-account-password":{"value": "[parameters('admin-account-password')]"}
+                },
+                "templateLink": {
+                    "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/extensions-jsonaddomainextension.json",
+                    "contentVersion":"1.0.0.0"
+                }
+            }
+        },
+        // Deploy DSC Add Session Host Extension
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "[variables('add-sesion-host-ext-deployment-name')]",
+            "dependsOn": [
+                "[variables('domain-join-ext-deployment-name')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "parameters": {
+                    "host-pool-token":{"value": "[parameters('host-pool-token')]"}
                 },
                 "templateLink": {
                     "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/extensions-jsonaddomainextension.json",
