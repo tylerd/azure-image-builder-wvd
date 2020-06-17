@@ -39,4 +39,8 @@ az deployment group what-if \
 --template-file main-template.json \
 --parameters subnet-id='$subnetid'
 
-az deployment group create --verbose --resource-group $imageResourceGroup --template-file main-template.json --parameters subnet-id='/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourceGroups/aib-sig-rg/providers/Microsoft.Network/virtualNetworks/aib-proxyvm-vnet/subnets/default'
+az deployment group create \
+--verbose \
+--resource-group $imageResourceGroup \
+--template-file main-template.json \
+--parameters subnet-id='$subnetid'
