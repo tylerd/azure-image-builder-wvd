@@ -39,30 +39,3 @@ trigger:
           inputs:
             targetType: 'inline'
             script: 'ls -al'
-  
-        - task: Bash@3
-          displayName: Configure Image Template
-          inputs:
-            filePath: '00-configure-image-template.sh'
-  
-        - task: Bash@3
-          displayName: Log Image Template
-          inputs:
-            targetType: 'inline'
-            script: 'cat ${IMAGETEMPLATEFILENAME}'
-  
-        - task: AzureCLI@2
-          displayName: Create Image Template
-          inputs:
-            azureSubscription: 'AzDevOPS'
-            scriptType: 'bash'
-            scriptLocation: 'scriptPath'
-            scriptPath: '01-create-image-template.sh'
-  
-        - task: AzureCLI@2
-          displayName: Build Image
-          inputs:
-            azureSubscription: 'AzDevOPS'
-            scriptType: 'bash'
-            scriptLocation: 'scriptPath'
-            scriptPath: '02-build-image.sh'
