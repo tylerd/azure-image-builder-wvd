@@ -1,41 +1,41 @@
 trigger:
     - none
   
-  schedules:
-  - cron: "0 4 * * *"
-    displayName: Daily Midnight Build
-    branches:
-      include:
-      - master
-    always: true
-  
-  pr:
-    - none
-  
-  pool:
-    vmImage: 'ubuntu-latest'
-  
-  variables:
-    - name: IMAGERESORUCEGROUP
-      value: aib-sig-rg
-    - name: IMAGETEMPLATEFILENAME
-      value: image-template-win-10.json
-    - name: IMAGERESOURCENAME
-      value: 01-image-template-win-10-desktop
-  
-  stages:
-  # Create Image Stage
-  - stage: Create_Image_Stage
-    displayName: Create Image Stage
-    jobs:
-      - job: Create_Image_Job
-        displayName: Create Image Job
-        steps:
-        - checkout: self
-          displayName: Clone Git Repo
-  
-        - task: Bash@3
-          displayName: List Git Repo Content
-          inputs:
-            targetType: 'inline'
-            script: 'ls -al'
+schedules:
+- cron: "0 4 * * *"
+  displayName: Daily Midnight Build
+  branches:
+    include:
+    - master
+  always: true
+
+pr:
+  - none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - name: IMAGERESORUCEGROUP
+    value: aib-sig-rg
+  - name: IMAGETEMPLATEFILENAME
+    value: image-template-win-10.json
+  - name: IMAGERESOURCENAME
+    value: 01-image-template-win-10-desktop
+
+stages:
+# Create Image Stage
+- stage: Create_Image_Stage
+  displayName: Create Image Stage
+  jobs:
+    - job: Create_Image_Job
+      displayName: Create Image Job
+      steps:
+      - checkout: self
+        displayName: Clone Git Repo
+
+      - task: Bash@3
+        displayName: List Git Repo Content
+        inputs:
+          targetType: 'inline'
+          script: 'ls -al'
