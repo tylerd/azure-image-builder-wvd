@@ -56,7 +56,7 @@
             "metadata": {
                 "description": "The version of the image definition"
             },
-            "defaultValue": "latest"
+            "defaultValue": "0.24299.50491"
         },
         "vm-disk-type": {
             "type": "string",
