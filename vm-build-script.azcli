@@ -96,3 +96,12 @@ az sig image-version show \
    --gallery-image-definition aibWin10365Image \
    --gallery-image-version 0.24294.62837 \
    --query "id"
+
+# Exclude from latest
+# az sig image-version update \
+#    --verbose \
+#    --resource-group $sigResourceGroup \
+#    --gallery-name $sigName \
+#    --gallery-image-definition aibWin10365Image \
+#    --gallery-image-version 0.24294.62837 \
+#    --add exclude-from-latest=true
