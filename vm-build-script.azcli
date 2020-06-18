@@ -38,6 +38,35 @@ subnetid="/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourceGroups/aib
 
 subnetid="/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourceGroups/Azureminilab-VNET/providers/Microsoft.Network/virtualNetworks/wvdspring-vnet/subnets/subnet1"
 
+# Create Image from existing image
+az feature register --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview
+az feature show --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview | grep state
+az provider show -n Microsoft.VirtualMachineImages | grep registrationState
+az provider show -n Microsoft.KeyVault | grep registrationState
+az provider show -n Microsoft.Compute | grep registrationState
+az provider show -n Microsoft.Storage | grep registrationState
+az provider register -n Microsoft.VirtualMachineImages
+az provider register -n Microsoft.Compute
+az provider register -n Microsoft.KeyVault
+az provider register -n Microsoft.Storage
+
+# Resource group name 
+sigResourceGroup=aib-sig-rg
+# Gallery location 
+location=eastus2
+# Additional region to replicate the image version to 
+additionalregion=canadacentral
+# Name of the shared image gallery 
+sigName=myIBSIG
+# Name of the image definition to use
+imageDefName=aibWin10365Image
+# image distribution metadata reference name
+runOutputName=aibWin10365ImageUpdate
+# Sub ID
+subscriptionID=1965c25a-b7fd-48b5-a393-c9e785c1c4d9
+
+
+
 echo $subnetid
 az deployment group what-if \
 --verbose \
