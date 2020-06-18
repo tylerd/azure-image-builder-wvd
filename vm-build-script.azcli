@@ -79,3 +79,20 @@ az deployment group create \
 --resource-group $imageResourceGroup \
 --template-file main-template.json \
 --parameters subnet-id=$subnetid
+
+# Get the location, status and other information about the available image galleries
+az sig list -o table
+
+# List the image definitions in a gallery, including information about OS type and status
+az sig image-definition list --resource-group $sigResourceGroup --gallery-name $sigName -o table
+
+# List the shared image versions in a gallery
+az sig image-version list --resource-group $sigResourceGroup --gallery-name $sigName --gallery-image-definition aibWin10365Image -o table
+
+# Get the ID of an image version using
+az sig image-version show \
+   --resource-group $sigResourceGroup \
+   --gallery-name $sigName \
+   --gallery-image-definition aibWin10365Image \
+   --gallery-image-version 0.24294.62837 \
+   --query "id"
