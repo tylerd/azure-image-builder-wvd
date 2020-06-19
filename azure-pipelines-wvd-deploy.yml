@@ -16,12 +16,10 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  - name: IMAGERESORUCEGROUP
-    value: aib-sig-rg
-  - name: IMAGETEMPLATEFILENAME
-    value: image-template-win-10.json
-  - name: IMAGERESOURCENAME
-    value: 01-image-template-win-10-desktop
+  - name: HOSTPOOLRESOURCEGROUPNAME
+    value: tbd
+  - name: SESSIONHOSTRESOURCEGROUPNAME
+    value: tbd
 
 stages:
 # Create Image Stage
@@ -40,7 +38,7 @@ stages:
           targetType: 'inline'
           script: 'ls -al'
       - task: AzureCLI@2
-        displayName: Delete Resoruce Group
+        displayName: Delete Resource Group
         inputs:
           azureSubscription: 'AzDevOPS'
           scriptType: 'bash'
@@ -48,7 +46,7 @@ stages:
           inlineScript: 'az group delete --verbose --name aib-wvd-vmpool-rg --yes'
 
       - task: AzureCLI@2
-        displayName: Create Resoruce Group
+        displayName: Create Resource Group
         inputs:
           azureSubscription: 'AzDevOPS'
           scriptType: 'bash'
