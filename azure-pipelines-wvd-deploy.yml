@@ -45,8 +45,8 @@ stages:
         inputs:
           azureSubscription: 'AzDevOPS'
           scriptType: 'batch'
-          scriptLocation: 'inlineScript'
-          inlineScript: 'uploadtoSA.sh'
+          scriptLocation: 'scriptPath'
+          scriptPath: 'uploadtoSA.sh'
 
       - task: AzureCLI@2
         displayName: Delete Resource Group
