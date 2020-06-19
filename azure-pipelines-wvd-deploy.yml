@@ -19,7 +19,9 @@ variables:
   - name: HOSTPOOLRESOURCEGROUPNAME
     value: tbd
   - name: SESSIONHOSTRESOURCEGROUPNAME
-    value: tbd
+    value: aib-wvd-vmpool-rg
+  - name: LOCATION
+    value: eastus2
 
 stages:
 # Create Image Stage
@@ -43,7 +45,7 @@ stages:
           azureSubscription: 'AzDevOPS'
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
-          inlineScript: 'az group delete --verbose --name aib-wvd-vmpool-rg --yes'
+          inlineScript: 'az group delete --verbose --name ${SESSIONHOSTRESOURCEGROUPNAME} --yes'
 
       - task: AzureCLI@2
         displayName: Create Resource Group
@@ -51,4 +53,4 @@ stages:
           azureSubscription: 'AzDevOPS'
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
-          inlineScript: 'az group create -n aib-wvd-vmpool-rg -l eastus2'
+          inlineScript: 'az group create -n ${SESSIONHOSTRESOURCEGROUPNAME} -l #{LOCATION}'
