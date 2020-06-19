@@ -39,6 +39,14 @@ stages:
         inputs:
           targetType: 'inline'
           script: 'ls -al'
+      - task: AzureFileCopy@4
+        inputs:
+          SourcePath: 'inline'
+          azureSubscription: 'AzDevOPS'
+          Destination: 'AzureBlob'
+          storage: 'azminlandevops'
+          ContainerName: 'templates'
+          
       - task: AzureCLI@2
         displayName: Delete Resource Group
         inputs:
