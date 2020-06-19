@@ -65,8 +65,6 @@ runOutputName=aibWin10365ImageUpdate
 # Sub ID
 subscriptionID=1965c25a-b7fd-48b5-a393-c9e785c1c4d9
 
-
-
 echo $subnetid
 az deployment group what-if \
 --verbose \
@@ -97,11 +95,14 @@ az sig image-version show \
    --gallery-image-version 0.24294.62837 \
    --query "id"
 
-# Exclude from latest
-# az sig image-version update \
-#    --verbose \
-#    --resource-group $sigResourceGroup \
-#    --gallery-name $sigName \
-#    --gallery-image-definition aibWin10365Image \
-#    --gallery-image-version 0.24294.62837 \
-#    --add exclude-from-latest=true
+az deployment group what-if \
+--verbose \
+--resource-group $imageResourceGroup \
+--template-file desktopvirtualization-hostpools.json
+
+echo $imageResourceGroup 
+
+az deployment group create \
+--verbose \
+--resource-group $imageResourceGroup \
+--template-file desktopvirtualization-hostpools.json

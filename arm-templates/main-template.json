@@ -27,6 +27,7 @@
     },
     "functions": [],
     "variables": {
+        "hostpool-token-deployment-name":"[concat('get-hostpool-token-',parameters('utc-value'))]",
         "availability-set-deployment-name": "[concat('compute-availabilitysets-',parameters('utc-value'))]",
         "public-ip-addresses-deployment-name": "[concat('network-publicipaddresses-',parameters('utc-value'))]",
         "network-iterfaces-deployment-name":"[concat('network-interfaces-',parameters('utc-value'))]",
@@ -35,6 +36,19 @@
         "add-session-host-ext-deployment-name":"[concat('add-session-host-',parameters('utc-value'))]"
     },
     "resources": [
+        // Get Hostpool Token
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "[variables('hostpool-token-deployment-name')]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/desktopvirtualization-hostpools.json",
+                    "contentVersion":"1.0.0.0"
+                }
+            }
+        },
         // Deploy Availability Set
         {
             "type": "Microsoft.Resources/deployments",
@@ -123,7 +137,8 @@
             "apiVersion": "2019-10-01",
             "name": "[variables('add-session-host-ext-deployment-name')]",
             "dependsOn": [
-                "[variables('domain-join-ext-deployment-name')]"
+                "[variables('domain-join-ext-deployment-name')]",
+                "[variables('hostpool-token-deployment-name')]"
             ],
             "properties": {
                 "mode": "Incremental",
