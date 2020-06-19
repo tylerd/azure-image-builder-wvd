@@ -87,7 +87,7 @@
         {
             "apiVersion": "2019-07-01",
             "type": "Microsoft.Compute/virtualMachines",
-            "name": "[concat(parameters('rdsh-prefix'), copyindex(), parameters('instance-count'), '-vm')]",
+            "name": "[concat(parameters('rdsh-prefix'), copyindex(), '-vm')]",
             "location": "[resourceGroup().location]",
             "copy": {
                 "name": "rdsh-vm-loop",
@@ -102,7 +102,7 @@
                 "id": "[variables('availability-set-id')]"
             },
             "osProfile": {
-                "computerName": "[concat(parameters('rdsh-prefix'), copyindex(), parameters('instance-count'),'-vm')]",
+                "computerName": "[concat(parameters('rdsh-prefix'), copyindex(),'-vm')]",
                 "adminUsername": "[variables('existing-domain-username')]",
                 "adminPassword": "[parameters('administrator-account-password')]"
             },
@@ -120,7 +120,7 @@
             "networkProfile": {
                 "networkInterfaces": [
                     {
-                        "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('rdsh-prefix'), copyindex(), parameters('instance-count'), '-nic'))]"
+                        "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('rdsh-prefix'), copyindex(), '-nic'))]"
                     }
                 ]
             },

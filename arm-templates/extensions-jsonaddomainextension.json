@@ -50,7 +50,7 @@
         {
             "apiVersion": "2018-10-01",
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(parameters('rdsh-prefix'), copyindex(), parameters('instance-count'), '-vm/', 'joindomain')]",
+            "name": "[concat(parameters('rdsh-prefix'), copyindex(), '-vm/', 'joindomain')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [],
             "copy": {

@@ -43,7 +43,7 @@
         {
             "apiVersion": "2018-10-01",
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(parameters('rdsh-prefix'), copyindex(), parameters('instance-count'), '-vm/', 'dscextension')]",
+            "name": "[concat(parameters('rdsh-prefix'), copyindex(), '-vm/', 'dscextension')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [],
             "copy": {

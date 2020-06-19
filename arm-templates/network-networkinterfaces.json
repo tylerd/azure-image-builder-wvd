@@ -36,7 +36,7 @@
         {
             "apiVersion": "2019-12-01",
             "type": "Microsoft.Network/networkInterfaces",
-            "name": "[concat(parameters('rdsh-prefix'), copyindex(), parameters('instance-count'), '-nic')]",
+            "name": "[concat(parameters('rdsh-prefix'), copyindex(), '-nic')]",
             "location": "[resourceGroup().location]",
             "copy": {
             "name": "rdsh-nic-loop",
@@ -51,7 +51,7 @@
                         "subnet": {
                             "id": "[parameters('subnet-id')]"
                         },
-                        "publicIpAddress": "[if(parameters('use-public-ip'), json(concat('{\"id\": \"', resourceId('Microsoft.Network/publicIpAddresses', concat(parameters('rdsh-prefix'), copyindex(), parameters('instance-count'), '-ip')), '\"}')), json('null'))]"
+                        "publicIpAddress": "[if(parameters('use-public-ip'), json(concat('{\"id\": \"', resourceId('Microsoft.Network/publicIpAddresses', concat(parameters('rdsh-prefix'), copyindex(), '-ip')), '\"}')), json('null'))]"
                     }
                 }
             ],
