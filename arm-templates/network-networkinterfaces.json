@@ -21,13 +21,6 @@
             "metadata": {
                 "description": "The unique id of the subnet for the nics."
             }
-        },
-        "use-public-ip": {
-            "type": "bool",
-            "metadata": {
-                "description": "Whether to use a Public IP"
-            },
-            "defaultValue": false
         }
     },
     "functions": [],

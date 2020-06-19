@@ -69,7 +69,6 @@
             "apiVersion": "2019-10-01",
             "name": "[variables('network-iterfaces-deployment-name')]",
             "dependsOn": [
-                "[variables('public-ip-addresses-deployment-name')]"
             ],
             "properties": {
                 "mode": "Incremental",
