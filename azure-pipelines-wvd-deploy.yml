@@ -45,6 +45,12 @@ stages:
           azureSubscription: 'AzDevOPS'
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
-          inlineScript: |
-            az group delete --verbose --name aib-wvd-vmpool-rg
-             --yes
+          inlineScript: 'az group delete --verbose --name aib-wvd-vmpool-rg --yes'
+
+      - task: AzureCLI@2
+        displayName: Create Resoruce Group
+        inputs:
+          azureSubscription: 'AzDevOPS'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: 'az group create -n aib-wvd-vmpool-rg -l eastus2'
