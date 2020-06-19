@@ -41,11 +41,12 @@ stages:
           script: 'ls -al'
 
       - task: AzureCLI@2
+        displayName: Stage to Storage Account
         inputs:
           azureSubscription: 'AzDevOPS'
           scriptType: 'batch'
-          scriptLocation: 'scriptPath'
-          scriptPath: 'uploadtoSA.sh'
+          scriptLocation: 'inlineScript'
+          inlineScript: 'uploadtoSA.sh'
 
       - task: AzureCLI@2
         displayName: Delete Resource Group
