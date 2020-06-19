@@ -1,0 +1,41 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+    "hostpool-name": {
+        "type": "string",
+        "metadata": {
+          "description": "The name of the Hostpool."
+        },
+        "defaultValue": "test"
+      }       
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "name": "[parameters('hostpool-name')]",
+            "apiVersion": "2019-12-10-preview",
+            "type": "Microsoft.DesktopVirtualization/hostpools",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                //"friendlyName": "[parameters('hostpoolFriendlyName')]",
+                //"description": "[parameters('hostpoolDescription')]",
+                // M"hostpoolType": "[parameters('hostpoolType')]",
+                //"customRdpProperty": "[parameters('customRdpProperty')]",
+                // M"personalDesktopAssignmentType": "[parameters('personalDesktopAssignmentType')]",
+                //"maxSessionLimit": "[parameters('maxSessionLimit')]",
+                //M "loadBalancerType": "[parameters('loadBalancerType')]",
+                //"validationEnviroment": "[parameters('validationEnviroment')]",
+                //"ring": null,
+                "registrationInfo": {
+                    "expirationTime": "2020-07-20T01:19:29.488Z",
+                    "token": null,
+                "registrationTokenOperation": "Update"
+                }
+                //"vmTemplate": ""
+            } 
+        }
+    ],
+    "outputs": {}
+}
