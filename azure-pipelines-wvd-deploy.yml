@@ -39,25 +39,12 @@ stages:
         inputs:
           targetType: 'inline'
           script: 'ls -al'
-
-      # - task: AzureResourceManagerTemplateDeployment@3
-      #   displayName: Deploy Main ARM Template
-      #   inputs:
-      #     deploymentScope: 'Resource Group'
-      #     azureResourceManagerConnection: 'AzDevOPS'
-      #     subscriptionId: '1965c25a-b7fd-48b5-a393-c9e785c1c4d9'
-      #     action: 'DeleteRG'
-      #     resourceGroupName: 'aib-wvd-vmpool-rg'
-
-      # - task: AzureResourceManagerTemplateDeployment@3
-      #   displayName: Deploy Main ARM Template
-      #   inputs:
-      #     deploymentScope: 'Resource Group'
-      #     azureResourceManagerConnection: 'AzDevOPS'
-      #     subscriptionId: '1965c25a-b7fd-48b5-a393-c9e785c1c4d9'
-      #     action: 'Create Or Update Resource Group'
-      #     resourceGroupName: 'aib-wvd-hostpool-rg'
-      #     location: 'Canada Central'
-      #     templateLocation: 'Linked artifact'
-      #     csmFile: 'arm-templates/maintemplate.json'
-      #     deploymentMode: 'Incremental'
+      - task: AzureCLI@2
+        displayName: Delete Resoruce Group
+        inputs:
+          azureSubscription: 'AzDevOPS'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            az group delete --verbose --name aib-wvd-vmpool-rg
+             --yes
