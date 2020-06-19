@@ -50,8 +50,7 @@
                         "privateIPAllocationMethod": "Dynamic",
                         "subnet": {
                             "id": "[parameters('subnet-id')]"
-                        },
-                        "publicIpAddress": "[if(parameters('use-public-ip'), json(concat('{\"id\": \"', resourceId('Microsoft.Network/publicIpAddresses', concat(parameters('rdsh-prefix'), copyindex(), '-ip')), '\"}')), json('null'))]"
+                        }
                     }
                 }
             ],
