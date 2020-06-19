@@ -65,18 +65,18 @@
             }
         },
         // Deploy Public IP Addresses
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "name": "[variables('public-ip-addresses-deployment-name')]",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/network-publicipaddresses.json",
-                    "contentVersion":"1.0.0.0"
-                }
-            }
-        },
+        // {
+        //     "type": "Microsoft.Resources/deployments",
+        //     "apiVersion": "2019-10-01",
+        //     "name": "[variables('public-ip-addresses-deployment-name')]",
+        //     "properties": {
+        //         "mode": "Incremental",
+        //         "templateLink": {
+        //             "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/network-publicipaddresses.json",
+        //             "contentVersion":"1.0.0.0"
+        //         }
+        //     }
+        // },
         // Deploy Network Interfaces
         {
             "type": "Microsoft.Resources/deployments",
