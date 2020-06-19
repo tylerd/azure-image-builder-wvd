@@ -18,12 +18,12 @@
                 "description": "Admin account passoword for domain join."
             }
         },
-        "host-pool-token": {
-            "type": "securestring",
-            "metadata": {
-                "description": "The token for adding VMs to the hostpool."
-            }
-        },
+        // "host-pool-token": {
+        //     "type": "securestring",
+        //     "metadata": {
+        //         "description": "The token for adding VMs to the hostpool."
+        //     }
+        // },
         "host-pool-resource-group": {
             "type": "string",
             "defaultValue": "aib-wvd-hostpool-rg",
@@ -151,7 +151,8 @@
             "properties": {
                 "mode": "Incremental",
                 "parameters": {
-                    "host-pool-token":{"value": "[parameters('host-pool-token')]"}
+                    //"host-pool-token":{"value": "[parameters('host-pool-token')]"}
+                    "host-pool-token":{"value": "[reference(variables('hostpool-token-deployment-name')).outputs.hostpooltoken.value]"}
                 },
                 "templateLink": {
                     "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/extensions-dsc-addsessionhost.json",

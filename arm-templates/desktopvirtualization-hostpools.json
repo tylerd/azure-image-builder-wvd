@@ -45,7 +45,7 @@
         }
     ],
     "outputs": {
-        "hostpool-token": {
+        "hostpooltoken": {
             "type": "string",
             "value": "[reference(parameters('hostpool-name')).registrationInfo.token]"
         }
