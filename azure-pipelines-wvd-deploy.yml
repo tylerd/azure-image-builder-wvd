@@ -39,6 +39,7 @@ stages:
         inputs:
           targetType: 'inline'
           script: 'ls -al'
+
       - task: AzureCLI@2
         displayName: Delete Resource Group
         inputs:
