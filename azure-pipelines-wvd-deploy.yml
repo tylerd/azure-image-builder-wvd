@@ -25,11 +25,11 @@ variables:
 
 stages:
 # Create Image Stage
-- stage: Create_Image_Stage
-  displayName: Create Image Stage
+- stage: Deploy_Session_Hosts
+  displayName: Deploy Session Hosts
   jobs:
-    - job: Create_Image_Job
-      displayName: Create Image Job
+    - job: Deploy_Session_Hosts_Job
+      displayName: Deploy Session Hosts Job
       steps:
       - checkout: self
         displayName: Clone Git Repo
@@ -39,3 +39,16 @@ stages:
         inputs:
           targetType: 'inline'
           script: 'ls -al'
+      
+      - task: AzureResourceManagerTemplateDeployment@3
+        displayName: Deploy Main ARM Template
+        inputs:
+          deploymentScope: 'Resource Group'
+          azureResourceManagerConnection: 'AzDevOPS'
+          subscriptionId: '1965c25a-b7fd-48b5-a393-c9e785c1c4d9'
+          action: 'Create Or Update Resource Group'
+          resourceGroupName: 'aib-wvd-hostpool-rg'
+          location: 'Canada Central'
+          templateLocation: 'Linked artifact'
+          csmFile: 'arm-templates/maintemplate.json'
+          deploymentMode: 'Incremental'
