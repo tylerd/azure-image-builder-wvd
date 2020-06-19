@@ -87,7 +87,7 @@
         {
             "apiVersion": "2019-07-01",
             "type": "Microsoft.Compute/virtualMachines",
-            "name": "[concat(parameters('rdsh-prefix'), add(copyindex(), parameters('instance-count')), '-vm')]",
+            "name": "[concat(parameters('rdsh-prefix'), copyindex(), parameters('instance-count'), '-vm')]",
             "location": "[resourceGroup().location]",
             "copy": {
                 "name": "rdsh-vm-loop",

@@ -35,7 +35,7 @@
             "condition": "[parameters('use-public-ip')]",
             "type": "Microsoft.Network/publicIpAddresses",
             "apiVersion": "2019-12-01",
-            "name": "[concat(parameters('rdsh-prefix'), add(copyindex(), parameters('instance-count')), '-ip')]",
+            "name": "[concat(parameters('rdsh-prefix'), copyindex(), parameters('instance-count'), '-ip')]",
             "location": "[resourceGroup().location]",
             "sku": {
                 "name": "Basic"
