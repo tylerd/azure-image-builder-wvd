@@ -18,12 +18,6 @@
                 "description": "Admin account passoword for domain join."
             }
         },
-        // "host-pool-token": {
-        //     "type": "securestring",
-        //     "metadata": {
-        //         "description": "The token for adding VMs to the hostpool."
-        //     }
-        // },
         "host-pool-resource-group": {
             "type": "string",
             "defaultValue": "aib-wvd-hostpool-rg",
