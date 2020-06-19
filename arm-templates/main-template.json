@@ -23,6 +23,13 @@
             "metadata": {
                 "description": "The token for adding VMs to the hostpool."
             }
+        },
+        "host-pool-resource-group": {
+            "type": "string",
+            "defaultValue": "aib-wvd-hostpool-rg",
+            "metadata": {
+                "description": "The name of the  hostpool resource group."
+            }
         }
     },
     "functions": [],
@@ -41,6 +48,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "[variables('hostpool-token-deployment-name')]",
+            "resourceGroup": "[parameters('host-pool-resource-group')]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
