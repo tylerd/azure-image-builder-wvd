@@ -73,4 +73,6 @@ stages:
           azureSubscription: 'AzDevOPS'
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
-          inlineScript: az deployment group create -g ${SESSIONHOSTRESOURCEGROUPNAME} --template-file main.json
+          inlineScript: |
+            cd 'arm-templates'
+            az deployment group create -g ${SESSIONHOSTRESOURCEGROUPNAME} --template-file main.json
