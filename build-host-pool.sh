@@ -10,7 +10,7 @@ connection=$(az storage account show-connection-string \
   --name $storageAccountName \
   --query connectionString)
 token=$(az storage container generate-sas \
-  --name $rootcontainer \
+  --name $rootcontainer/$container \
   --expiry $expiretime \
   --permissions rw \
   --output tsv \
