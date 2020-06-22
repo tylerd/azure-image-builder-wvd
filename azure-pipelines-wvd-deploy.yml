@@ -68,13 +68,11 @@ stages:
           scriptLocation: 'inlineScript'
           inlineScript: az group create -n ${SESSIONHOSTRESOURCEGROUPNAME} -l ${LOCATION}
 
-
       - task: AzureCLI@2
-        displayName: Create Host Pool 
+        displayName: Create Host Pool
         inputs:
           azureSubscription: 'AzDevOPS'
           scriptType: 'bash'
-          scriptLocation: 'inlineScript'
-          inlineScript: |
-            cd 'arm-templates'
-            az deployment group create -g ${SESSIONHOSTRESOURCEGROUPNAME} --template-uri ${MAINTEMPLATEURI}
+          scriptLocation: 'scriptPath'
+          scriptPath: 'build-host-pool.sh'
+
