@@ -24,6 +24,8 @@ variables:
     value: eastus2
   - name: HostPoolLocation
     value: canadacentral
+  - name: MAINTEMPLATEURI
+    value: https://azminlandevops.blob.core.windows.net/templates/arm-templates/main-template.json
 
 stages:
 # Create Image Stage
@@ -75,4 +77,4 @@ stages:
           scriptLocation: 'inlineScript'
           inlineScript: |
             cd 'arm-templates'
-            az deployment group create -g ${SESSIONHOSTRESOURCEGROUPNAME} --template-file main.json
+            az deployment group create -g ${SESSIONHOSTRESOURCEGROUPNAME} --template-uri ${MAINTEMPLATEURI}
