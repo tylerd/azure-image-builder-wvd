@@ -21,4 +21,10 @@ stages:
       - checkout: self
         displayName: Clone Git Repo
 
+      - task: PowerShell@2
+        displayName: List Git Repo Content
+        inputs:
+          targetType: 'inline'
+          script: 'ls -al'
+
   
