@@ -44,7 +44,7 @@ stages:
         displayName: Stage to Storage Account
         inputs:
           azureSubscription: 'AzDevOPS'
-          scriptType: 'batch'
+          scriptType: 'bash'
           scriptLocation: 'scriptPath'
           scriptPath: 'uploadtoSA.sh'
 
