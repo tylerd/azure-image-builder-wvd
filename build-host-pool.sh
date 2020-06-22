@@ -21,5 +21,11 @@ token=$(az storage container generate-sas \
    --name main-template.json \
    --output tsv \
    --connection-string $connection)
+   
+   urlparam= $(az storage blob url \
+   --container-name $rootcontainer/$container \
+   --name azmin-params.json \
+   --output tsv \
+   --connection-string $connection)
  parameter='{"_artifactsLocationSasToken":{"value":"?'$token'"}}'
- az deployment group create --resource-group ${SESSIONHOSTRESOURCEGROUPNAME} --template-uri $url?$token --parameters $parameter
+ az deployment group create --resource-group ${SESSIONHOSTRESOURCEGROUPNAME} --template-uri $url?$token --parameters $urlparam?$token  --parameters $parameter
