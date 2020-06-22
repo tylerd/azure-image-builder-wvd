@@ -37,7 +37,7 @@ stages:
 
       - task: AzureFileCopy@4
         inputs:
-          azureSubscription: 'AzDevOps_WVD_MSI'
+          azureSubscription: 'AzDevOPS'
           SourcePath: '$(Build.Repository.LocalPath)'
           Destination: 'AzureBlob'
           storage: 'azminlandevops'
