@@ -42,7 +42,7 @@ stages:
           Destination: 'AzureBlob'
           storage: 'azminlandevops'
           ContainerName: 'templates'
-          BlobPrefix: '*'
+          BlobPrefix: '*.json'
           sasTokenTimeOutInMinutes: '30'
 
 - stage: Cleanup_Session_Hosts_WVD
