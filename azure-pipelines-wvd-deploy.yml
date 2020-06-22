@@ -59,14 +59,18 @@ stages:
           inlineScript: 'az group delete --verbose --name ${SESSIONHOSTRESOURCEGROUPNAME} --yes'
 
       - task: AzureCLI@2
-        displayName: Create Resource Group and Host Pool 
+        displayName: Create Resource Group 
         inputs:
           azureSubscription: 'AzDevOPS'
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
-          inlineScript: |
-            az group create -n ${SESSIONHOSTRESOURCEGROUPNAME} -l ${LOCATION}
-            az group deployment create -g ${SESSIONHOSTRESOURCEGROUPNAME} -l ${HostPoolLocation} --template-file main.json
+          inlineScript: az group create -n ${SESSIONHOSTRESOURCEGROUPNAME} -l ${LOCATION}
 
 
-          
+      - task: AzureCLI@2
+        displayName: Create Host Pool 
+        inputs:
+          azureSubscription: 'AzDevOPS'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: az group deployment create -g ${SESSIONHOSTRESOURCEGROUPNAME} -l ${HostPoolLocation} --template-file main.json
