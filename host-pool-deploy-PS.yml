@@ -4,16 +4,19 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+- none
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: Hosted Windows 2019 with VS2019
+  demands: azureps
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+stages:
+# Create Image Stage
+- stage: Deploy_Session_Hosts
+  displayName: Deploy Session Hosts
+  jobs:
+    - job: Deploy_Session_Hosts_Job
+      displayName: Deploy Session Hosts Job
+      steps:
+      - checkout: self
+        displayName: Clone Git Repo
