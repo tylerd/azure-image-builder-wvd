@@ -22,6 +22,10 @@ variables:
     value: aib-wvd-vmpool-rg
   - name: LOCATION
     value: eastus2
+  - name: HostPoolLocation
+    value: canadacentral
+  - name: MAINTEMPLATEURI
+    value: https://azminlandevops.blob.core.windows.net/templates/arm-templates/main-template.json
 
 stages:
 # Create Image Stage
@@ -57,9 +61,20 @@ stages:
           inlineScript: 'az group delete --verbose --name ${SESSIONHOSTRESOURCEGROUPNAME} --yes'
 
       - task: AzureCLI@2
-        displayName: Create Resource Group
+        displayName: Create Resource Group 
         inputs:
           azureSubscription: 'AzDevOPS'
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
-          inlineScript: 'az group create -n ${SESSIONHOSTRESOURCEGROUPNAME} -l ${LOCATION}'
+          inlineScript: az group create -n ${SESSIONHOSTRESOURCEGROUPNAME} -l ${LOCATION}
+
+
+      - task: AzureCLI@2
+        displayName: Create Host Pool 
+        inputs:
+          azureSubscription: 'AzDevOPS'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            cd 'arm-templates'
+            az deployment group create -g ${SESSIONHOSTRESOURCEGROUPNAME} --template-uri ${MAINTEMPLATEURI}
