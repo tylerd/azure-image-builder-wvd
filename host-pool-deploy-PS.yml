@@ -47,6 +47,16 @@ stages:
 
 - stage: Cleanup_Session_Hosts_WVD
   displayName: Clean up the session hosts registration
+  jobs: 
+  - job: Remove_Session_Hosts_Registration
+    displayName: Drain connections, remove users. Remove session hosts from the pool.
+    steps:
+      - task: AzurePowerShell@5
+        inputs:
+          azureSubscription: 'AzDevOPS'
+          ScriptType: 'FilePath'
+          azurePowerShellVersion: 'LatestVersion'
+
 
 - stage: Cleanup_Sessions_Hosts_RGP
   displayName: Remove the Session Hosts Resource Group
