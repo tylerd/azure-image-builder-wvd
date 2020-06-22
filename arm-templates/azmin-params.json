@@ -8,9 +8,6 @@
                     "id": "/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourceGroups/Azureminilab-Lighthouse/providers/Microsoft.KeyVault/vaults/azuredevopsazminlab"
                 },
                 "secretName":"subnet-id"
-            },
-            "metadata": {
-                "description": "The unique id of the subnet for the nics."
             }
         },
         "admin-account-password": {
@@ -19,9 +16,6 @@
                 "id": "/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourceGroups/Azureminilab-Lighthouse/providers/Microsoft.KeyVault/vaults/azuredevopsazminlab"
               },
               "secretName": "admin-account-password"
-            },
-            "metadata": {
-                "description": "Admin account passoword for domain join."
             }
         }
     }
