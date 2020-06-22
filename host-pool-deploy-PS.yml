@@ -42,7 +42,6 @@ stages:
           Destination: 'AzureBlob'
           storage: 'azminlandevops'
           ContainerName: 'templates'
-          BlobPrefix: '*'
           sasTokenTimeOutInMinutes: '240'
           additionalArgumentsForBlobCopy: '/Y /S'
 
