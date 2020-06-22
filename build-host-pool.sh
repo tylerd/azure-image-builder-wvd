@@ -10,15 +10,15 @@ connection=$(az storage account show-connection-string \
   --name $storageAccountName \
   --query connectionString)
 token=$(az storage container generate-sas \
-  --name $rootcontainer/$container \
+  --name $rootcontainer \
   --expiry $expiretime \
-  --permissions rw \
+  --permissions r \
   --output tsv \
   --connection-string $connection)
 
   url=$(az storage blob url \
    --container-name $rootcontainer/$container \
-   --name main.json \
+   --name main-template.json \
    --output tsv \
    --connection-string $connection)
  parameter='{"_artifactsLocationSasToken":{"value":"?'$token'"}}'
