@@ -37,12 +37,13 @@ stages:
 
       - task: AzureFileCopy@4
         inputs:
-          azureSubscription: 'AzDevOPS'
+          azureSubscription: 'AzDevOps_WVD_MSI'
           SourcePath: '$(Build.Repository.LocalPath)'
           Destination: 'AzureBlob'
           storage: 'azminlandevops'
           ContainerName: 'templates'
           sasTokenTimeOutInMinutes: '240'
+      
 
 - stage: Cleanup_Session_Hosts_WVD
   displayName: Clean up the session hosts registration
