@@ -32,6 +32,16 @@ stages:
 
 - stage: Cleanup_Sessions_Hosts_RGP
   displayName: Remove the Session Hosts Resource Group
+  jobs:
+  - job: Remove_Session_Hosts_WVD
+    displayName: Remove Session Hosts VMs -> Removing Resource Group
+    steps: 
+    - task: AzurePowerShell@5
+      inputs:
+        azureSubscription: 'AzDevOPS'
+        ScriptType: 'InlineScript'
+        Inline: 
+        azurePowerShellVersion: 'LatestVersion'
 
 - stage: Create_Session_Hosts
   displayName: Create and Register Session Hosts
