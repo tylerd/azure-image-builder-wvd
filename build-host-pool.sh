@@ -3,8 +3,12 @@ expiretime=$(date -u -d '30 minutes' +%Y-%m-%dT%H:%MZ)
 storageAccountRG="Azureminilab-Lighthouse"
 storageAccountName="azminlandevops"
 
+connection=$(az storage account show-connection-string \
+  --resource-group $storageAccountRG \
+  --name $storageAccountName \
+  --query connectionString)
 token=$(az storage container generate-sas \
-  --name templates \
+  --name arm-templates \
   --expiry $expiretime \
   --permissions rw \
   --output tsv \
