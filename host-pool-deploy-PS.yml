@@ -84,8 +84,14 @@ stages:
       inputs:
         deploymentScope: 'Resource Group'
         azureResourceManagerConnection: 'AzDevOPS'
+        subscriptionId: $(SUBSCRIPTIONID)
         action: 'Create Or Update Resource Group'
+        resourceGroupName: $(SESSIONHOSTRESOURCEGROUPNAME)
+        location: $(LOCATION)
         templateLocation: 'URL of the file'
+        csmFileLink: 'fdfd'
+        csmParametersFileLink: 'fdf'
+        overrideParameters: 'fd'
         deploymentMode: 'Incremental'
 
 
