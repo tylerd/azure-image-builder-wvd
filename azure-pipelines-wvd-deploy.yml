@@ -62,4 +62,4 @@ stages:
           azureSubscription: 'AzDevOPS'
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
-          inlineScript: 'az group create -n ${SESSIONHOSTRESOURCEGROUPNAME} -l #{LOCATION}'
+          inlineScript: 'az group create -n ${SESSIONHOSTRESOURCEGROUPNAME} -l ${LOCATION}'
