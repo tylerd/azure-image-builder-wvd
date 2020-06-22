@@ -27,4 +27,14 @@ stages:
           targetType: 'inline'
           script: 'ls'
 
+- stage: Cleanup_Session_Hosts_WVD
+  displayName: Clean up the session hosts registration
+
+- stage: Cleanup_Sessions_Hosts_RGP
+  displayName: Remove the Session Hosts Resource Group
+
+- stage: Create_Session_Hosts
+  displayName: Create and Register Session Hosts
+
+
   
