@@ -27,6 +27,16 @@ stages:
           targetType: 'inline'
           script: 'ls'
 
+      - task: AzureFileCopy@4
+        inputs:
+          azureSubscription: 'AzDevOPS'
+          SourcePath: '$(Build.Repository.LocalPath)'
+          Destination: 'AzureBlob'
+          storage: 'azminlandevops'
+          ContainerName: 'templates'
+          BlobPrefix: '*'
+          sasTokenTimeOutInMinutes: '30'
+
 - stage: Cleanup_Session_Hosts_WVD
   displayName: Clean up the session hosts registration
 
