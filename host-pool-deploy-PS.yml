@@ -25,6 +25,6 @@ stages:
         displayName: List Git Repo Content
         inputs:
           targetType: 'inline'
-          script: 'ls -al'
+          script: 'ls'
 
   
