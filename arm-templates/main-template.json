@@ -41,7 +41,7 @@
         "virtual-machines-deployment-name":"[concat('virtual-machines-',parameters('utc-value'))]",
         "domain-join-ext-deployment-name":"[concat('domain-join-ext-',parameters('utc-value'))]",
         "add-session-host-ext-deployment-name":"[concat('add-session-host-',parameters('utc-value'))]",
-        "templateURI": "[concat(parameters('_artifactsLocation'),'/arm-templates/')]"
+        "templateURI": "[concat(parameters('_artifactsLocation'),'templates/arm-templates/')]"
     },
     "resources": [
         // Get Hostpool Token
