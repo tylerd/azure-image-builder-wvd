@@ -17,6 +17,8 @@ variables:
     value: aib-wvd-vmpool-rg
   - name: LOCATION
     value: canadacentral
+  - name: HOSTPOOLNAME
+    value: aib-wvd-vmpool
 
 stages:
 # Create Prep Deployment 
@@ -74,6 +76,17 @@ stages:
 
 - stage: Create_Session_Hosts
   displayName: Create and Register Session Hosts
+  jobs:
+  - job: Depoy_and_Register_Session_Hosts
+    displayName: Deploy and register Session Hosts in RGP
+    steps:
+    - task: AzureResourceManagerTemplateDeployment@3
+      inputs:
+        deploymentScope: 'Resource Group'
+        azureResourceManagerConnection: 'AzDevOPS'
+        action: 'Create Or Update Resource Group'
+        templateLocation: 'URL of the file'
+        deploymentMode: 'Incremental'
 
 
   
