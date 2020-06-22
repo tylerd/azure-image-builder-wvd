@@ -11,12 +11,14 @@ pool:
   demands: azureps
 
 stages:
-# Create Image Stage
-- stage: Deploy_Session_Hosts
-  displayName: Deploy Session Hosts
+# Create Prep Deployment 
+- stage: Prep_Deployment
+  displayName: Prep Deployment
   jobs:
-    - job: Deploy_Session_Hosts_Job
-      displayName: Deploy Session Hosts Job
+    - job: Download_Repo
+      displayName: Download the Repo
       steps:
       - checkout: self
         displayName: Clone Git Repo
+
+  
