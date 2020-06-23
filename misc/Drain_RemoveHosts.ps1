@@ -5,7 +5,7 @@ param (
 )
 
 #Load up the WVD PS module
-Install-Module -Name Az.DesktopVirtualization
+Install-Module -Name Az.DesktopVirtualization -Force -AllowClobber
 
 function Wait-ForJobs {
     param ([array]$Jobs = @())
