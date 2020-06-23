@@ -3,7 +3,46 @@ param (
     [string]$ResourceGroupName
 )
 
+function Wait-ForJobs {
+    param ([array]$Jobs = @())
 
+    Write-Host "Wait for $($Jobs.Count) jobs"
+    $StartTime = Get-Date
+    while ($true) {
+        if ((Get-Date).Subtract($StartTime).TotalSeconds -ge $StatusCheckTimeOut) {
+            throw "Status check timed out. Taking more than $StatusCheckTimeOut seconds"
+        }
+        Write-Host "[Check jobs status] Total: $($Jobs.Count), $(($Jobs | Group-Object State | ForEach-Object { "$($_.Name): $($_.Count)" }) -join ', ')"
+        if (!($Jobs | Where-Object { $_.State -eq 'Running' })) {
+            break
+        }
+        Start-Sleep -Seconds 30
+    }
+
+    $IncompleteJobs = @($Jobs | Where-Object { $_.State -ne 'Completed' })
+    if ($IncompleteJobs) {
+        throw "$($IncompleteJobs.Count) jobs did not complete successfully: $($IncompleteJobs | Format-List -Force | Out-String)"
+    }
+}
+
+function Update-SessionHostToAllowNewSession {
+    [CmdletBinding(SupportsShouldProcess)]
+    param (
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
+        $SessionHost
+    )
+    Begin { }
+    Process {
+        if (!$SessionHost.AllowNewSession) {
+            $SessionHostName = $SessionHost.Name.Split('/')[-1].ToLower()
+            Write-Log "Update session host '$($SessionHostName)' to allow new sessions"
+            if ($PSCmdlet.ShouldProcess($SessionHostName, 'Update session host to allow new sessions')) {
+                Update-AzWvdSessionHost -HostPoolName $HostPoolName -ResourceGroupName $ResourceGroupName -Name $SessionHostName -AllowNewSession:$true | Write-Verbose
+            }
+        }
+    }
+    End { }
+}
 
 #Setting the Log-off Message
 
@@ -61,8 +100,47 @@ $CurrentDateTime = (Get-Date).ToUniversalTime().AddHours($TimeDiffHrsMin[0]).Add
     # Popoluate all session hosts objects
 	foreach ($SessionHost in $SessionHosts) {
 		$SessionHostName = $SessionHost.Name.Split('/')[-1].ToLower()
-		$VMs.Add($SessionHostName.Split('.')[0], @{ 'SessionHostName' = $SessionHostName; 'SessionHost' = $SessionHost})
+		$VMs.Add($SessionHostName.Split('.')[0], @{ 'SessionHostName' = $SessionHostName; 'SessionHost' = $SessionHost; 'Instance' = $null})
     }
+
+    Write-Host 'Get all VMs, check session host status and get usage info'
+	foreach ($VMInstance in (Get-AzVM -Status)) {
+		if (!$VMs.ContainsKey($VMInstance.Name.ToLower())) {
+			# This VM is not a WVD session host
+			continue
+		}
+		$VMName = $VMInstance.Name.ToLower()
+		if ($VMInstance.Tags.Keys -contains $MaintenanceTagName) {
+			Write-Host "VM '$VMName' is in maintenance and will be ignored"
+			$VMs.Remove($VMName)
+			continue
+		}
+
+		$VM = $VMs[$VMName]
+		$SessionHost = $VM.SessionHost
+		if ($VM.Instance) {
+			throw "More than 1 VM found in Azure with same session host name '$($VM.SessionHostName)' (This is not supported): $($VMInstance | Format-List -Force | Out-String)$($VM.Instance | Format-List -Force | Out-String)"
+		}
+
+		$VM.Instance = $VMInstance
+
+		Write-Host "Session host: '$($VM.SessionHostName)', power state: '$($VMInstance.PowerState)', status: '$($SessionHost.Status)', update state: '$($SessionHost.UpdateState)', sessions: $($SessionHost.Session), allow new session: $($SessionHost.AllowNewSession)"
+
+		if ($VMInstance.PowerState -eq 'VM running') {
+			if ($SessionHost.Status -notin $DesiredRunningStates) {
+				Write-Host 'VM is in running state but session host is not (this could be because the VM was just started and has not connected to broker yet)'
+			}
+
+			++$nRunningVMs
+			$nUserSessionsFromAllRunningVMs += $SessionHost.Session
+		}
+		else {
+			if ($SessionHost.Status -in $DesiredRunningStates) {
+				Write-Host "VM is not in running state but session host is (this could be because the VM was just stopped and broker doesn't know that yet)"
+			}
+		}
+	}
+
     
     # '0' then begin drain and log off
     
@@ -78,7 +156,8 @@ $CurrentDateTime = (Get-Date).ToUniversalTime().AddHours($TimeDiffHrsMin[0]).Add
 	[array]$StopVMjobs = @()
 	[array]$VMsToStopAfterLogOffTimeOut = @()
 
-	Write-Host 'Find session hosts that are running, sort them by number of user sessions'
+    Write-Host 'Find session hosts that are running, sort them by number of user sessions'
+    
 	foreach ($VM in ($VMs.Values | Where-Object { $_.Instance.PowerState -eq 'VM running' } | Sort-Object { $_.SessionHost.Session })) {
 		if (!$Ops.nVMsToStop) {
 			# Done with stopping session hosts that needed to be
@@ -94,8 +173,8 @@ $CurrentDateTime = (Get-Date).ToUniversalTime().AddHours($TimeDiffHrsMin[0]).Add
 		}
 
 		if ($SessionHost.AllowNewSession) {
-			Write-Host "Session host '$SessionHostName' has $($SessionHost.Session) sessions. Set it to disallow new sessions"
-			if ($PSCmdlet.ShouldProcess($SessionHostName, 'Set session host to disallow new sessions')) {
+			Write-Host "Session host '$SessionHostName' has '$($SessionHost.Session)' sessions. Set it to disallow new sessions"
+			#if ($PSCmdlet.ShouldProcess($SessionHostName, 'Set session host to disallow new sessions')) {
 				try {
 					$VM.SessionHost = $SessionHost = Update-AzWvdSessionHost -HostPoolName $HostPoolName -ResourceGroupName $ResourceGroupName -Name $SessionHostName -AllowNewSession:$false
 				}
@@ -104,11 +183,11 @@ $CurrentDateTime = (Get-Date).ToUniversalTime().AddHours($TimeDiffHrsMin[0]).Add
 				}
 
 				if ($SessionHost.Session -and !$LimitSecondsToForceLogOffUser) {
-					Write-Host -Warn "Session host '$SessionHostName' has $($SessionHost.Session) sessions but limit seconds to force log off user is set to 0, so will not stop any more session hosts (https://aka.ms/wvdscale#how-the-scaling-tool-works)"
+					Write-Host "Session host '$SessionHostName' has $($SessionHost.Session) sessions but limit seconds to force log off user is set to 0, so will not stop any more session hosts (https://aka.ms/wvdscale#how-the-scaling-tool-works)"
 					Update-SessionHostToAllowNewSession -SessionHost $SessionHost
 					continue
 				}
-			}
+			#}
 		}
 
 		if ($SessionHost.Session) {
@@ -142,10 +221,10 @@ $CurrentDateTime = (Get-Date).ToUniversalTime().AddHours($TimeDiffHrsMin[0]).Add
 		}
 		else {
 			Write-Host "Stop session host '$SessionHostName' as a background job"
-			if ($PSCmdlet.ShouldProcess($SessionHostName, 'Stop session host as a background job')) {
+			#if ($PSCmdlet.ShouldProcess($SessionHostName, 'Stop session host as a background job')) {
 				$StopSessionHostFullNames.Add($SessionHost.Name, $null)
 				$StopVMjobs += ($VM.Instance | Stop-AzVM -Force -AsJob)
-			}
+			#}
 		}
 
 		--$Ops.nVMsToStop
@@ -189,7 +268,7 @@ $CurrentDateTime = (Get-Date).ToUniversalTime().AddHours($TimeDiffHrsMin[0]).Add
 
 	# Check if there were enough number of session hosts to stop
 	if ($Ops.nVMsToStop) {
-		Write-Host -Warn "Not enough session hosts to stop. Still need to stop $($Ops.nVMsToStop) VMs"
+		Write-Host "Still need to stop $($Ops.nVMsToStop) VMs"
 	}
 
 	# Wait for those jobs to stop the session hosts
@@ -197,7 +276,7 @@ $CurrentDateTime = (Get-Date).ToUniversalTime().AddHours($TimeDiffHrsMin[0]).Add
 
 	Write-Host 'All jobs completed'
 	Write-Host 'End'
-	return
+	#return
 
 	# //todo if not going to poll for status here, then no need to keep track of the list of session hosts that were stopped
 	Write-Host "Wait for $($StopSessionHostFullNames.Count) session hosts to be unavailable"
@@ -216,4 +295,17 @@ $CurrentDateTime = (Get-Date).ToUniversalTime().AddHours($TimeDiffHrsMin[0]).Add
 	}
 
 	# Make sure session hosts are allowing new user sessions & update them to allow if not
-	$SessionHostsToCheck | Update-SessionHostToAllowNewSession
+    $SessionHostsToCheck | Update-SessionHostToAllowNewSession
+    
+    # Start the removal from the host pool
+    $SessionHosts = @(Get-AzWvdSessionHost -HostPoolName $HostPoolName -ResourceGroupName $ResourceGroupName)
+	if (!$SessionHosts) {
+		Write-Host "There are no session hosts in the Hostpool '$HostPoolName'. Ensure that hostpool has session hosts"
+		Write-Host 'End'
+		return
+    }
+    foreach ($SessionHost in $SessionHosts) {
+        $SessionHostName = $SessionHost.Name.Split('/')[-1].ToLower()
+        Write-Host "Removing the registration of the Host: '$SessionHostName'"
+        Remove-AzWvdSessionHost -ResourceGroupName $ResourceGroupName -HostPoolName $HostPoolName -Name $SessionHostName
+    }
