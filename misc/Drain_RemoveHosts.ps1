@@ -1,6 +1,7 @@
 param (
     [string]$HostPoolName,
-    [string]$ResourceGroupName
+    [string]$ResourceGroupName,
+    [string]$SubscriptionId
 )
 Import-Module -Name Az.DesktopVirtualization
 
@@ -68,7 +69,7 @@ $CurrentDateTime = (Get-Date).ToUniversalTime().AddHours($TimeDiffHrsMin[0]).Add
 
 	try {
 		Write-Host "Get Hostpool info of '$HostPoolName' in resource group '$ResourceGroupName'"
-		$HostPool = Get-AzWvdHostPool -Name $HostPoolName -ResourceGroupName $ResourceGroupName
+		$HostPool = Get-AzWvdHostPool -Name $HostPoolName -ResourceGroupName $ResourceGroupName -SubscriptionId $SubscriptionId
 		if (!$HostPool) {
 			throw $HostPool
 		}
