@@ -8,13 +8,15 @@ $StorageAccountName = "azminlandevops"
 $RootContainer = "templates"
 $folder = "arm-templates"
 
-$MainTemplate = "main-template-kv.json"
+$MainTemplate = "main-template-kv2.json"
 
 $TargetResourceGroup = $Env:SESSIONHOSTRESOURCEGROUPNAME
+$Location = $Env:LOCATION
+$SubscriptionId = $Env:SUBSCRIPTIONID
 
 $rg = Get-AzResourceGroup -Name $TargetResourceGroup -ErrorAction SilentlyContinue
 if (!$rg) {
-    $rg = New-AzResourceGroup -Name $TargetResourceGroup -Location $Env:LOCATION
+    $rg = New-AzResourceGroup -Name $TargetResourceGroup -Location $Location
 }
 
 Set-AzCurrentStorageAccount -ResourceGroupName $StorageAccountRG -Name $StorageAccountName
@@ -25,13 +27,9 @@ $templateUri = (Get-AzStorageBlob -Blob "$folder/$MainTemplate" -Container $Root
 
 $secureToken = ConvertTo-SecureString -String $token -AsPlainText -Force
 
-$ParamObject = @{
-    'vault-name'                = 'azuredevopsazminlab'
-    'vault-resourcegroup-name'  = 'Azureminilab-Lighthouse'
-    'vault-subscription-id'     = $Env:SUBSCRIPTIONID
-    'artifactsLocationSasToken' = $secureToken
-}
-
 New-AzResourceGroupDeployment -ResourceGroupName $TargetResourceGroup `
-    -TemplateUri ($templateUri+$token) `
-    -TemplateParameterObject $ParamObject -SkipTemplateParameterPrompt -Verbose
+    -TemplateUri "$templateUri$token" -Verbose `
+    -VaultName 'azuredevopsazminlab' `
+    -VaultResourceGroupName 'Azureminilab-Lighthouse' `
+    -VaultSubscriptionId $SubscriptionId `
+    -artifactsLocationSasToken $secureToken
