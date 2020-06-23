@@ -3,6 +3,10 @@ param (
     [string]$ResourceGroupName,
     [string]$SubscriptionId
 )
+
+#Load up the WVD PS module
+Install-Module -Name Az.DesktopVirtualization
+
 function Wait-ForJobs {
     param ([array]$Jobs = @())
 
