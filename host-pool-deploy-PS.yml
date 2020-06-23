@@ -40,7 +40,7 @@ stages:
       - task: AzureFileCopy@4
         inputs:
           azureSubscription: 'AzDevOPS'
-          SourcePath: '$(Build.Repository.LocalPath)'
+          SourcePath: '$(Build.Repository.LocalPath)\*'
           Destination: 'AzureBlob'
           storage: 'azminlandevops'
           ContainerName: 'templates'
