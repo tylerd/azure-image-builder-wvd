@@ -29,7 +29,7 @@
             "type":"string", 
             "defaultValue": "https://azminlandevops.blob.core.windows.net/"
         },
-         "_artifactsLocationSasToken": {
+         "artifactsLocationSasToken": {
         "type": "securestring"
                 }
     },
@@ -54,7 +54,7 @@
                 "mode": "Incremental",
                 "templateLink": {
                     //"uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/desktopvirtualization-hostpools.json",
-                    "uri":"[concat(variables('templateURI'),'desktopvirtualization-hostpools.json',parameters('_artifactsLocationSasToken'))]",
+                    "uri":"[concat(variables('templateURI'),'desktopvirtualization-hostpools.json',parameters('artifactsLocationSasToken'))]",
                     "contentVersion":"1.0.0.0"
                 }
             }
@@ -68,7 +68,7 @@
                 "mode": "Incremental",
                 "templateLink": {
                     //"uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/compute-availabilitysets.json",
-                    "uri":"[concat(variables('templateURI'),'compute-availabilitysets.json',parameters('_artifactsLocationSasToken'))]",
+                    "uri":"[concat(variables('templateURI'),'compute-availabilitysets.json',parameters('artifactsLocationSasToken'))]",
                     "contentVersion":"1.0.0.0"
                 }
             }
@@ -87,7 +87,7 @@
                 },
                 "templateLink": {
                     //"uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/network-networkinterfaces.json",
-                    "uri":"[concat(variables('templateURI'),'network-networkinterfaces.json',parameters('_artifactsLocationSasToken'))]",
+                    "uri":"[concat(variables('templateURI'),'network-networkinterfaces.json',parameters('artifactsLocationSasToken'))]",
                     "contentVersion":"1.0.0.0"
                 }
             }
@@ -106,7 +106,7 @@
                 "parameters": {},
                 "templateLink": {
                    // "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/compute-virtualmachines.json",
-                    "uri":"[concat(variables('templateURI'),'compute-virtualmachines.json',parameters('_artifactsLocationSasToken'))]",
+                    "uri":"[concat(variables('templateURI'),'compute-virtualmachines.json',parameters('artifactsLocationSasToken'))]",
                     "contentVersion":"1.0.0.0"
                 }
             }
@@ -126,7 +126,7 @@
                 },
                 "templateLink": {
                    // "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/extensions-jsonaddomainextension.json",
-                    "uri":"[concat(variables('templateURI'),'extensions-jsonaddomainextension.json',parameters('_artifactsLocationSasToken'))]",
+                    "uri":"[concat(variables('templateURI'),'extensions-jsonaddomainextension.json',parameters('artifactsLocationSasToken'))]",
                     "contentVersion":"1.0.0.0"
                 }
             }
@@ -148,7 +148,7 @@
                 },
                 "templateLink": {
                     //"uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/extensions-dsc-addsessionhost.json",
-                    "uri":"[concat(variables('templateURI'),'extensions-dsc-addsessionhost.json',parameters('_artifactsLocationSasToken'))]",
+                    "uri":"[concat(variables('templateURI'),'extensions-dsc-addsessionhost.json',parameters('artifactsLocationSasToken'))]",
                     "contentVersion":"1.0.0.0"
                 }
             }
