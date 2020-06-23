@@ -84,7 +84,8 @@ stages:
         steps:
           - task: AzurePowerShell@5
             inputs:
-              azureSubscription: "AzDevOPS"
-              ScriptType: "FilePath"
-              ScriptPath: Build-Host-Pool.ps1
-              azurePowerShellVersion: "LatestVersion"
+              azureSubscription: 'AzDevOPS'
+              ScriptType: 'FilePath'
+              ScriptPath: 'Build-Host-Pool.ps1'
+              azurePowerShellVersion: 'LatestVersion'
+              pwsh: true
