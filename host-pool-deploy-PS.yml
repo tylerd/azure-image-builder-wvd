@@ -14,7 +14,7 @@ variables:
   - name: SUBSCRIPTIONID
     value: 1965c25a-b7fd-48b5-a393-c9e785c1c4d9
   - name: SESSIONHOSTRESOURCEGROUPNAME
-    value: Azureminilab-Lighthouse
+    value: aib-wvd-hostpool-rg
   - name: LOCATION
     value: canadacentral
   - name: HOSTPOOLNAME
@@ -69,12 +69,12 @@ stages:
         steps:
           - task: AzureResourceManagerTemplateDeployment@3
             inputs:
-              deploymentScope: 'Resource Group'
-              azureResourceManagerConnection: 'AzDevOPS'
-              subscriptionId: '$(SUBSCRIPTIONID)'
-              action: 'DeleteRG'
+              deploymentScope: "Resource Group"
+              azureResourceManagerConnection: "AzDevOPS"
+              subscriptionId: "$(SUBSCRIPTIONID)"
+              action: "DeleteRG"
               location: $(LOCATION)
-              resourceGroupName: '$(SESSIONHOSTRESOURCEGROUPNAME)'
+              resourceGroupName: "$(SESSIONHOSTRESOURCEGROUPNAME)"
 
   - stage: Create_Session_Hosts
     displayName: Create and Register Session Hosts

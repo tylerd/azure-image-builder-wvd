@@ -3,14 +3,14 @@
 
 $startTime = Get-Date
 $expiryTime = $startTime.AddMinutes(30)
-$StorageAccountRG = "Azureminilab-Lighthouse"
+$StorageAccountRG = "aib-devops-rg"
 $StorageAccountName = "azminlandevops"
 $RootContainer = "templates"
 $folder = "arm-templates"
 
 $MainTemplate = "main-template-kv.json"
 
-$TargetResourceGroup = "aib-wvd-vmpool-rg"
+$TargetResourceGroup = $Env:SESSIONHOSTRESOURCEGROUPNAME
 
 Set-AzCurrentStorageAccount -ResourceGroupName $StorageAccountRG -Name $StorageAccountName
 
