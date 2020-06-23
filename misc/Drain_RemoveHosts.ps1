@@ -2,6 +2,7 @@ param (
     [string]$HostPoolName,
     [string]$ResourceGroupName
 )
+Import-Module -Name Az.DesktopVirtualization
 
 function Wait-ForJobs {
     param ([array]$Jobs = @())
