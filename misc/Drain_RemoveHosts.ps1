@@ -3,8 +3,6 @@ param (
     [string]$ResourceGroupName,
     [string]$SubscriptionId
 )
-Import-Module -Name Az.DesktopVirtualization
-
 function Wait-ForJobs {
     param ([array]$Jobs = @())
 
