@@ -12,6 +12,11 @@ $MainTemplate = "main-template-kv.json"
 
 $TargetResourceGroup = $Env:SESSIONHOSTRESOURCEGROUPNAME
 
+$rg = Get-AzResourceGroup -Name $TargetResourceGroup -ErrorAction SilentlyContinue
+if (!$rg) {
+    $rg = New-AzResourceGroup -Name $TargetResourceGroup -Location $Env:LOCATION
+}
+
 Set-AzCurrentStorageAccount -ResourceGroupName $StorageAccountRG -Name $StorageAccountName
 
 $token = New-AzStorageContainerSASToken -Name $RootContainer -ExpiryTime $expiryTime -Permission "r"
