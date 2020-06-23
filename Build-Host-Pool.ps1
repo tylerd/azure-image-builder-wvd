@@ -33,5 +33,5 @@ $ParamObject = @{
 }
 
 New-AzResourceGroupDeployment -ResourceGroupName $TargetResourceGroup `
-    -TemplateUri "$templateUri$token" `
+    -TemplateUri ($templateUri+$token) `
     -TemplateParameterObject $ParamObject -SkipTemplateParameterPrompt -Verbose
