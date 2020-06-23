@@ -57,8 +57,9 @@ stages:
         inputs:
           azureSubscription: 'AzDevOPS'
           ScriptType: 'FilePath'
+          ScriptPath: '$(Build.Repository.LocalPath)\Drain_RemoveHosts.ps1'
+          ScriptArguments: '-HostPoolName $(HOSTPOOLNAME) -ResourceGroupName $(SESSIONHOSTRESOURCEGROUPNAME))'
           azurePowerShellVersion: 'LatestVersion'
-
 
 - stage: Cleanup_Sessions_Hosts_RGP
   displayName: Remove the Session Hosts Resource Group
