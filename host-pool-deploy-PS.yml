@@ -80,19 +80,10 @@ stages:
   - job: Depoy_and_Register_Session_Hosts
     displayName: Deploy and register Session Hosts in RGP
     steps:
-    - task: AzureResourceManagerTemplateDeployment@3
+    - task: AzurePowerShell@5
       inputs:
-        deploymentScope: 'Resource Group'
-        azureResourceManagerConnection: 'AzDevOPS'
-        subscriptionId: $(SUBSCRIPTIONID)
-        action: 'Create Or Update Resource Group'
-        resourceGroupName: $(SESSIONHOSTRESOURCEGROUPNAME)
-        location: $(LOCATION)
-        templateLocation: 'URL of the file'
-        csmFileLink: 'fdfd'
-        csmParametersFileLink: 'fdf'
-        overrideParameters: 'fd'
-        deploymentMode: 'Incremental'
-
+        azureSubscription: 'AzDevOPS'
+        ScriptType: 'FilePath'
+        ScriptPath: '$(Build.Repository.LocalPath)'
 
   
