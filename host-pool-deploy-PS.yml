@@ -69,11 +69,12 @@ stages:
         steps:
           - task: AzureResourceManagerTemplateDeployment@3
             inputs:
-              deploymentScope: "Resource Group"
-              azureResourceManagerConnection: "AzDevOPS"
-              subscriptionId: $(SUBSCRIPTIONID)
-              action: "DeleteRG"
-              resourceGroupName: $(SESSIONHOSTRESOURCEGROUPNAME)
+              deploymentScope: 'Resource Group'
+              azureResourceManagerConnection: 'AzDevOPS'
+              subscriptionId: '$(SUBSCRIPTIONID)'
+              action: 'DeleteRG'
+              location: $(LOCATION)
+              resourceGroupName: '$(SESSIONHOSTRESOURCEGROUPNAME)'
 
   - stage: Create_Session_Hosts
     displayName: Create and Register Session Hosts
