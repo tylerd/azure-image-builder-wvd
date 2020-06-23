@@ -26,12 +26,12 @@ $templateUri = (Get-AzStorageBlob -Blob "$folder/$MainTemplate" -Container $Root
 $secureToken = ConvertTo-SecureString -String $token -AsPlainText -Force
 
 $ParamObject = @{
-    'vault-name'                = 'azuredevopsazminlab';
-    'vault-resourcegroup-name'  = 'Azureminilab-Lighthouse';
-    'vault-subscription-id'     = $Env:SUBSCRIPTIONID;
+    'vault-name'                = 'azuredevopsazminlab'
+    'vault-resourcegroup-name'  = 'Azureminilab-Lighthouse'
+    'vault-subscription-id'     = $Env:SUBSCRIPTIONID
     'artifactsLocationSasToken' = $secureToken
 }
 
 New-AzResourceGroupDeployment -ResourceGroupName $TargetResourceGroup `
     -TemplateUri "$templateUri$token" `
-    -TemplateParameterObject $ParamObject -SkipTemplateParameterPrompt
+    -TemplateParameterObject $ParamObject -SkipTemplateParameterPrompt -Verbose
