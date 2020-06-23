@@ -88,4 +88,3 @@ stages:
               ScriptType: 'FilePath'
               ScriptPath: 'Build-Host-Pool.ps1'
               azurePowerShellVersion: 'LatestVersion'
-              pwsh: true
