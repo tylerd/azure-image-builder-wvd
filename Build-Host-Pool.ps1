@@ -13,6 +13,7 @@ $MainTemplate = "main-template-kv2.json"
 $TargetResourceGroup = $Env:SESSIONHOSTRESOURCEGROUPNAME
 $Location = $Env:LOCATION
 $SubscriptionId = $Env:SUBSCRIPTIONID
+$TargetWorkspaceResourceGroup = $Env:WORKSPACERESOURCEGROUPNAME
 
 $rg = Get-AzResourceGroup -Name $TargetResourceGroup -ErrorAction SilentlyContinue
 if (!$rg) {
@@ -32,4 +33,5 @@ New-AzResourceGroupDeployment -ResourceGroupName $TargetResourceGroup `
     -VaultName 'azuredevopsazminlab' `
     -VaultResourceGroupName 'Azureminilab-Lighthouse' `
     -VaultSubscriptionId $SubscriptionId `
+    -host-pool-resource-group $TargetWorkspaceResourceGroup `
     -artifactsLocationSasToken $secureToken
