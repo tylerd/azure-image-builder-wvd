@@ -14,11 +14,11 @@ variables:
   - name: SUBSCRIPTIONID
     value: 1965c25a-b7fd-48b5-a393-c9e785c1c4d9
   - name: SESSIONHOSTRESOURCEGROUPNAME
-    value: aib-wvd-hostpool-rg
+    value: Azureminilab-WVD
   - name: LOCATION
     value: canadacentral
   - name: HOSTPOOLNAME
-    value: pool2
+    value: poolA
 
 stages:
   # Create Prep Deployment
@@ -46,45 +46,15 @@ stages:
               ContainerName: "templates"
               sasTokenTimeOutInMinutes: "240"
 
-  - stage: Cleanup_Session_Hosts_WVD
-    displayName: Clean up the session hosts registration
+  - stage: Create_HostPool_AppGroup
+    displayName: Create Host Pool and Application Group
     jobs:
-      - job: Remove_Session_Hosts_Registration
-        displayName: Drain connections, remove users. Remove session hosts from the pool.
-        steps:
-          - task: AzurePowerShell@5
-            inputs:
-              azureSubscription: "AzDevOPS"
-              ScriptType: "FilePath"
-              ScriptPath: '$(Build.Repository.LocalPath)\misc\Drain_RemoveHosts.ps1'
-              ScriptArguments: "-HostPoolName $(HOSTPOOLNAME) -ResourceGroupName $(SESSIONHOSTRESOURCEGROUPNAME) -SubscriptionId $(SUBSCRIPTIONID)"
-              azurePowerShellVersion: "LatestVersion"
-              pwsh: true
-
-  - stage: Cleanup_Sessions_Hosts_RGP
-    displayName: Remove the Session Hosts Resource Group
-    jobs:
-      - job: Remove_Session_Hosts_WVD
-        displayName: Remove Session Hosts VMs -> Removing Resource Group
-        steps:
-          - task: AzureResourceManagerTemplateDeployment@3
-            inputs:
-              deploymentScope: "Resource Group"
-              azureResourceManagerConnection: "AzDevOPS"
-              subscriptionId: "$(SUBSCRIPTIONID)"
-              action: "DeleteRG"
-              location: $(LOCATION)
-              resourceGroupName: "$(SESSIONHOSTRESOURCEGROUPNAME)"
-
-  - stage: Create_Session_Hosts
-    displayName: Create and Register Session Hosts
-    jobs:
-      - job: Depoy_and_Register_Session_Hosts
-        displayName: Deploy and register Session Hosts in RGP
+      - job: Create_Host_Pool_App_Group
+        displayName: Create Host Pool and Application Group
         steps:
           - task: AzurePowerShell@5
             inputs:
               azureSubscription: 'AzDevOPS'
               ScriptType: 'FilePath'
-              ScriptPath: 'Build-Host-Pool.ps1'
+              ScriptPath: 'Deploy-New-HostPool.ps1'
               azurePowerShellVersion: 'LatestVersion'
