@@ -6,6 +6,9 @@
 trigger:
   - none
 
+pr:
+  - none
+
 pool:
   name: Hosted Windows 2019 with VS2019
   demands: azureps
@@ -86,7 +89,7 @@ stages:
         steps:
           - task: AzurePowerShell@5
             inputs:
-              azureSubscription: 'AzDevOPS'
-              ScriptType: 'FilePath'
-              ScriptPath: 'Build-Host-Pool.ps1'
-              azurePowerShellVersion: 'LatestVersion'
+              azureSubscription: "AzDevOPS"
+              ScriptType: "FilePath"
+              ScriptPath: "Build-Host-Pool.ps1"
+              azurePowerShellVersion: "LatestVersion"
