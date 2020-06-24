@@ -201,7 +201,7 @@
         },
         {
             "apiVersion": "2018-05-01",
-            "name": "[concat('Workspace-linkedTemplate-', parameters('utc-value'))]",
+            "name": "[concat('Workspace-linkedTemplate-', parameters('workSpaceName'))]",
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[variables('workspaceResourceGroup')]",
             "condition": "[parameters('addToWorkspace')]",
