@@ -11,7 +11,7 @@
         },
         "location": {
             "type": "string",
-            "defaultValue": ""
+            "defaultValue": "eastus2"
         },
         "friendlyName": {
             "type": "string",
