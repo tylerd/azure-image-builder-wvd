@@ -15,7 +15,7 @@ $Location = $Env:LOCATION
 $SubscriptionId = $Env:SUBSCRIPTIONID
 $HostPoolName=$Env:HOSTPOOLNAME
 $workspaceName=$Env:WORKSPACENAME
-$addToWorkspace=true
+$addToWorkspace=$true
 
 $rg = Get-AzResourceGroup -Name $TargetResourceGroup -ErrorAction SilentlyContinue
 if (!$rg) {
