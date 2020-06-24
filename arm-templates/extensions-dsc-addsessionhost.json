@@ -28,7 +28,7 @@
             "metadata": {
                 "description": "The name of the hostpool."
             },
-            "defaultValue": "aib-wvd-vmpool"
+            "defaultValue": "poolA"
         },
         "host-pool-token": {
             "type": "string",
