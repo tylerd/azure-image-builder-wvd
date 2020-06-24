@@ -2,6 +2,9 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "TargetresourceGroup": {
+            "type": "string"
+        },
           "utc-value": {
             "type": "string",
             "defaultValue": "[utcNow('u')]"
@@ -153,7 +156,7 @@
         "hostpoolFriendlyName": "[parameters('hostpoolFriendlyName')]",
         "appGroupName": "[concat(variables('hostpoolName'),'-DAG')]",
         "appGroupResourceId": "[createArray(resourceId('Microsoft.DesktopVirtualization/applicationgroups/', variables('appGroupName')))]",
-        "workspaceResourceGroup": "[if(empty(parameters('workspaceResourceGroup')), parameters('resourceGroup'), parameters('workspaceResourceGroup'))]",
+        "workspaceResourceGroup": "[if(empty(parameters('workspaceResourceGroup')), parameters('TargetresourceGroup'), parameters('workspaceResourceGroup'))]",
         "applicationGroupReferencesArr": "[if(equals('',parameters('allApplicationGroupReferences')), variables('appGroupResourceId'), concat(split(parameters('allApplicationGroupReferences'),','), variables('appGroupResourceId')))]"
     },
     "resources": [
