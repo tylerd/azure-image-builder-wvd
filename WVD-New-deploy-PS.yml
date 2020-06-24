@@ -46,6 +46,20 @@ stages:
               ContainerName: "templates"
               sasTokenTimeOutInMinutes: "240"
 
+  - stage: Create_Workspace
+    displayName: Create Workspace
+    jobs:
+      - job: Create_Workspace
+        displayName: Create Workspace
+        steps:
+          - task: AzurePowerShell@5
+            inputs:
+              azureSubscription: 'AzDevOPS'
+              ScriptType: 'FilePath'
+              ScriptPath: 'Deploy-New-Workspace.ps1'
+              azurePowerShellVersion: 'LatestVersion'
+
+
   - stage: Create_HostPool_AppGroup
     displayName: Create Host Pool and Application Group
     jobs:
