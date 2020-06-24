@@ -117,12 +117,6 @@
             },
             "defaultValue": ""
         },
-        "tokenExpirationTime": {
-            "type": "string",
-            "metadata": {
-                "description": "Hostpool token expiration time"
-            }
-        },
         "hostpoolTags": {
             "type": "object",
             "metadata": {
@@ -154,6 +148,7 @@
     },
     "variables": {
         //"resourceGroup": "[replace(parameters('TargetresourceGroup'),'\"','')]",
+        "registration-token-expiration-time": "[dateTimeAdd(parameters('utc-value'), 'P7D')]",
         "hostpoolName": "[replace(parameters('hostpoolName'),'\"','')]",
         "hostpoolFriendlyName": "[parameters('hostpoolFriendlyName')]",
         "appGroupName": "[concat(variables('hostpoolName'),'-DAG')]",
@@ -179,7 +174,7 @@
                 "validationEnvironment": "[parameters('validationEnvironment')]",
                 "ring": null,
                 "registrationInfo": {
-                    "expirationTime": "[parameters('tokenExpirationTime')]",
+                    "expirationTime": "[variables('registration-token-expiration-time')]",
                     "token": null,
                     "registrationTokenOperation": "Update"
                 }
