@@ -30,5 +30,4 @@ $secureToken = ConvertTo-SecureString -String $token -AsPlainText -Force
 
 New-AzResourceGroupDeployment -ResourceGroupName $TargetResourceGroup `
     -TemplateUri "$templateUri$token" -Verbose `
-    -resourceGroup $TargetResourceGroup `
     -hostpoolName $HostPoolName

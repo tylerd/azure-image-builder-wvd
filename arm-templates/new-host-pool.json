@@ -6,9 +6,6 @@
             "type": "string",
             "defaultValue": "[utcNow()]"
         },
-        "resourceGroup": {
-            "type": "string"
-        },
         "hostpoolName": {
             "type": "string",
             "metadata": {
@@ -156,7 +153,7 @@
         }
     },
     "variables": {
-        "resourceGroup": "[replace(parameters('resourceGroup'),'\"','')]",
+        //"resourceGroup": "[replace(parameters('TargetresourceGroup'),'\"','')]",
         "hostpoolName": "[replace(parameters('hostpoolName'),'\"','')]",
         "hostpoolFriendlyName": "[parameters('hostpoolFriendlyName')]",
         "appGroupName": "[concat(variables('hostpoolName'),'-DAG')]",
