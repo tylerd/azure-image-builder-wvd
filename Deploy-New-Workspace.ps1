@@ -10,7 +10,7 @@ $folder = "arm-templates"
 
 $MainTemplate = "new-workspace.json"
 
-$TargetResourceGroup = $Env:SESSIONHOSTRESOURCEGROUPNAME
+$TargetResourceGroup = $Env:WORKSPACERESOURCEGROUPNAME
 $Location = $Env:LOCATION
 $SubscriptionId = $Env:SUBSCRIPTIONID
 $HostPoolName=$Env:HOSTPOOLNAME

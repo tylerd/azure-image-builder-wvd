@@ -10,7 +10,8 @@ $folder = "arm-templates"
 
 $MainTemplate = "new-host-pool.json"
 
-$TargetResourceGroup = $Env:SESSIONHOSTRESOURCEGROUPNAME
+$TargetResourceGroup = $Env:WORKSPACERESOURCEGROUPNAME
+$TargetWorkspaceResourceGroup = $Env:WORKSPACERESOURCEGROUPNAME
 $Location = $Env:LOCATION
 $SubscriptionId = $Env:SUBSCRIPTIONID
 $HostPoolName=$Env:HOSTPOOLNAME
