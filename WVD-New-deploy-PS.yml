@@ -19,6 +19,8 @@ variables:
     value: canadacentral
   - name: HOSTPOOLNAME
     value: poolA
+  - name: WORKSPACENAME
+    value: "Azureminilab-EAS2"
 
 stages:
   # Create Prep Deployment
@@ -70,5 +72,5 @@ stages:
             inputs:
               azureSubscription: 'AzDevOPS'
               ScriptType: 'FilePath'
-              ScriptPath: 'Deploy-New-HostPool.ps1'
+              ScriptPath: 'Deploy-New-HostPool-Add-Workspace.ps1'
               azurePowerShellVersion: 'LatestVersion'
