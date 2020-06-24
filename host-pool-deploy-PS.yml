@@ -16,7 +16,7 @@ variables:
   - name: SESSIONHOSTRESOURCEGROUPNAME
     value: Azureminilab-WVD
   - name: WORKSPACERESOURCEGROUPNAME
-    value: Azureminilan-WVDRoot
+    value: Azureminilab-WVDRoot
   - name: LOCATION
     value: canadacentral
   - name: HOSTPOOLNAME
