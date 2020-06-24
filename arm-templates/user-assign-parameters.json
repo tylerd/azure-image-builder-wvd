@@ -15,11 +15,11 @@
                     "principalId": "7a968489-417d-4fec-813b-aa07e9e5e747"
                 },
                 {
-                    "name": "e01@azureminilab.com ",
+                    "name": "e01@azureminilab.com",
                     "principalId": "e62eb52c-9974-4796-9a10-47d8e781e60b"
                 },
                 {
-                    "name": "ADSyncAdmins@azureminila.com=>Group",
+                    "name": "ADSyncAdmins@azureminila.com",
                     "principalId": "72853093-c270-4dbc-8312-7655aca9b5d0"
                 }
             ]
