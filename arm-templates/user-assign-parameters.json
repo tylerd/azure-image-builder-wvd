@@ -1,0 +1,49 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appGroupName": {
+            "value": "poolA-DAG"
+        },
+        "location": {
+            "value": "eastus2"
+        },
+        "roleAssignments": {
+            "value": [
+                {
+                    "name": "585808ca-a595-4705-a4e5-5ad93da6004a",
+                    "id": "",
+                    "type": "Microsoft.Authorization/roleAssignments",
+                    "properties": {
+                        "principalId": "7a968489-417d-4fec-813b-aa07e9e5e747",
+                        "roleDefinitionId": "1d18fff3-a72a-46b5-b4a9-0b38a3cd7e63",
+                        "scope": ""
+                    }
+                },
+                {
+                    "name": "585808ca-a595-4705-a4e5-5ad93da6004b",
+                    "id": "",
+                    "type": "Microsoft.Authorization/roleAssignments",
+                    "properties": {
+                        "principalId": "30e5eb01-2360-4005-a7b5-39e38d4e790c",
+                        "roleDefinitionId": "1d18fff3-a72a-46b5-b4a9-0b38a3cd7e63",
+                        "scope": ""
+                    }
+                },
+                {
+                    "name": "585808ca-a595-4705-a4e5-5ad93da6004c",
+                    "id": "",
+                    "type": "Microsoft.Authorization/roleAssignments",
+                    "properties": {
+                        "principalId": "eaaaa631-067b-42d6-8528-dd960f40180b",
+                        "roleDefinitionId": "1d18fff3-a72a-46b5-b4a9-0b38a3cd7e63",
+                        "scope": ""
+                    }
+                }
+            ]
+        },
+        "apiVersion": {
+            "value": "2019-12-10-preview"
+        }
+    }
+}
