@@ -40,13 +40,11 @@
     "variables": {
         //"appGroupResourceId": "[resourceId('Microsoft.DesktopVirtualization/applicationgroups/', parameters('appGroupName'))]",
         "noRoleAssignments": "[empty(parameters('roleAssignments'))]",
-        //"noSelectedApps": "[empty(parameters('selectedApps'))]",
+        "unique_string": "[uniqueString(resourceGroup().id)]",
+        "guid":"[guid(variables('unique_string'))]",
+        "GuidforAppGroupRole": "[concat(parameters('appGroupName'),'/Microsoft.Authorization/',variables('guid'))]",
         "desktopVirtualizationUserRoleDefinition": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '1d18fff3-a72a-46b5-b4a9-0b38a3cd7e63')]",
-        //"addToWorkspace": "[not(empty(parameters('workspaceName')))]",
-        //"workspaceResourceGroup": "[if(empty(parameters('workspaceResourceGroup')), parameters('resourceGroup'), parameters('workspaceResourceGroup'))]",
-        //"appGroupResourceReferenceArr": "[createArray(variables('appGroupResourceId'))]",
-        //"applicationGroupReferencesArr": "[if(empty(parameters('allApplicationGroupReferences')), variables('appGroupResourceReferenceArr'), concat(split(parameters('allApplicationGroupReferences'),','), variables('appGroupResourceReferenceArr')))]"
-    },
+            },
     "resources": [     
         {
             "apiVersion": "2018-05-01",
@@ -62,9 +60,9 @@
                         {
                             "type": "Microsoft.DesktopVirtualization/applicationgroups/providers/roleAssignments",
                             "apiVersion": "[if(contains(parameters('location'), 'euap'), '2019-04-01-preview','2018-07-01')]",
-                            "name": "[concat(parameters('appGroupName'), '/Microsoft.Authorization/', parameters('roleAssignments')[CopyIndex()].name)]",
+                            "name": "[variables('GuidforAppGroupRole')]",
                             "properties": {
-                                "principalId": "[parameters('roleAssignments')[CopyIndex()].properties.principalId]",
+                                "principalId": "[parameters('roleAssignments')[CopyIndex()].principalId]",
                                 "roleDefinitionId": "[variables('desktopVirtualizationUserRoleDefinition')]"
                             }
                         }
@@ -75,9 +73,7 @@
                 "name": "role-assignments-loop",
                 "count": "[if(variables('noRoleAssignments'), 1, length(parameters('roleAssignments')))]"
             },
-            "dependsOn": [
- //               "[resourceId('Microsoft.DesktopVirtualization/applicationgroups', parameters('appGroupName'))]"
-            ]
+            "dependsOn": []
         }
     ]
 }

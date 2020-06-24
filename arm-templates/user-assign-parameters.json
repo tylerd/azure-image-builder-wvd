@@ -11,34 +11,16 @@
         "roleAssignments": {
             "value": [
                 {
-                    "name": "585808ca-a595-4705-a4e5-5ad93da6004a",
-                    "id": "",
-                    "type": "Microsoft.Authorization/roleAssignments",
-                    "properties": {
-                        "principalId": "7a968489-417d-4fec-813b-aa07e9e5e747",
-                        "roleDefinitionId": "1d18fff3-a72a-46b5-b4a9-0b38a3cd7e63",
-                        "scope": ""
-                    }
+                    "name": "E95@azureminilab.com",
+                    "principalId": "7a968489-417d-4fec-813b-aa07e9e5e747"
                 },
                 {
-                    "name": "585808ca-a595-4705-a4e5-5ad93da6004b",
-                    "id": "",
-                    "type": "Microsoft.Authorization/roleAssignments",
-                    "properties": {
-                        "principalId": "30e5eb01-2360-4005-a7b5-39e38d4e790c",
-                        "roleDefinitionId": "1d18fff3-a72a-46b5-b4a9-0b38a3cd7e63",
-                        "scope": ""
-                    }
+                    "name": "e01@azureminilab.com ",
+                    "principalId": "e62eb52c-9974-4796-9a10-47d8e781e60b"
                 },
                 {
-                    "name": "585808ca-a595-4705-a4e5-5ad93da6004c",
-                    "id": "",
-                    "type": "Microsoft.Authorization/roleAssignments",
-                    "properties": {
-                        "principalId": "eaaaa631-067b-42d6-8528-dd960f40180b",
-                        "roleDefinitionId": "1d18fff3-a72a-46b5-b4a9-0b38a3cd7e63",
-                        "scope": ""
-                    }
+                    "name": "ADSyncAdmins@azureminila.com=>Group",
+                    "principalId": "72853093-c270-4dbc-8312-7655aca9b5d0"
                 }
             ]
         },
