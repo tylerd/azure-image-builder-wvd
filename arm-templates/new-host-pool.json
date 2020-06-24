@@ -66,7 +66,7 @@
             "metadata": {
                 "description": "Whether to add applicationGroup to workspace."
             },
-            "defaultValue":"false"
+            "defaultValue":false
         },
         "hostpoolType": {
             "type": "string",
