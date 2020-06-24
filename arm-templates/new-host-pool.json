@@ -4,7 +4,7 @@
     "parameters": {
           "utc-value": {
             "type": "string",
-            "defaultValue": "[utcNow()]"
+            "defaultValue": "[utcNow('u')]"
         },
         "hostpoolName": {
             "type": "string",
