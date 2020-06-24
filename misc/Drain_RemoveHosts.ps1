@@ -39,7 +39,7 @@ function Update-SessionHostToAllowNewSession {
     Process {
         if (!$SessionHost.AllowNewSession) {
             $SessionHostName = $SessionHost.Name.Split('/')[-1].ToLower()
-            Write-Log "Update session host '$($SessionHostName)' to allow new sessions"
+            Write-Host "Update session host '$($SessionHostName)' to allow new sessions"
             if ($PSCmdlet.ShouldProcess($SessionHostName, 'Update session host to allow new sessions')) {
                 Update-AzWvdSessionHost -HostPoolName $HostPoolName -ResourceGroupName $ResourceGroupName -Name $SessionHostName -AllowNewSession:$true | Write-Verbose
             }
