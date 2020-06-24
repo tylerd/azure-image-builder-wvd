@@ -212,10 +212,10 @@ $CurrentDateTime = (Get-Date).ToUniversalTime().AddHours($TimeDiffHrsMin[0]).Add
 				$SessionID = $Session.Name.Split('/')[-1]
 				try {
 					Write-Host "Send a log off message to user: '$($Session.ActiveDirectoryUserName)', session ID: $SessionID"
-					if ($PSCmdlet.ShouldProcess($Session.ActiveDirectoryUserName, 'Send a log off message to user')) {
+					#if ($PSCmdlet.ShouldProcess($Session.ActiveDirectoryUserName, 'Send a log off message to user')) {
 						# //todo what if user logged off by this time
 						Send-AzWvdUserSessionMessage -HostPoolName $HostPoolName -ResourceGroupName $ResourceGroupName -SessionHostName $SessionHostName -UserSessionId $SessionID -MessageTitle $LogOffMessageTitle -MessageBody "$LogOffMessageBody You will be logged off in $LimitSecondsToForceLogOffUser seconds"
-					}
+					#}
 				}
 				catch {
 					throw [System.Exception]::new("Failed to send a log off message to user: '$($Session.ActiveDirectoryUserName)', session ID: $SessionID", $PSItem.Exception)
