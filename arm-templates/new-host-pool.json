@@ -34,7 +34,7 @@
             "metadata": {
                 "description": "The location where the resources will be deployed."
             },
-            "defaultValue": "canadacentral"
+            "defaultValue": "eastus2"
         },
         "workSpaceName": {
             "type": "string",
