@@ -239,9 +239,9 @@ $CurrentDateTime = (Get-Date).ToUniversalTime().AddHours($TimeDiffHrsMin[0]).Add
 
 	if ($VMsToStopAfterLogOffTimeOut) {
 		Write-Host "Wait $LimitSecondsToForceLogOffUser seconds for users to log off"
-		if ($PSCmdlet.ShouldProcess("for $LimitSecondsToForceLogOffUser seconds", 'Wait for users to log off')) {
+		#if ($PSCmdlet.ShouldProcess("for $LimitSecondsToForceLogOffUser seconds", 'Wait for users to log off')) {
 			Start-Sleep -Seconds $LimitSecondsToForceLogOffUser
-		}
+		#}
 
 		Write-Host "Force log off users and stop remaining $($VMsToStopAfterLogOffTimeOut.Count) session hosts"
 		foreach ($VM in $VMsToStopAfterLogOffTimeOut) {
@@ -252,10 +252,10 @@ $CurrentDateTime = (Get-Date).ToUniversalTime().AddHours($TimeDiffHrsMin[0]).Add
 				$SessionID = $Session.Name.Split('/')[-1]
 				try {
 					Write-Host "Force log off user: '$($Session.ActiveDirectoryUserName)', session ID: $SessionID"
-					if ($PSCmdlet.ShouldProcess($Session.Id, 'Force log off user with session ID')) {
+					#if ($PSCmdlet.ShouldProcess($Session.Id, 'Force log off user with session ID')) {
 						# //todo what if user logged off by this time
 						Remove-AzWvdUserSession -HostPoolName $HostPoolName -ResourceGroupName $ResourceGroupName -SessionHostName $SessionHostName -Id $SessionID -Force
-					}
+					#}
 				}
 				catch {
 					throw [System.Exception]::new("Failed to force log off user: '$($Session.ActiveDirectoryUserName)', session ID: $SessionID", $PSItem.Exception)
@@ -263,10 +263,10 @@ $CurrentDateTime = (Get-Date).ToUniversalTime().AddHours($TimeDiffHrsMin[0]).Add
 			}
 			
 			Write-Host "Stop session host '$SessionHostName' as a background job"
-			if ($PSCmdlet.ShouldProcess($SessionHostName, 'Stop session host as a background job')) {
+			#if ($PSCmdlet.ShouldProcess($SessionHostName, 'Stop session host as a background job')) {
 				$StopSessionHostFullNames.Add($VM.SessionHost.Name, $null)
 				$StopVMjobs += ($VM.Instance | Stop-AzVM -Force -AsJob)
-			}
+			#}
 		}
 	}
 
