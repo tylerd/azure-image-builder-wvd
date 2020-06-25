@@ -1,0 +1,71 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "neworExistingVolume": {
+        "type": "string"
+        },
+        "netAppAccounts_name": {
+            "type":"string"
+        },
+        "netAppAccounts_pool": {
+            "type": "string"
+        },
+        "netAppAccounts_volume": {
+            "type": "string"
+        },
+        "location": {
+        "type":"string",
+        "defaultValue": "[resourceGroup().location]"
+    },
+            "VaultName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the keyvault that contains the secret."
+            }
+        },
+        "VaultResourceGroupName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the resource group that contains the keyvault."
+            }
+        },
+        "VaultSubscriptionId": {
+            "type": "string",
+            "defaultValue": "[subscription().subscriptionId]",
+            "metadata": {
+                "description": "The name of the subscription that contains the keyvault."
+            }
+        }
+    },
+    "functions": [],
+    "variables": {
+        "serviceLevel": "Premium",
+        "protocolTypes": [
+            "CIFS"
+        ],
+        "usageThreshold": 1099511627776
+
+    },
+    "resources": [
+                {
+            "condition":"[equals(parameters('newOrExistingVolume'),'newVolume')]",
+            "type": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes",
+            "apiVersion": "2019-11-01",
+            "name": "[concat(parameters('netAppAccounts_name'), '/', parameters('netAppAccounts_pool'), '/',parameters('netAppAccounts_volume'))]",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "properties": {
+                "serviceLevel": "[variables('serviceLevel')]",
+                "creationToken": "[parameters('netAppAccounts_volume')]",
+                "usageThreshold": "[variables('usageThreshold')]",
+                "exportPolicy": {
+                    "rules": []
+                },
+                "protocolTypes": "[variables('protocolTypes')]",
+                "subnetId": "[concat(reference(resourceId(parameters('VaultSubscriptionId'), parameters('VaultResourceGroupName'), 'Microsoft.KeyVault/vaults', parameters('VaultName'))),'/secrets/subnetid-netapp')]"
+            }
+        }
+    ],
+    "outputs": {}
+}
