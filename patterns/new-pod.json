@@ -145,7 +145,8 @@
                         "value": "[variables('keyVaultName')]"
                     },
                     "secretsObject": {
-                        "value":[
+                        "value": {
+                        "secrets":[
                             {
                             "secretName": "subnet-id",
                             "secretValue": "[variables('subnetID')]"
@@ -176,6 +177,7 @@
                                 "secretValue": "[variables('netapp_volume_name')]"
                             }
                                 ]
+                        }
                     }
                 },
                 "templateLink": {
