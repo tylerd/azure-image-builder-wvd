@@ -1,0 +1,82 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "environment": {
+            "type": "string",
+            "allowedValues": [
+                "SBX",
+                "DEV",
+                "PRD",
+                "WVD"
+            ],
+            "defaultValue":"SBX"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue":"[resourceGroup().location]"
+        },
+        "persona":{
+            "type": "string",
+            "defaultValue":"BMOCLOUD"
+        },
+        "AzDevOpsSPN": {
+            "type": "string",
+            "defaultValue":"f303d02d-7596-421d-953d-1735ff2ca8e6"
+        },
+        "workspaceId": {
+            "type": "string",
+            "defaultValue":"/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourcegroups/azureminilab-la/providers/microsoft.operationalinsights/workspaces/azureminilab2019"
+        },
+        "_artifactsLocation": {
+            "type": "string",
+            "defaultValue": "https://azminlandevops.blob.core.windows.net/"
+        },
+        "artifactsLocationSasToken": {
+            "type": "securestring"
+        }
+
+    },
+    "functions": [],
+    "variables": {
+        "templateURI": "[concat(parameters('_artifactsLocation'),'templates/arm-templates/')]",
+        "regionCode": {
+            "canadacentral":"CANC",
+            "canadaeast":"CAEA",
+            "eastus2":"USE2",
+            "centralus":"USN"
+        },
+        "unique_string": "[uniqueString(resourceGroup().id)]",
+        "keyVaultName":"[concat(parameters('environment'),'-',variables('regionCode')[parameters('location')],'-WVD-',parameters('persona'),'-',variables('unique_string'))]"
+    },
+    "resources": [
+        //Deploy Key Vault for Pod. 
+                {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "[variables('keyVaultName')]",
+            "resourceGroup": "[deployment().resourceGroup]",
+            "properties": {
+                "mode": "Incremental",
+                "parameters": {
+                    "keyVaultName": {
+                        "value": "[variables('keyVaultName')]"
+                    },
+                    "neworExistingKeyVault": {
+                        "value":"newKeyVault"
+                    },
+                    "AzDevOpsSPN": {
+                        "value":"[parameters('AzDevOpsSPN')]"
+                    },
+                    "workspaceId":"[parameters('workspaceId')]"
+                },
+                "templateLink": {
+                    "uri": "[concat(variables('templateURI'),'create-keyvault.json',parameters('artifactsLocationSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                }
+            }
+        }
+        
+    ],
+    "outputs": {}
+}
