@@ -33,19 +33,23 @@
         "secrets":  [
         {
           "secretName":"admin-account-password",
-          "secretValue":"!R37fallacy1505"
+          "secretValue":"!R37fallacy1505",
+          "contentType":"secretValue"
         },
         {
           "secretName":"ou-path",
-          "secretValue":""
+          "secretValue":"",
+          "contentType":"secretValue"
         },
         {
           "secretName":"domain",
-          "secretValue":"azureminilab.com"
+          "secretValue":"azureminilab.com",
+          "contentType":"secretValue"
         },
         {
           "secretName":"admin-account-user",
-          "secretValue":"azadmin@azureminilab.com"
+          "secretValue":"azadmin@azureminilab.com",
+          "contentType":"secretValue"
         }  
       ]
       //"final_secrets": "[union(variables('baselineSecrets'),parameters('secretsObject'))]"
