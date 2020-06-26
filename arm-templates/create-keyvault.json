@@ -4,7 +4,6 @@
     "parameters": {
         "neworExistingKeyVault": {
             "type": "string"
-            //"defaultValue": "newKeyVault"
         },
         "keyVaultName": {
             "type": "string"
@@ -14,6 +13,7 @@
         },
         "workspaceId": {
             "type": "string"
+           // "defaultValue":"/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourcegroups/azureminilab-la/providers/microsoft.operationalinsights/workspaces/azureminilab2019"
         },
         "location": {
             "type": "string",
@@ -86,8 +86,8 @@
     },
     {
     "type": "Microsoft.KeyVault/vaults/providers/diagnosticSettings",
-    "name": "[concat(parameters('keyVaultName'),'/microsoft.insights/', variables('settingName'))]",
-    "dependsOn": ["resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))"],
+    "name": "[concat(parameters('keyVaultName'),'/microsoft.Insights/', variables('settingName'))]",
+    "dependsOn": ["[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"],
      "apiVersion": "2017-05-01-preview",
      "properties":{
         "name": "[variables('settingName')]",

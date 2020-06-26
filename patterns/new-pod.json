@@ -55,7 +55,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "[variables('keyVaultName')]",
-            "resourceGroup": "[deployment().resourceGroup]",
+            "resourceGroup": "[resourceGroup().name]",
             "properties": {
                 "mode": "Incremental",
                 "parameters": {
