@@ -47,7 +47,7 @@
             "centralus":"USN"
         },
         "unique_string": "[uniqueString(resourceGroup().id)]",
-        "keyVaultName":"[concat(parameters('environment'),'-',variables('regionCode')[parameters('location')],'-WVD-',parameters('persona'),'-',variables('unique_string'))]"
+        "keyVaultName":"[concat(parameters('environment'),'-',variables('regionCode')[parameters('location')],'-WVD-',parameters('persona'),'-',variables('unique_string'),'-KYV')]"
     },
     "resources": [
         //Deploy Key Vault for Pod. 
@@ -68,7 +68,9 @@
                     "AzDevOpsSPN": {
                         "value":"[parameters('AzDevOpsSPN')]"
                     },
-                    "workspaceId":"[parameters('workspaceId')]"
+                    "workspaceId": {
+                    "value": "[parameters('workspaceId')]"
+                    }
                 },
                 "templateLink": {
                     "uri": "[concat(variables('templateURI'),'create-keyvault.json',parameters('artifactsLocationSasToken'))]",
