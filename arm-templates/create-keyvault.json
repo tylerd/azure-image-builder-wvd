@@ -12,6 +12,9 @@
         "AzDevOpsSPN": {
             "type": "string"
         },
+        "workspaceId": {
+            "type": "string"
+        },
         "location": {
             "type": "string",
            "defaultValue": "[resourceGroup().location]"
@@ -25,7 +28,8 @@
         "enableSoftDelete": true,
         "enablePurgeProtection": true,
         "tenantId": "[subscription().tenantId]",
-        "skuName": "Standard"
+        "skuName": "Standard",
+        "settingName": "Send_to_LGA"
         },
     "resources": [
     {
@@ -79,7 +83,38 @@
             "bypass": "AzureServices"
         }
       }
-    }
+    },
+    {
+    "type": "Microsoft.KeyVault/vaults/providers/diagnosticSettings",
+    "name": "[concat(parameters('keyVaultName'),'/microsoft.insights/', variables('settingName'))]",
+    "dependsOn": ["resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))"],
+     "apiVersion": "2017-05-01-preview",
+     "properties":{
+        "name": "[variables('settingName')]",
+        "workspaceId": "[parameters('workspaceId')]",
+        "logs": [
+        {
+          "category": "AuditEvent",
+          "enabled": true
+        }
+         ],
+        "metrics": [
+        {
+          "category": "AllMetrics",
+          "enabled": true
+        }
+      ]
+     }
+        }
     ],
-    "outputs": {}
+    "outputs": {
+            "keyvaultName": {
+      "type": "string",
+      "value": "[parameters('keyVaultName')]"
+    },
+    "keyvaultResourceId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.KeyVault/vaults',parameters('keyvaultName'))]"
+    }
+    }
 }
