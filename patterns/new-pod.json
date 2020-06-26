@@ -61,6 +61,7 @@
         "subnetName": "[concat('SUB-WVD-',parameters('persona'),'-',variables('unique_string'))]",
         "unique_string": "[take(uniqueString(resourceGroup().id),3)]",
         "keyVaultName":"[concat(parameters('environment'),'-',variables('regionCode')[parameters('location')],'-WVD-',parameters('persona'),'-',variables('unique_string'),'-KV')]",
+        "subnetID":"[concat(resourceId(parameters('VNETRG'),'Microsoft.Network/virtualNetworks',parameters('VNETName')),'/subnets/',variables('subnetName'))]",
         "netapp_volume_name": "[concat(parameters('environment'),'-NetAppVol-',parameters('persona'),'-',variables('unique_string'),'-profiles')]",
         "secrets-deployment": "[concat('secrets-for-WVD-',parameters('persona'),'-',variables('unique_string'))]",
         "workspace_name": "[concat(parameters('environment'),'-WKS-',parameters('persona'),'-',variables('unique_string'))]",
@@ -147,7 +148,7 @@
                         "value":[
                             {
                             "secretName": "subnet-id",
-                            "secretValue": "[resourceId(parameters('VNETRG'),'Microsoft.Network/virtualNetworks/subnets',variables('subnetName'))]"
+                            "secretValue": "[variables('subnetID')]"
                             },
 
                             {
