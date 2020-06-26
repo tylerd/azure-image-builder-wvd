@@ -43,7 +43,7 @@
     }
   ],
   "outputs": {
-        "subnet-Id": {
+        "subnetId": {
       "type": "string",
       "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('newSubnetName'))]"
     }

@@ -60,7 +60,14 @@
         },
         "subnetName": "[concat('SUB-WVD-',parameters('persona'),'-',variables('unique_string'))]",
         "unique_string": "[take(uniqueString(resourceGroup().id),3)]",
-        "keyVaultName":"[concat(parameters('environment'),'-',variables('regionCode')[parameters('location')],'-WVD-',parameters('persona'),'-',variables('unique_string'),'-KV')]"
+        "keyVaultName":"[concat(parameters('environment'),'-',variables('regionCode')[parameters('location')],'-WVD-',parameters('persona'),'-',variables('unique_string'),'-KV')]",
+        "netapp_volume_name": "[concat(parameters('environment'),'-NetAppVol-',parameters('persona'),'-',variables('unique_string'),'-profiles')]",
+        "secrets-deployment": "[concat('secrets-for-WVD-',parameters('persona'),'-',variables('unique_string'))]",
+        "workspace_name": "[concat(parameters('environment'),'-WKS-',parameters('persona'),'-',variables('unique_string'))]",
+        "appgrp_blue": "[concat(parameters('environment'),'-AppGroup-',parameters('persona'),'-',variables('unique_string'),'-BLUE')]",
+        "appgrp_green": "[concat(parameters('environment'),'-AppGroup-',parameters('persona'),'-',variables('unique_string'),'-GREEN')]",
+        "hostpool_blue": "[concat(parameters('environment'),'-HostPool-',parameters('persona'),'-',variables('unique_string'),'-BLUE')]",
+        "hostpool_green": "[concat(parameters('environment'),'-HostPool-',parameters('persona'),'-',variables('unique_string'),'-GREEN')]"
     },
     "resources": [
         //Deploy Key Vault for Pod. 
@@ -115,8 +122,67 @@
                     "contentVersion": "1.0.0.0"
                 }
             }
+        },
+
+        // Deploy NetApp Volume
+        // {Insert deployment here}
+
+    // Add secrets to Key Vault - input parameters for the WVD deployment: Blue and Green. 
+                              {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "[variables('secrets-deployment')]",
+            "resourceGroup": "[resourceGroup().name]",
+            "dependsOn": [
+                "[variables('subnetName')]",
+                "[variables('keyVaultName')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "parameters": {
+                    "keyVaultName": {
+                        "value": "[variables('keyVaultName')]"
+                    },
+                    "secretsObjects": {
+                        "value":[
+                            {
+                            "secretName": "subnet-id",
+                            "secretValue": "[reference(variables('subnetName')).outputs.subnetId.value]"
+                            },
+
+                            {
+                              "secretName": "wkspace_name",
+                              "secretValue": "[variables('workspace_name')]"  
+                            },
+                            {
+                                "secretName":"app-group-blue",
+                                "secretValue": "[variables('appgrp_blue')]"
+                            },
+                            {
+                                "secretName":"app-group-green",
+                                "secretValue": "[variables('appgrp_green')]"
+                            },
+                            {
+                                "secretName": "host-pool-blue",
+                                "secretValue": "[variables('hostpool_blue')]"
+                            },
+                            {
+                                "secretName": "host-pool-green",
+                                "secretValue": "[variables('hostpool_green')]"
+                            },
+                                                        {
+                                "secretName": "netapp_volume",
+                                "secretValue": "[variables('netapp_volume_name')]"
+                            }
+                                ]
+                    }
+                },
+                "templateLink": {
+                    "uri": "[concat(variables('templateURI'),'add-secrets.json',parameters('artifactsLocationSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                }
+            }
         }
-        
     ],
     "outputs": {}
 }
