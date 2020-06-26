@@ -144,6 +144,9 @@
                     "keyVaultName": {
                         "value": "[variables('keyVaultName')]"
                     },
+                    "AzDevOpsSPN": {
+                        "value":"[parameters('AzDevOpsSPN')]"
+                    },
                     "secretsObject": {
                         "value": {
                         "secrets":[
