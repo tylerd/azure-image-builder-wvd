@@ -33,19 +33,19 @@
         "secrets":  [
         {
           "secretName":"admin-account-password",
-          "secretVale":"!R37fallacy1505"
+          "secretValue":"!R37fallacy1505"
         },
         {
           "secretName":"ou-path",
-          "secretVale":""
+          "secretValue":""
         },
         {
           "secretName":"domain",
-          "secretVale":"azureminilab.com"
+          "secretValue":"azureminilab.com"
         },
         {
           "secretName":"admin-account-user",
-          "secretVale":"azadmin@azureminilab.com"
+          "secretValue":"azadmin@azureminilab.com"
         }  
       ]
       //"final_secrets": "[union(variables('baselineSecrets'),parameters('secretsObject'))]"
@@ -105,15 +105,14 @@
     },
     {
       "type": "Microsoft.KeyVault/vaults/secrets",
-      "name": "[concat(parameters('keyVaultName'), '/', variables('secrets')[copyIndex()].name)]",
+      "name": "[concat(parameters('keyVaultName'), '/', variables('secrets')[copyIndex()].secretName)]",
       "apiVersion": "2018-02-14",
-      "tags": "[variables('secrets')[copyIndex()].tags]",
       "copy": {
         "name": "secretCopy",
         "count": "[length(variables('secrets'))]"
       },
       "properties": {
-        "value": "[variables('secrets')[copyIndex()].value]",
+        "value": "[variables('secrets')[copyIndex()].secretValue]",
         "contentType": "[variables('secrets')[copyIndex()].contentType]"
       },
       "dependsOn": [ "[concat('Microsoft.KeyVault/vaults/',parameters('keyVaultName'))]" ]
