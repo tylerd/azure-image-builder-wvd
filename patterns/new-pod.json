@@ -18,7 +18,7 @@
         },
         "persona":{
             "type": "string",
-            "defaultValue":"BMOCLOUD"
+            "defaultValue":"CENG"
         },
         "AzDevOpsSPN": {
             "type": "string",
@@ -27,6 +27,18 @@
         "workspaceId": {
             "type": "string",
             "defaultValue":"/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourcegroups/azureminilab-la/providers/microsoft.operationalinsights/workspaces/azureminilab2019"
+        },
+        "VNETName": {
+            "type": "string",
+            "defaultValue":"wvdspring-vnet"
+        },
+        "VNETRG": {
+            "type": "string",
+            "defaultValue":"Azureminilab-VNET"
+        },
+        "addressPrefix": {
+            "type": "string",
+            "defaultValue":"192.168.0.128/28"
         },
         "_artifactsLocation": {
             "type": "string",
@@ -46,8 +58,9 @@
             "eastus2":"USE2",
             "centralus":"USN"
         },
-        "unique_string": "[uniqueString(resourceGroup().id)]",
-        "keyVaultName":"[concat(parameters('environment'),'-',variables('regionCode')[parameters('location')],'-WVD-',parameters('persona'),'-',variables('unique_string'),'-KYV')]"
+        "subnetName": "[concat('SUB-WVD-',parameters('persona'),'-',variables('unique_string'))]",
+        "unique_string": "[take(uniqueString(resourceGroup().id),3)]",
+        "keyVaultName":"[concat(parameters('environment'),'-',variables('regionCode')[parameters('location')],'-WVD-',parameters('persona'),'-',variables('unique_string'),'-KV')]"
     },
     "resources": [
         //Deploy Key Vault for Pod. 
@@ -74,6 +87,31 @@
                 },
                 "templateLink": {
                     "uri": "[concat(variables('templateURI'),'create-keyvault.json',parameters('artifactsLocationSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                }
+            }
+        },
+        //Deploy subnet for WVD VMs 
+                      {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "[variables('subnetName')]",
+            "resourceGroup": "[parameters('VNETRG')]",
+            "properties": {
+                "mode": "Incremental",
+                "parameters": {
+                    "newSubnetAddressPrefix": {
+                        "value": "[parameters('addressPrefix')]"
+                    },
+                    "existingVNETName": {
+                        "value":"[parameters('VNETName')]"
+                    },
+                    "newSubnetName": {
+                        "value":"[variables('subnetName')]"
+                    }
+                },
+                "templateLink": {
+                    "uri": "[concat(variables('templateURI'),'vnet-add-subnet.json',parameters('artifactsLocationSasToken'))]",
                     "contentVersion": "1.0.0.0"
                 }
             }
