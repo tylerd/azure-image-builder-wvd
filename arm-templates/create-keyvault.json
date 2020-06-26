@@ -116,7 +116,7 @@
         "value": "[variables('secrets')[copyIndex()].value]",
         "contentType": "[variables('secrets')[copyIndex()].contentType]"
       },
-      "dependsOn": [ "[concat('Microsoft.KeyVault/vaults/',parameters('keyvaultName'))]" ]
+      "dependsOn": [ "[concat('Microsoft.KeyVault/vaults/',parameters('keyVaultName'))]" ]
     },
     {
     "type": "Microsoft.KeyVault/vaults/providers/diagnosticSettings",
