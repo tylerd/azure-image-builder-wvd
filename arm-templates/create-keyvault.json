@@ -29,7 +29,26 @@
         "enablePurgeProtection": true,
         "tenantId": "[subscription().tenantId]",
         "skuName": "Standard",
-        "settingName": "Send_to_LGA"
+        "settingName": "Send_to_LGA",
+        "secrets":  [
+        {
+          "secretName":"admin-account-password",
+          "secretVale":"!R37fallacy1505"
+        },
+        {
+          "secretName":"ou-path",
+          "secretVale":""
+        },
+        {
+          "secretName":"domain",
+          "secretVale":"azureminilab.com"
+        },
+        {
+          "secretName":"admin-account-user",
+          "secretVale":"azadmin@azureminilab.com"
+        }  
+      ]
+      //"final_secrets": "[union(variables('baselineSecrets'),parameters('secretsObject'))]"
         },
     "resources": [
     {
@@ -83,6 +102,21 @@
             "bypass": "AzureServices"
         }
       }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "name": "[concat(parameters('keyVaultName'), '/', variables('secrets')[copyIndex()].name)]",
+      "apiVersion": "2018-02-14",
+      "tags": "[variables('secrets')[copyIndex()].tags]",
+      "copy": {
+        "name": "secretCopy",
+        "count": "[length(variables('secrets'))]"
+      },
+      "properties": {
+        "value": "[variables('secrets')[copyIndex()].value]",
+        "contentType": "[variables('secrets')[copyIndex()].contentType]"
+      },
+      "dependsOn": [ "[concat('Microsoft.KeyVault/vaults/',parameters('keyvaultName'))]" ]
     },
     {
     "type": "Microsoft.KeyVault/vaults/providers/diagnosticSettings",
