@@ -147,7 +147,7 @@
                         "value":[
                             {
                             "secretName": "subnet-id",
-                            "secretValue": "[reference(variables('subnetName')).outputs.subnetId.value]"
+                            "secretValue": "[resourceId(parameters('VNETRG'),'Microsoft.Network/virtualNetworks/subnets',variables('subnetName'))]"
                             },
 
                             {

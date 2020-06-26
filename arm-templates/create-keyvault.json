@@ -108,7 +108,7 @@
         }
     ],
     "outputs": {
-            "keyvaultName": {
+    "keyvaultName": {
       "type": "string",
       "value": "[parameters('keyVaultName')]"
     },
