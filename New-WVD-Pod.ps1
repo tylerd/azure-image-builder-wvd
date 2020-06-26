@@ -25,6 +25,11 @@ $templateUri = (Get-AzStorageBlob -Blob "$folder/$MainTemplate" -Container $Root
 
 $secureToken = ConvertTo-SecureString -String $token -AsPlainText -Force
 
-New-AzResourceGroupDeployment -ResourceGroupName $TargetResourceGroup `
+<#New-AzResourceGroupDeployment -ResourceGroupName $TargetResourceGroup `
     -TemplateUri "$templateUri$token" -Verbose `
+    -artifactsLocationSasToken $secureToken
+    #>
+
+    New-AzResourceGroupDeployment -ResourceGroupName $TargetResourceGroup `
+    -TemplateFile $MainTemplate -Verbose `
     -artifactsLocationSasToken $secureToken

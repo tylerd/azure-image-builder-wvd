@@ -144,7 +144,7 @@
                     "keyVaultName": {
                         "value": "[variables('keyVaultName')]"
                     },
-                    "secretsObjects": {
+                    "secretsObject": {
                         "value":[
                             {
                             "secretName": "subnet-id",
