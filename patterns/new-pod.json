@@ -66,6 +66,7 @@
         "subnetID":"[concat(resourceId(parameters('VNETRG'),'Microsoft.Network/virtualNetworks',parameters('VNETName')),'/subnets/',variables('subnetName'))]",
         "netapp":"[concat(parameters('environment'),'-NetAppVol-',parameters('persona'),'-',variables('unique_string'),'-profiles')]",
         "secrets-deployment": "[concat('secrets-for-WVD-',parameters('persona'),'-',variables('unique_string'))]",
+        "wks-deployment":"[concat('WVD-WKS-',parameters('persona'),'-',variables('unique_string'))]",
         "wvd_location":"eastus2",
         "wks":"[concat(parameters('environment'),'-WKS-',parameters('persona'),'-',variables('unique_string'))]",
         "appgrp_blue":"[concat(parameters('environment'),'-AppGroup-',parameters('persona'),'-',variables('unique_string'),'-BLUE')]",
@@ -195,9 +196,8 @@
     // Deploy WVD Workspace
            { "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "[variables('secrets-deployment')]",
+            "name": "[variables('wks-deployment')]",
             "resourceGroup": "[resourceGroup().name]",
-            "location":"[variables('wvd_location')]",
             "dependsOn": [
                 "[variables('secrets-deployment')]"
             ],
