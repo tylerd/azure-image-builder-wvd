@@ -211,12 +211,13 @@
                             },
                             "secretName": "[variables('wks')]"
                         }
+                    }
                 },
                 "templateLink": {
                     "uri": "[concat(variables('templateURI'),'new-workspace.json',parameters('artifactsLocationSasToken'))]",
                     "contentVersion": "1.0.0.0"
                 }
-            }
+            
         }
            }
 
