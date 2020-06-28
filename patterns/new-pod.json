@@ -67,6 +67,7 @@
         "netapp":"[concat(parameters('environment'),'-NetAppVol-',parameters('persona'),'-',variables('unique_string'),'-profiles')]",
         "secrets-deployment": "[concat('secrets-for-WVD-',parameters('persona'),'-',variables('unique_string'))]",
         "wks-deployment":"[concat('WVD-WKS-',parameters('persona'),'-',variables('unique_string'))]",
+        "blue-pod-container-deployment":"[concat('WVD-POD-Container-BLUE',parameters('persona'),'-',variables('unique_string'))]",
         "wvd_location":"eastus2",
         "wks":"[concat(parameters('environment'),'-WKS-',parameters('persona'),'-',variables('unique_string'))]",
         "appgrp_blue":"[concat(parameters('environment'),'-AppGroup-',parameters('persona'),'-',variables('unique_string'),'-BLUE')]",
@@ -78,7 +79,7 @@
         //Deploy Key Vault for Pod. 
                 {
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
+            "apiVersion": "2020-06-01",
             "name": "[variables('keyVaultName')]",
             "resourceGroup": "[resourceGroup().name]",
             "properties": {
@@ -106,7 +107,7 @@
         //Deploy subnet for WVD VMs 
                       {
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
+            "apiVersion": "2020-06-01",
             "name": "[variables('subnetName')]",
             "resourceGroup": "[parameters('VNETRG')]",
             "properties": {
@@ -135,7 +136,7 @@
     // Add secrets to Key Vault - input parameters for the WVD deployment: Blue and Green. 
                               {
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
+            "apiVersion": "2020-06-01",
             "name": "[variables('secrets-deployment')]",
             "resourceGroup": "[resourceGroup().name]",
             "dependsOn": [
@@ -195,7 +196,7 @@
         },
     // Deploy WVD Workspace
            { "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
+            "apiVersion": "2020-06-01",
             "name": "[variables('wks-deployment')]",
             "resourceGroup": "[resourceGroup().name]",
             "dependsOn": [
@@ -209,8 +210,11 @@
                             "keyVault": {
                                 "id": "[resourceId(variables('subscriptionId'), variables('resourceGroupName'), 'Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
                             },
-                            "secretName": "[variables('wks')]"
+                            "secretName": "wks"
                         }
+                    },
+                    "location": {
+                    "value":"[variables('wvd_location')]"
                     }
                 },
                 "templateLink": {
@@ -219,9 +223,69 @@
                 }
             
         }
-           }
+           },
 
     //Deploy BLUE POD Container (Host Pool and App Group)
+           { "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('blue-pod-container-deployment')]",
+            "resourceGroup": "[resourceGroup().name]",
+            "dependsOn": [
+                "[variables('wks-deployment')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "parameters": {
+                    "hostpoolName":{
+                            "reference": {
+                            "keyVault": {
+                                "id": "[resourceId(variables('subscriptionId'), variables('resourceGroupName'), 'Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
+                            },
+                            "secretName": "host-pool-blue"
+                        }
+                    },
+                    "appGroupName": {
+                            "reference": {
+                            "keyVault": {
+                                "id": "[resourceId(variables('subscriptionId'), variables('resourceGroupName'), 'Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
+                            },
+                            "secretName": "app-group-blue"
+                        }
+                    },
+                    "workspaceName": {
+                            "reference": {
+                            "keyVault": {
+                                "id": "[resourceId(variables('subscriptionId'), variables('resourceGroupName'), 'Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
+                            },
+                            "secretName": "wks"
+                        }
+                    },
+                    "location": {
+                    "value":"[variables('wvd_location')]"
+                    },
+                    "addToWorkspace":{
+                        "value": true
+                    },
+                    "hostpoolType": {
+                        "value":"Pooled"
+                    },
+                    "personalDesktopAssignmentType": {
+                        "value": ""
+                    },
+                    "loadBalancerType": {
+                        "value":"BreadthFirst"
+                    },
+                    "maxSessionLimit": {
+                        "value": 400
+                    }
+                },
+                "templateLink": {
+                    "uri": "[concat(variables('templateURI'),'new-host-pool.json',parameters('artifactsLocationSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                }
+            
+        }
+           }
 
     //Deploy GREEN POD Container (Host Pool and App Group)
 

@@ -43,19 +43,8 @@
             },
             "defaultValue": ""
         },
-        "workspaceLocation": {
-            "type": "string",
-            "metadata": {
-                "description": "The location of the workspace."
-            },
-            "defaultValue": "eastus2"
-        },
-        "workspaceResourceGroup": {
-            "type": "string",
-            "metadata": {
-                "description": "The workspace resource group Name."
-            },
-            "defaultValue": ""
+        "appGroupName": {
+            "type": "string"
         },
         "allApplicationGroupReferences": {
             "type": "string",
@@ -155,8 +144,9 @@
         "hostpoolName": "[replace(parameters('hostpoolName'),'\"','')]",
         "hostpoolFriendlyName": "[parameters('hostpoolFriendlyName')]",
         "appGroupName": "[concat(variables('hostpoolName'),'-DAG')]",
-        "appGroupResourceId": "[createArray(resourceId('Microsoft.DesktopVirtualization/applicationgroups/', variables('appGroupName')))]",
-        "workspaceResourceGroup": "[if(empty(parameters('workspaceResourceGroup')), parameters('TargetresourceGroup'), parameters('workspaceResourceGroup'))]",
+        "appGroupResourceId": "[createArray(resourceId('Microsoft.DesktopVirtualization/applicationgroups/', parameters('appGroupName')))]",
+        //"workspaceResourceGroup": "[if(empty(parameters('workspaceResourceGroup')), parameters('TargetresourceGroup'), parameters('workspaceResourceGroup'))]",
+        "workspaceResourceGroup": "[resourceGroup().name]",
         "applicationGroupReferencesArr": "[if(equals('',parameters('allApplicationGroupReferences')), variables('appGroupResourceId'), concat(split(parameters('allApplicationGroupReferences'),','), variables('appGroupResourceId')))]"
     },
     "resources": [
@@ -184,7 +174,7 @@
             }
         },
         {
-            "name": "[variables('appGroupName')]",
+            "name": "[parameters('appGroupName')]",
             "apiVersion": "[parameters('apiVersion')]",
             "type": "Microsoft.DesktopVirtualization/applicationgroups",
             "location": "[parameters('location')]",
@@ -215,7 +205,7 @@
                             "apiVersion": "[parameters('apiVersion')]",
                             "name": "[parameters('workSpaceName')]",
                             "type": "Microsoft.DesktopVirtualization/workspaces",
-                            "location": "[parameters('workspaceLocation')]",
+                            "location": "[parameters('location')]",
                             "properties": {
                                 "applicationGroupReferences": "[variables('applicationGroupReferencesArr')]"
                             }
@@ -224,7 +214,7 @@
                 }
             },
             "dependsOn": [
-                "[resourceId('Microsoft.DesktopVirtualization/applicationgroups/', variables('appGroupName'))]"
+                "[resourceId('Microsoft.DesktopVirtualization/applicationgroups/', parameters('appGroupName'))]"
             ]
         } 
         
