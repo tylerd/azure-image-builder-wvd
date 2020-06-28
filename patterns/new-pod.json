@@ -60,11 +60,14 @@
         },
         "subnetName": "[concat('SUB-WVD-',parameters('persona'),'-',variables('unique_string'))]",
         "unique_string": "[take(uniqueString(resourceGroup().id),3)]",
+        "subscriptionId": "[subscription().subscriptionId]",
+        "resourceGroupName": "[resourceGroup().name]",
         "keyVaultName":"[concat(parameters('environment'),'-',variables('regionCode')[parameters('location')],'-WVD-',parameters('persona'),'-',variables('unique_string'),'-KV')]",
         "subnetID":"[concat(resourceId(parameters('VNETRG'),'Microsoft.Network/virtualNetworks',parameters('VNETName')),'/subnets/',variables('subnetName'))]",
         "netapp":"[concat(parameters('environment'),'-NetAppVol-',parameters('persona'),'-',variables('unique_string'),'-profiles')]",
         "secrets-deployment": "[concat('secrets-for-WVD-',parameters('persona'),'-',variables('unique_string'))]",
-        "wks_name":"[concat(parameters('environment'),'-WKS-',parameters('persona'),'-',variables('unique_string'))]",
+        "wvd_location":"eastus2",
+        "wks":"[concat(parameters('environment'),'-WKS-',parameters('persona'),'-',variables('unique_string'))]",
         "appgrp_blue":"[concat(parameters('environment'),'-AppGroup-',parameters('persona'),'-',variables('unique_string'),'-BLUE')]",
         "appgrp_green":"[concat(parameters('environment'),'-AppGroup-',parameters('persona'),'-',variables('unique_string'),'-GREEN')]",
         "hostpool_blue":"[concat(parameters('environment'),'-HostPool-',parameters('persona'),'-',variables('unique_string'),'-BLUE')]",
@@ -156,8 +159,8 @@
                             },
 
                             {
-                              "secretName": "wks_name",
-                              "secretValue": "[variables('wks_name')]"  
+                              "secretName": "wks",
+                              "secretValue": "[variables('wks')]"  
                             },
                             {
                                 "secretName":"app-group-blue",
@@ -188,7 +191,41 @@
                     "contentVersion": "1.0.0.0"
                 }
             }
+        },
+    // Deploy WVD Workspace
+           { "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "[variables('secrets-deployment')]",
+            "resourceGroup": "[resourceGroup().name]",
+            "location":"[variables('wvd_location')]",
+            "dependsOn": [
+                "[variables('secrets-deployment')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "parameters": {
+                    "workspaceName": {
+                            "reference": {
+                            "keyVault": {
+                                "id": "[resourceId(variables('subscriptionId'), variables('resourceGroupName'), 'Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
+                            },
+                            "secretName": "[variables('wks')]"
+                        }
+                },
+                "templateLink": {
+                    "uri": "[concat(variables('templateURI'),'new-workspace.json',parameters('artifactsLocationSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                }
+            }
         }
+           }
+
+    //Deploy BLUE POD Container (Host Pool and App Group)
+
+    //Deploy GREEN POD Container (Host Pool and App Group)
+
+
+    
     ],
     "outputs": {}
 }

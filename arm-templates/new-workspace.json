@@ -24,19 +24,12 @@
         "tags": {
             "type": "object",
             "defaultValue": {}
-        },
-        "apiVersion": {
-            "type": "string",
-            "metadata": {
-                "description": "WVD api version"
-            },
-            "defaultValue": "2019-12-10-preview"
         }
     },
     "resources": [
         {
             "name": "[parameters('workspaceName')]",
-            "apiVersion": "[parameters('apiVersion')]",
+            "apiVersion": "2019-12-10-preview",
             "type": "Microsoft.DesktopVirtualization/workspaces",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
