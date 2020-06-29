@@ -294,7 +294,7 @@
             "name": "[variables('green-pod-container-deployment')]",
             "resourceGroup": "[resourceGroup().name]",
             "dependsOn": [
-                "[variables('wks-deployment')]"
+                "[variables('blue-pod-container-deployment')]"
             ],
             "properties": {
                 "mode": "Incremental",
