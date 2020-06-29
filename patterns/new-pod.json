@@ -32,6 +32,15 @@
             "type": "string",
             "defaultValue":"wvdspring-vnet"
         },
+        "VNETName-green":{
+            "type": "string",
+            "defaultValue": "vnet_ca_central"
+            },
+
+        "VNETRG-green":{
+            "type": "string",
+            "defaultValue": "azure144"
+        },
         "VNETRG": {
             "type": "string",
             "defaultValue":"Azureminilab-VNET"
@@ -39,6 +48,11 @@
         "addressPrefix": {
             "type": "string",
             "defaultValue":"192.168.0.128/28"
+        },
+
+        "addressPrefix-green": {
+            "type": "string",
+            "defaultValue":"10.0.2.0/28"
         },
         "_artifactsLocation": {
             "type": "string",
@@ -63,8 +77,12 @@
         "subscriptionId": "[subscription().subscriptionId]",
         "resourceGroupName": "[resourceGroup().name]",
         "keyVaultName":"[concat(parameters('environment'),'-',variables('regionCode')[parameters('location')],'-WVD-',parameters('persona'),'-',variables('unique_string'),'-KV')]",
-        "subnetID":"[concat(resourceId(parameters('VNETRG'),'Microsoft.Network/virtualNetworks',parameters('VNETName')),'/subnets/',variables('subnetName'))]",
-        "netapp":"[concat(parameters('environment'),'-NetAppVol-',parameters('persona'),'-',variables('unique_string'),'-profiles')]",
+        "blue-subnetID":"[concat(resourceId(parameters('VNETRG'),'Microsoft.Network/virtualNetworks',parameters('VNETName')),'/subnets/',variables('subnetName'))]",
+        "green-subnetID":"[concat(resourceId(parameters('VNETRG-green'),'Microsoft.Network/virtualNetworks',parameters('VNETName-green')),'/subnets/',variables('subnetName'))]",
+        "netapp-blue":"[concat(parameters('environment'),'-NetAppVol-BLUE',parameters('persona'),'-',variables('unique_string'),'-profiles')]",
+        "netapp-green":"[concat(parameters('environment'),'-NetAppVol-GREEN',parameters('persona'),'-',variables('unique_string'),'-profiles')]",
+        "subnetName-deployment-blue": "[concat('BLUE-subnet-for-WVD-',parameters('persona'),'-',variables('unique_string'))]",
+        "subnetName-deployment-green": "[concat('BLUE-subnet-for-WVD-',parameters('persona'),'-',variables('unique_string'))]",
         "secrets-deployment": "[concat('secrets-for-WVD-',parameters('persona'),'-',variables('unique_string'))]",
         "wks-deployment":"[concat('WVD-WKS-',parameters('persona'),'-',variables('unique_string'))]",
         "blue-pod-container-deployment":"[concat('WVD-POD-Container-BLUE',parameters('persona'),'-',variables('unique_string'))]",
@@ -115,11 +133,11 @@
                 }
             }
         },
-        //Deploy subnet for WVD VMs 
+        //Deploy BLUE subnet for WVD VMs 
                       {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
-            "name": "[variables('subnetName')]",
+            "name": "[variables('subnetName-deployment-blue')]",
             "resourceGroup": "[parameters('VNETRG')]",
             "properties": {
                 "mode": "Incremental",
@@ -129,6 +147,32 @@
                     },
                     "existingVNETName": {
                         "value":"[parameters('VNETName')]"
+                    },
+                    "newSubnetName": {
+                        "value":"[variables('subnetName')]"
+                    }
+                },
+                "templateLink": {
+                    "uri": "[concat(variables('templateURI'),'vnet-add-subnet.json',parameters('artifactsLocationSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                }
+            }
+        },
+
+                //Deploy GREEN subnet for WVD VMs 
+                      {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('subnetName-deployment-green')]",
+            "resourceGroup": "[parameters('VNETRG-green')]",
+            "properties": {
+                "mode": "Incremental",
+                "parameters": {
+                    "newSubnetAddressPrefix": {
+                        "value": "[parameters('addressPrefix-green')]"
+                    },
+                    "existingVNETName": {
+                        "value":"[parameters('VNETName-green')]"
                     },
                     "newSubnetName": {
                         "value":"[variables('subnetName')]"
@@ -167,8 +211,12 @@
                         "value": {
                         "secrets":[
                             {
-                            "secretName": "subnet-id",
-                            "secretValue": "[variables('subnetID')]"
+                            "secretName": "blue-subnet-id",
+                            "secretValue": "[variables('blue-subnetID')]"
+                            },
+                            {
+                            "secretName": "green-subnet-id",
+                            "secretValue": "[variables('green-subnetID')]"
                             },
 
                             {
@@ -191,9 +239,18 @@
                                 "secretName": "host-pool-green",
                                 "secretValue": "[variables('hostpool_green')]"
                             },
-                                                        {
-                                "secretName": "netapp",
-                                "secretValue": "[variables('netapp')]"
+                            {
+                                "secretName": "netapp-blue",
+                                "secretValue": "[variables('netapp-blue')]"
+                            },
+                            {
+                                "secretName": "netapp-green",
+                                "secretValue": "[variables('netapp-green')]"
+                            },
+
+                            {
+                                "secretName": "active-host-pool",
+                                "secretValue":"[variables('hostpool_blue')]"
                             }
                                 ]
                         }
