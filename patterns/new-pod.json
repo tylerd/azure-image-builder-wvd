@@ -123,6 +123,32 @@
                     "AzDevOpsSPN": {
                         "value":"[parameters('AzDevOpsSPN')]"
                     },
+                    "secretsObject": {
+                        "value": {
+                        "secrets": [
+                            {
+                            "secretName":"admin-account-password",
+                            "secretValue":"!R37fallacy1505",
+                            "contentType":"secretValue"
+                            },
+                            {
+                            "secretName":"ou-path",
+                            "secretValue":"",
+                            "contentType":"secretValue"
+                            },
+                            {
+                            "secretName":"domain",
+                            "secretValue":"azureminilab.com",
+                            "contentType":"secretValue"
+                            },
+                            {
+                            "secretName":"admin-account-user",
+                            "secretValue":"azadmin@azureminilab.com",
+                            "contentType":"secretValue"
+                            }  
+                        ]
+
+                    },
                     "workspaceId": {
                     "value": "[parameters('workspaceId')]"
                     }
