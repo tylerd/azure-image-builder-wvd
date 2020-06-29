@@ -18,19 +18,13 @@
         "location": {
             "type": "string",
            "defaultValue": "[resourceGroup().location]"
-        }
-    },
-    "functions": [],
-    "variables": {
-        "enabledForDeployment":true,
-        "enabledForDiskEncryption": false,
-        "enabledForTemplateDeployment": true,
-        "enableSoftDelete": true,
-        "enablePurgeProtection": true,
-        "tenantId": "[subscription().tenantId]",
-        "skuName": "Standard",
-        "settingName": "Send_to_LGA",
-        "secrets":  [
+        },
+        "secretsObject": {
+        "type": "secureObject",
+        "metadata": {
+        "description": "Specifies all secrets {\"secretName\":\"\",\"secretValue\":\"\"} wrapped in a secure object."
+        },
+        "defaultValue": [
         {
           "secretName":"admin-account-password",
           "secretValue":"!R37fallacy1505",
@@ -52,7 +46,18 @@
           "contentType":"secretValue"
         }  
       ]
-      //"final_secrets": "[union(variables('baselineSecrets'),parameters('secretsObject'))]"
+        }
+    },
+    "functions": [],
+    "variables": {
+        "enabledForDeployment":true,
+        "enabledForDiskEncryption": false,
+        "enabledForTemplateDeployment": true,
+        "enableSoftDelete": true,
+        "enablePurgeProtection": true,
+        "tenantId": "[subscription().tenantId]",
+        "skuName": "Standard",
+        "settingName": "Send_to_LGA"
         },
     "resources": [
     {
@@ -109,18 +114,19 @@
     },
     {
       "type": "Microsoft.KeyVault/vaults/secrets",
-      "name": "[concat(parameters('keyVaultName'), '/', variables('secrets')[copyIndex()].secretName)]",
+      "name": "[concat(parameters('keyVaultName'), '/', parameters('secretsObject')[copyIndex()].secretName)]",
       "apiVersion": "2018-02-14",
       "copy": {
         "name": "secretCopy",
-        "count": "[length(variables('secrets'))]"
+        "count": "[length(parameters('secretsObject'))]"
       },
       "properties": {
-        "value": "[variables('secrets')[copyIndex()].secretValue]",
-        "contentType": "[variables('secrets')[copyIndex()].contentType]"
+        "value": "[parameters('secretsObject')[copyIndex()].secretValue]",
+        "contentType": "[parameters('secretsObject')[copyIndex()].contentType]"
       },
       "dependsOn": [ "[concat('Microsoft.KeyVault/vaults/',parameters('keyVaultName'))]" ]
     },
+
     {
     "type": "Microsoft.KeyVault/vaults/providers/diagnosticSettings",
     "name": "[concat(parameters('keyVaultName'),'/microsoft.Insights/', variables('settingName'))]",
