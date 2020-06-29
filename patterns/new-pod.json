@@ -195,7 +195,8 @@
             "name": "[variables('secrets-deployment')]",
             "resourceGroup": "[resourceGroup().name]",
             "dependsOn": [
-                "[variables('subnetName')]",
+                "[variables('subnetName-deployment-green')]",
+                "[variables('subnetName-deployment-blue')]",
                 "[variables('keyVaultName')]"
             ],
             "properties": {
