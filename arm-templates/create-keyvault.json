@@ -23,7 +23,7 @@
         "type": "secureObject",
         "metadata": {
         "description": "Specifies all secrets {\"secretName\":\"\",\"secretValue\":\"\"} wrapped in a secure object."
-        }
+            }
         }
     },
     "functions": [],
@@ -92,15 +92,14 @@
     },
     {
       "type": "Microsoft.KeyVault/vaults/secrets",
-      "name": "[concat(parameters('keyVaultName'), '/', parameters('secretsObject')[copyIndex()].secretName)]",
+      "name": "[concat(parameters('keyVaultName'), '/', parameters('secretsObject').secrets[copyIndex()].secretName)]",
       "apiVersion": "2018-02-14",
       "copy": {
         "name": "secretCopy",
-        "count": "[length(parameters('secretsObject'))]"
+        "count": "[length(parameters('secretsObject').secrets)]"
       },
       "properties": {
-        "value": "[parameters('secretsObject')[copyIndex()].secretValue]",
-        "contentType": "[parameters('secretsObject')[copyIndex()].contentType]"
+        "value": "[parameters('secretsObject').secrets[copyIndex()].secretValue]"
       },
       "dependsOn": [ "[concat('Microsoft.KeyVault/vaults/',parameters('keyVaultName'))]" ]
     },
