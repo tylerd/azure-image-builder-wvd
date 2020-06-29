@@ -69,7 +69,8 @@
         "wks-deployment":"[concat('WVD-WKS-',parameters('persona'),'-',variables('unique_string'))]",
         "blue-pod-container-deployment":"[concat('WVD-POD-Container-BLUE',parameters('persona'),'-',variables('unique_string'))]",
         "green-pod-container-deployment":"[concat('WVD-POD-Container-GREEN',parameters('persona'),'-',variables('unique_string'))]",
-        "user-pod-container-blue-deployment": "[concat('WVD-POD-Containers--BLUE-UsersAssignmt',parameters('persona'),'-',variables('unique_string'))]",
+        "user-pod-container-blue-deployment": "[concat('WVD-POD-Containers-BLUE-UsersAssignmt',parameters('persona'),'-',variables('unique_string'))]",
+        "user-pod-container-green-deployment": "[concat('WVD-POD-Containers-GREEN-UsersAssignmt',parameters('persona'),'-',variables('unique_string'))]",
         "wvd_location":"eastus2",
         "wks":"[concat(parameters('environment'),'-WKS-',parameters('persona'),'-',variables('unique_string'))]",
         "appgrp_blue":"[concat(parameters('environment'),'-AppGroup-',parameters('persona'),'-',variables('unique_string'),'-BLUE')]",
@@ -79,6 +80,10 @@
         "user-group-blue": [ {
                     "name": "E95@azureminilab.com",
                     "principalId": "7a968489-417d-4fec-813b-aa07e9e5e747"
+                } ],
+        "user-group-green": [ {
+                    "name": "e01@azureminilab.com",
+                    "principalId": "e62eb52c-9974-4796-9a10-47d8e781e60b"
                 } ]
     },
     "resources": [
@@ -189,11 +194,6 @@
                                                         {
                                 "secretName": "netapp",
                                 "secretValue": "[variables('netapp')]"
-                            },
-                            
-                            {
-                                "secretName":"user-group-blue",
-                                "secretValue":"[variables('user-group-blue')]"
                             }
                                 ]
                         }
@@ -388,7 +388,40 @@
                     }
                 },
                 "templateLink": {
-                    "uri": "[concat(variables('templateURI'),'new-host-pool.json',parameters('artifactsLocationSasToken'))]",
+                    "uri": "[concat(variables('templateURI'),'user-assignment.json',parameters('artifactsLocationSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                }
+            
+        }
+           },
+           
+            { "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('user-pod-container-green-deployment')]",
+            "resourceGroup": "[resourceGroup().name]",
+            "dependsOn": [
+                "[variables('green-pod-container-deployment')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "parameters": {
+                    "appGroupName": {
+                            "reference": {
+                            "keyVault": {
+                                "id": "[resourceId(variables('subscriptionId'), variables('resourceGroupName'), 'Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
+                            },
+                            "secretName": "app-group-green"
+                        }
+                    },
+                    "location": {
+                    "value":"[variables('wvd_location')]"
+                    },
+                    "roleAssignments":{
+                        "value": "[variables('user-group-green')]"
+                    }
+                },
+                "templateLink": {
+                    "uri": "[concat(variables('templateURI'),'user-assignment.json',parameters('artifactsLocationSasToken'))]",
                     "contentVersion": "1.0.0.0"
                 }
             
