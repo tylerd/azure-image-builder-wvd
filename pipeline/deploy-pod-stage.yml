@@ -27,7 +27,7 @@ stages:
           - task: AzureResourceGroupDeployment@2
             inputs:
               azureSubscription: ${{ variables.azureConnectionName }}
-              resourceGroupName: $[format('{0}-{1}', variables.resourceGroupPrefix, parameters.podId)]
+              resourceGroupName: ${{ format('{0}-{1}', variables.resourceGroupPrefix, parameters.podId) }}
               location: ${{ parameters.location }}
               templateLocation: URL of the file
               csmFileLink: "https://$(storageAccountName).blob.core.windows.net/templates/patterns/new-pod.json$(token)"
