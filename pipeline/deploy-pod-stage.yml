@@ -6,14 +6,9 @@ stages:
   # Create new pod resource group and resources
   - stage: Deploy_Pod
     displayName: Deploy Pod
-    variables:
-      - template: vars.yml
     jobs:
-      - job: Deploy_Pod_ARM_Template
-        displayName: Deploy Pod ARM Template
-        steps:
-          - template: deploy-template.yml
-            parameters:
-              resourceGroupName: ${{ format('{0}-{1}', variables.resourceGroupPrefix, parameters.podId) }}
-              location: ${{ parameters.location }}
-              templateFile: patterns/new-pod.json
+      - template: deploy-template.yml
+        parameters:
+          resourceGroupName: ${{ format('{0}-{1}', variables.resourceGroupPrefix, parameters.podId) }}
+          location: ${{ parameters.location }}
+          templateFile: patterns/new-pod.json
