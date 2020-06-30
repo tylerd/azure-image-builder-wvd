@@ -169,6 +169,13 @@
                     "AzDevOpsSPN": {
                         "value":"[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName')), '2018-11-30').principalId]"
                     },
+                    "secretsObject": {
+                        "value": {
+                            "secrets": [
+                               { "secretName": "host-pool-token", "secretValue":"[reference(variables('hostpool-token-deployment-name')).outputs.hostpooltoken.value]" }
+                            ]
+                        }
+                    },
                     "workspaceId": {
                     "value": "[parameters('workspaceId')]"
                     }
