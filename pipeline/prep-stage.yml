@@ -25,4 +25,3 @@ stages:
               storage: ${{ variables.storageAccountName }}
               ContainerName: "templates"
               sasTokenTimeOutInMinutes: "240"
-              blobPrefix: $(Build.BuildNumber)/

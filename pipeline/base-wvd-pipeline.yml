@@ -26,8 +26,11 @@ parameters:
 
 stages:
   - template: prep-stage.yml
-#  - template: deploy-pod-stage.yml
 
+  - template: deploy-pod-stage.yml
+    parameters:
+      podId: ${{ parameters.podId }}
+      location: ${{ parameters.targetRegion }}
 #  - template: deploy-host-group-stage.yml
 
 #  - template: swap-users-stage.yml
