@@ -50,7 +50,7 @@
     },
     "functions": [],
     "variables": {
-        "resourceGroup": "[resourceGroup().name]",
+        "resourceGroup": "[string(resourceGroup().name)]",
         "hostpool-token-deployment-name": "[concat('get-hostpool-token-',parameters('utc-value'))]",
         "availability-set-deployment-name": "[concat('compute-availabilitysets-',parameters('utc-value'))]",
         "network-iterfaces-deployment-name": "[concat('network-interfaces-',parameters('utc-value'))]",
