@@ -16,6 +16,7 @@ stages:
             inputs:
               azureSubscription: ${{ variables.azureConnectionName }}
               scriptType: inlineScript
+              azurePowerShellVersion: "LatestVersion"
               inline: |
                 $startTime = Get-Date
                 $expiryTime = $startTime.AddMinutes(30)
