@@ -50,6 +50,7 @@
     },
     "functions": [],
     "variables": {
+        "resourceGroup": "[resourceGroup().name]",
         "hostpool-token-deployment-name": "[concat('get-hostpool-token-',parameters('utc-value'))]",
         "availability-set-deployment-name": "[concat('compute-availabilitysets-',parameters('utc-value'))]",
         "network-iterfaces-deployment-name": "[concat('network-interfaces-',parameters('utc-value'))]",
@@ -210,7 +211,7 @@
         "forceUpdateTag": "[parameters('utc-value')]",
         "azPowerShellVersion": "3.0",
         "timeout": "PT30M",
-        "arguments": "[format(' -vaultName {0} -$vaultRG {1} -keyName {2}', variables('keyVaultName'),resourceGroup().name,variables('disk-encrypt-key-name'))]", // can pass an arguement string, double quotes must be escaped
+        "arguments": "[format(' -vaultName {0} -$vaultRG {1} -keyName {2}', variables('keyVaultName'),variables('resourceGroup'),variables('disk-encrypt-key-name'))]", // can pass an arguement string, double quotes must be escaped
         "scriptContent": "
           param(
             [string] [Parameter(Mandatory=$true)] $vaultName,
@@ -222,7 +223,7 @@
           $DeploymentScriptOutputs = @{}
             
 
-            $keyDestination='Software'
+            $keyDestination=\"Software\"
             $key = Add-AzKeyVaultKey -VaultName $vaultName -Name $keyName -Destination $keyDestination
 
             $keyVault= Get-AzKeyVault -VaultName $vaultName -ResourceGroupName $vaultRG
