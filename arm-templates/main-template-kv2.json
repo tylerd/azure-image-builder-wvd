@@ -47,6 +47,7 @@
     "functions": [],
     "variables": {
         "hostpool-token-deployment-name": "[concat('get-hostpool-token-',parameters('utc-value'))]",
+        "rdsh-prefix":"[take(uniqueString(parameters('HostPoolName')),7)]",
         "availability-set-deployment-name": "[concat('compute-availabilitysets-',parameters('utc-value'))]",
         "network-iterfaces-deployment-name": "[concat('network-interfaces-',parameters('utc-value'))]",
         "virtual-machines-deployment-name": "[concat('virtual-machines-',parameters('utc-value'))]",
@@ -106,7 +107,10 @@
                             },
                             "secretName": "subnet-id"
                         }
-                    }
+                    },
+                        "rdsh-prefix":{
+                            "value": "[variables('rdsh-prefix')]"
+                        }
                 },
                 "templateLink": {
                     //"uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/network-networkinterfaces.json",
