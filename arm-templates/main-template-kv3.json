@@ -121,7 +121,10 @@
                             },
                             "secretName": "subnet-id"
                         }
-                    }
+                    },
+                        "rdsh-prefix":{
+                            "value": "[variables('rdsh-prefix')]"
+                        }
                 },
                 "templateLink": {
                     //"uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/network-networkinterfaces.json",
