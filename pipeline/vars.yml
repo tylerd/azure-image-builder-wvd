@@ -1,0 +1,6 @@
+variables:
+  - name: storageAccountName
+    value: azminlandevops
+
+  - name: azureConnectionName
+    value: AzDevOPS

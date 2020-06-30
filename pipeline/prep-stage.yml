@@ -1,8 +1,5 @@
-parameters:
-  - name: storageAccountName
-    type: string
-  - name: azureConnectionName
-    type: string
+variables:
+  - template: vars.yml
 
 stages:
   # Create Prep Deployment
@@ -23,10 +20,10 @@ stages:
 
           - task: AzureFileCopy@4
             inputs:
-              azureSubscription: ${{ parameters.azureConnectionName }}
+              azureSubscription: ${{ variables.azureConnectionName }}
               SourcePath: '$(Build.Repository.LocalPath)\*'
               Destination: "AzureBlob"
-              storage: ${{ parameters.storageAccountName }}
+              storage: ${{ variables.storageAccountName }}
               ContainerName: "templates"
               sasTokenTimeOutInMinutes: "240"
               blobPrefix: $(Build.BuildNumber)/
