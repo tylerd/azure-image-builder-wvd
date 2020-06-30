@@ -51,6 +51,7 @@
     "functions": [],
     "variables": {
         "resourceGroup": "[replace(string(resourceGroup().name),'\"', '\\\"')]",
+        "tenantId":"[subscription().tenantId]",
         "hostpool-token-deployment-name": "[concat('get-hostpool-token-',parameters('utc-value'))]",
         "availability-set-deployment-name": "[concat('compute-availabilitysets-',parameters('utc-value'))]",
         "network-iterfaces-deployment-name": "[concat('network-interfaces-',parameters('utc-value'))]",
@@ -188,7 +189,7 @@
             }
                 },
 
-    // Deployment script to generage key. Add to Key Vault. Create disk encryption set. Set the permissions.
+    // Deployment script to generate key. Add to Key Vault. Create disk encryption set. Set the permissions.
 
     {
       "type": "Microsoft.Resources/deploymentScripts",
@@ -242,11 +243,9 @@
               $tries++
 
             } while (!$operation.Identity)
-           
-           
-            #Set-AzKeyVaultAccessPolicy -VaultName $vaultName -ObjectId $des.Identity.PrincipalId -PermissionsToKeys wrapkey,unwrapkey,get
-
-            $DeploymentScriptOutputs['desID'] = $des.Id
+                      
+           $DeploymentScriptOutputs['desID'] = $des.Id
+           $DeploymentScriptOutputs['desObjectID'] = $operation.Identity.PrincipalId
             $des | Out-String
         ",
         "cleanupPreference": "OnSuccess",
@@ -254,6 +253,29 @@
       }
     },
 
+
+    //Add access policy to the KV for the disk encryption set
+
+        {
+            "type": "Microsoft.KeyVault/vaults/accessPolicies",
+            "name": "[concat(variables('keyVaultName'), '/add')]",
+            "dependsOn":["[variables('key-vault-deployment-name')]", "[variables('disk-encrypt-set-deployment-name')]"],
+            "apiVersion": "2016-10-01",
+            "properties": {
+                "accessPolicies": [
+                    {
+                        "tenantId": "[variables('tenantId')]",
+                        "objectId": "[reference(variables('disk-encrypt-set-deployment-name')).outputs.desObjectID]",
+                        "permissions": {
+                            "keys": ["all"],
+                            "secrets": ["all"],
+                            "certificates": ["all"],
+                            "storage": ["all"]
+                        }
+                    }
+                ]
+            }
+        },
 
         // Deploy Virtual Machines
         {
@@ -263,7 +285,8 @@
             "dependsOn": [
                 "[variables('network-iterfaces-deployment-name')]",
                 "[variables('availability-set-deployment-name')]",
-                "[variables('disk-encrypt-set-deployment-name')]"
+                "[variables('disk-encrypt-set-deployment-name')]",
+                "[concat(variables('keyVaultName'), '/add')]"
             ],
             "properties": {
                 "mode": "Incremental",
