@@ -4,6 +4,25 @@
 # https://aka.ms/yaml
 
 parameters:
+  - name: targetRegion
+    displayName: Target Azure Region for deployment
+    type: string
+    default: canadacentral
+    values:
+      - canadacentral
+      - canadaeast
+
+  - name: targetContainer
+    displayName: Target Host Container
+    type: string
+    values:
+      - blue
+      - green
+
+  - name: podId
+    displayName: Pod ID (format:POD##, ex POD01)
+    type: string
+    default: POD01
 
 pool:
   name: Hosted Windows 2019 with VS2019
