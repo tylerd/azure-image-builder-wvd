@@ -76,7 +76,11 @@
                 "description": "The name of the avaliblity set."
             },
             "defaultValue": "availabilitySet1"
-        }
+        },
+    "diskEncryptionSetId": {
+      "type": "string",
+      "defaultValue": ""
+    }
     },
     "functions": [],
     "variables": {
@@ -113,7 +117,10 @@
             "osDisk": {
                 "createOption": "FromImage",
                 "managedDisk": {
-                    "storageAccountType": "[parameters('vm-disk-type')]"
+                    "storageAccountType": "[parameters('vm-disk-type')]", 
+                    "diskEncryptionSet": {
+                        "id": "[parameters('diskEncryptionSetId')]"
+                    }
                 }
             }
             },

@@ -278,9 +278,12 @@
                                     "tenantId": "[variables('tenantId')]",
                                     "objectId": "[reference(variables('disk-encrypt-set-deployment-name')).outputs.desObjectID]",
                                     "permissions": {
-                                        "keys": ["all"],
-                                        "secrets": ["all"],
-                                        "certificates": ["all"],
+                                        "keys": [                                    
+                                            "get",
+                                            "wrapKey",
+                                            "unwrapKey"],
+                                        "secrets": [""],
+                                        "certificates": [""],
                                         "storage": ["all"]
                                     }
                                 }
@@ -305,7 +308,11 @@
             ],
             "properties": {
                 "mode": "Incremental",
-                "parameters": {},
+                "parameters": {
+                    "diskEncryptionSetId": {
+                        "value": "[reference(variables('disk-encrypt-set-deployment-name')).outputs.desID]"
+                        }
+                },
                 "templateLink": {
                     // "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/compute-virtualmachines.json",
                     "uri": "[concat(variables('templateURI'),'compute-virtualmachines.json',parameters('artifactsLocationSasToken'))]",
