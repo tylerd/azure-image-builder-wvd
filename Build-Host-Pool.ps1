@@ -8,7 +8,7 @@ $StorageAccountName = "azminlandevops"
 $RootContainer = "templates"
 $folder = "arm-templates"
 
-$MainTemplate = "main-template-kv2.json"
+$MainTemplate = "main-template-kv3.json"
 
 $TargetResourceGroup = $Env:SESSIONHOSTRESOURCEGROUPNAME
 $Location = $Env:LOCATION
