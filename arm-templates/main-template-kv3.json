@@ -231,7 +231,9 @@
             $desConfig=New-AzDiskEncryptionSetConfig -Location $keyVault.Location -SourceVaultId $keyVault.ResourceId -KeyUrl $key.Key.Kid -IdentityType SystemAssigned
 
             $des=New-AzDiskEncryptionSet -Name $keyName -ResourceGroupName $vaultRG -InputObject $desConfig
-            
+
+            # Need to add logic to check for Azure AD. For now just sleep for 30 seconds
+            Start-Sleep -Seconds 30
             Set-AzKeyVaultAccessPolicy -VaultName $vaultName -ObjectId $des.Identity.PrincipalId -PermissionsToKeys wrapkey,unwrapkey,get
 
             $DeploymentScriptOutputs['desID'] = $des.Id
