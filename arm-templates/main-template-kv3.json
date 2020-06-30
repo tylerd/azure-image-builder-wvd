@@ -282,8 +282,8 @@
                                             "get",
                                             "wrapKey",
                                             "unwrapKey"],
-                                        "secrets": [""],
-                                        "certificates": [""],
+                                        "secrets": ["get","list"],
+                                        "certificates": ["get","list"],
                                         "storage": ["all"]
                                     }
                                 }
