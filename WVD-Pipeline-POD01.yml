@@ -1,0 +1,11 @@
+trigger:
+  - none
+
+pr:
+  - none
+
+extends:
+  template: pipeline/base-wvd-pipeline.yml
+  parameters:
+    pod: "POD01"
+    azureConnectionName: ""

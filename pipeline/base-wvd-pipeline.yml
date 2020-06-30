@@ -1,0 +1,23 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+parameters:
+
+pool:
+  name: Hosted Windows 2019 with VS2019
+  demands: azureps
+
+stages:
+  - template: pipeline/prep-stage.yml
+    parameters:
+      azureSubscription: ""
+      storageAccountName: ""
+  - template: pipeline/deploy-pod-stage.yml
+
+  - template: pipeline/deploy-host-group-stage.yml
+
+  - template: pipeline/swap-users-stage.yml
+
+  - template: pipeline/destroy-host-group-stage.yml
