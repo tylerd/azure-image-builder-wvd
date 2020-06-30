@@ -64,6 +64,7 @@
         "disk-encrypt-set-deployment-name":"[concat(parameters('HostPoolName'),'-disk-encrypt-set-',parameters('utc-value'))]",
         "disk-encrypt-key-name":"[concat(parameters('HostPoolName'),'-disk-encrypt-key')]",
         "virtual-machines-deployment-name": "[concat('virtual-machines-',parameters('utc-value'))]",
+        "rdsh-prefix":"[[take(uniqueString(parameters('HostPoolName')),7)]]",
         "domain-join-ext-deployment-name": "[concat('domain-join-ext-',parameters('utc-value'))]",
         "add-session-host-ext-deployment-name": "[concat('add-session-host-',parameters('utc-value'))]",
         "templateURI": "[concat(parameters('_artifactsLocation'),'templates/arm-templates/')]"
@@ -311,6 +312,9 @@
                 "parameters": {
                     "diskEncryptionSetId": {
                         "value": "[reference(variables('disk-encrypt-set-deployment-name')).outputs.desID]"
+                        },
+                        "rdsh-prefix":{
+                            "value": "[variables('rdsh-prefix')]"
                         }
                 },
                 "templateLink": {
