@@ -25,7 +25,7 @@ parameters:
     default: POD01
 
 stages:
-  - template: pipeline/prep-stage.yml
+  - template: prep-stage.yml
     parameters:
       azureSubscription: ""
       storageAccountName: ""
