@@ -236,7 +236,6 @@
 
             $DeploymentScriptOutputs['desID'] = $des.Id
             $des | Out-String
-          }
         ",
         "cleanupPreference": "OnSuccess",
         "retentionInterval": "P1D"
