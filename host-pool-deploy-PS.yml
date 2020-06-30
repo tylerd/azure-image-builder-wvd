@@ -17,13 +17,13 @@ variables:
   - name: SUBSCRIPTIONID
     value: 1965c25a-b7fd-48b5-a393-c9e785c1c4d9
   - name: SESSIONHOSTRESOURCEGROUPNAME
-    value: Azureminilab-WVD-BLUE
+    value: Azureminilab-WVD-GREEN
   - name: WORKSPACERESOURCEGROUPNAME
     value: Azureminilab-WVD-Pod
   - name: LOCATION
     value: canadacentral
   - name: HOSTPOOLNAME
-    value: SBX-HostPool-CENG-t2k-BLUE
+    value: SBX-HostPool-CENG-t2k-GREEN
 
 stages:
   # Create Prep Deployment
