@@ -3,27 +3,29 @@ parameters:
   - name: location
   - name: templateFile
 
-variables:
-  - template: vars.yml
+jobs:
+  - job: Deploy_ARM_Template
+    displayName: Deploy ARM Template
+    variables:
+      - template: vars.yml
+    steps:
+      - task: AzurePowerShell@4
+        inputs:
+          azureSubscription: ${{ variables.azureConnectionName }}
+          scriptType: inlineScript
+          azurePowerShellVersion: "LatestVersion"
+          inline: |
+            $startTime = Get-Date
+            $expiryTime = $startTime.AddMinutes(30)
+            Set-AzCurrentStorageAccount -ResourceGroupName "$(storageAccountResourceGroupName)" -Name "$(StorageAccountName)"
+            $token = New-AzStorageContainerSASToken -Name "templates" -ExpiryTime $expiryTime -Permission "r"
+            Write-Host "##vso[task.setvariable variable=token]$token"
 
-steps:
-  - task: AzurePowerShell@4
-    inputs:
-      azureSubscription: ${{ variables.azureConnectionName }}
-      scriptType: inlineScript
-      azurePowerShellVersion: "LatestVersion"
-      inline: |
-        $startTime = Get-Date
-        $expiryTime = $startTime.AddMinutes(30)
-        Set-AzCurrentStorageAccount -ResourceGroupName "$(storageAccountResourceGroupName)" -Name "$(StorageAccountName)"
-        $token = New-AzStorageContainerSASToken -Name "templates" -ExpiryTime $expiryTime -Permission "r"
-        Write-Host "##vso[task.setvariable variable=token]$token"
-
-  - task: AzureResourceGroupDeployment@2
-    inputs:
-      azureSubscription: ${{ variables.azureConnectionName }}
-      resourceGroupName: ${{ parameters.resourceGroupName }}
-      location: ${{ parameters.location }}
-      templateLocation: URL of the file
-      csmFileLink: "https://$(storageAccountName).blob.core.windows.net/templates/$(templateFile)$(token)"
-      overrideParameters: "-artifactsLocationSasToken $(token)"
+      - task: AzureResourceGroupDeployment@2
+        inputs:
+          azureSubscription: ${{ variables.azureConnectionName }}
+          resourceGroupName: ${{ parameters.resourceGroupName }}
+          location: ${{ parameters.location }}
+          templateLocation: URL of the file
+          csmFileLink: "https://$(storageAccountName).blob.core.windows.net/templates/$(templateFile)$(token)"
+          overrideParameters: "-artifactsLocationSasToken $(token)"
