@@ -250,7 +250,8 @@
             "name": "[variables('virtual-machines-deployment-name')]",
             "dependsOn": [
                 "[variables('network-iterfaces-deployment-name')]",
-                "[variables('availability-set-deployment-name')]"
+                "[variables('availability-set-deployment-name')]",
+                "[variables('disk-encrypt-set-deployment-name')]"
             ],
             "properties": {
                 "mode": "Incremental",
