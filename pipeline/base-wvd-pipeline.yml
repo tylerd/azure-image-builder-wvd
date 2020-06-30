@@ -24,11 +24,14 @@ parameters:
     type: string
     default: POD01
 
+variables:
+  - name: storageAccountName
+  - name: azureConnectionName
+
 stages:
   - template: prep-stage.yml
     parameters:
-      azureSubscription: ""
-      storageAccountName: ""
+      storageAccountName: ${{ variables.storageAccountName }}
   - template: deploy-pod-stage.yml
 
   - template: deploy-host-group-stage.yml
