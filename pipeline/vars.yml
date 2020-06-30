@@ -7,3 +7,6 @@ variables:
 
   - name: azureConnectionName
     value: AzDevOPS
+
+  - name: resourceGroupPrefix
+    value: Azureminilab-WVD
