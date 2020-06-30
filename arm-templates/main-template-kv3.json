@@ -345,7 +345,10 @@
                             },
                             "secretName": "admin-account-password"
                         }
-                    }
+                    },
+                        "rdsh-prefix":{
+                            "value": "[variables('rdsh-prefix')]"
+                        }
                 },
                 "templateLink": {
                     // "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/extensions-jsonaddomainextension.json",
@@ -369,6 +372,9 @@
                     "host-pool-name": {
                         "value": "[parameters('HostPoolName')]"
                     },
+                        "rdsh-prefix":{
+                            "value": "[variables('rdsh-prefix')]"
+                        },
                     //"host-pool-token":{"value": "[parameters('host-pool-token')]"}
                     "host-pool-token": { "value": "[reference(variables('hostpool-token-deployment-name')).outputs.hostpooltoken.value]" }
                 },
