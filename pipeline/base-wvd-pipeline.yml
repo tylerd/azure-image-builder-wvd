@@ -24,10 +24,6 @@ parameters:
     type: string
     default: POD01
 
-pool:
-  name: Hosted Windows 2019 with VS2019
-  demands: azureps
-
 stages:
   - template: pipeline/prep-stage.yml
     parameters:

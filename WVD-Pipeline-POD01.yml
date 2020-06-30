@@ -4,6 +4,10 @@ trigger:
 pr:
   - none
 
+pool:
+  name: Hosted Windows 2019 with VS2019
+  demands: azureps
+
 parameters:
   - name: targetRegion
     displayName: Target Azure Region for deployment
