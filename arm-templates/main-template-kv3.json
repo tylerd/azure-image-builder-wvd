@@ -54,7 +54,7 @@
         "availability-set-deployment-name": "[concat('compute-availabilitysets-',parameters('utc-value'))]",
         "network-iterfaces-deployment-name": "[concat('network-interfaces-',parameters('utc-value'))]",
         "key-vault-deployment-name": "[concat('add-key-vault-',parameters('utc-value'))]",
-        "keyVaultName":"[concat(parameters('HostPoolName'),'KY')]",
+        "keyVaultName":"[take(uniqueString(parameters('HostPoolName')),24)]",
         "identityName-deployment-name":"[concat(parameters('HostPoolName'),'-diskencrypt-mi',parameters('utc-value'))]",
         "identityName":"[concat(parameters('HostPoolName'),'-diskencrypt-mi')]",
         "bootstrapRoleAssignmentId": "[guid(concat(resourceGroup().id, 'contributor'))]",
