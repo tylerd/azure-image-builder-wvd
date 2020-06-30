@@ -1,10 +1,9 @@
-variables:
-  - template: vars.yml
-
 stages:
   # Create Prep Deployment
   - stage: Prep_Deployment
     displayName: Prep Deployment
+    variables:
+      - template: vars.yml
     jobs:
       - job: Download_Repo
         displayName: Download the Repo
