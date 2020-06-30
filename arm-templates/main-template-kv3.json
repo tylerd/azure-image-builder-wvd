@@ -244,7 +244,7 @@
             } while (!$operation.Identity)
            
            
-            Set-AzKeyVaultAccessPolicy -VaultName $vaultName -ObjectId $des.Identity.PrincipalId -PermissionsToKeys wrapkey,unwrapkey,get
+            #Set-AzKeyVaultAccessPolicy -VaultName $vaultName -ObjectId $des.Identity.PrincipalId -PermissionsToKeys wrapkey,unwrapkey,get
 
             $DeploymentScriptOutputs['desID'] = $des.Id
             $des | Out-String
