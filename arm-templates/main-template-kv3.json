@@ -223,7 +223,7 @@
           $DeploymentScriptOutputs = @{}
             
 
-            $keyDestination=\\\"Software\\\"
+            $keyDestination=\"Software\"
             $key = Add-AzKeyVaultKey -VaultName $vaultName -Name $keyName -Destination $keyDestination
 
             $keyVault= Get-AzKeyVault -VaultName $vaultName -ResourceGroupName $vaultRG
