@@ -4,8 +4,25 @@ trigger:
 pr:
   - none
 
+parameters:
+  - name: targetRegion
+    displayName: Target Azure Region for deployment
+    type: string
+    default: canadacentral
+    values:
+      - canadacentral
+      - canadaeast
+
+  - name: targetContainer
+    displayName: Target Host Container
+    type: string
+    values:
+      - blue
+      - green
+
 extends:
   template: pipeline/base-wvd-pipeline.yml
   parameters:
-    pod: "POD01"
-    azureConnectionName: ""
+    targetRegion: ${{ parameters.targetRegion }}
+    targetContainer: ${{ parameters.targetContainer }}
+    podId: "POD01"
