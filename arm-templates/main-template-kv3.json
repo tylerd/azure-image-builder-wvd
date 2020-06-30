@@ -132,7 +132,7 @@
         {
       "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
       "apiVersion": "2018-11-30",
-      "name": "[variables('identityName-deployment-name')]",
+      "name": "[variables('identityName')]",
       "location": "[resourceGroup().location]"
         },
      {
@@ -155,7 +155,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
             "name": "[variables('key-vault-deployment-name')]",
-            "dependsOn":["[variables('identityName-deployment-name')]"],
+            "dependsOn":["[variables('identityName')]"],
             "resourceGroup": "[resourceGroup().name]",
             "properties": {
                 "mode": "Incremental",
