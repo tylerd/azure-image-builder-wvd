@@ -25,6 +25,9 @@
             "type": "string",
             "defaultValue": "[utcNow()]"
         },
+        "desID": {
+            "type": "string"
+        },
         "HostPoolName": {
             "type": "string",
             "defaultValue": "poolA"
@@ -130,7 +133,13 @@
             ],
             "properties": {
                 "mode": "Incremental",
-                "parameters": {},
+                "parameters": {                    
+                    "diskEncryptionSetId": {
+                        "value": "[parameters('desID')]"
+                        },
+                        "rdsh-prefix":{
+                            "value": "[variables('rdsh-prefix')]"
+                        }},
                 "templateLink": {
                     // "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/compute-virtualmachines.json",
                     "uri": "[concat(variables('templateURI'),'compute-virtualmachines.json',parameters('artifactsLocationSasToken'))]",
@@ -155,6 +164,9 @@
                                 "id": "[resourceId(parameters('VaultSubscriptionId'), parameters('VaultResourceGroupName'), 'Microsoft.KeyVault/vaults', parameters('VaultName'))]"
                             },
                             "secretName": "admin-account-password"
+                        },
+                        "rdsh-prefix":{
+                            "value": "[variables('rdsh-prefix')]"
                         }
                     }
                 },
