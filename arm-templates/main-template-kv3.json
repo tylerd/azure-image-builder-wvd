@@ -36,6 +36,10 @@
                 "description": "The name of the  hostpool resource group."
             }
         },
+        "workspaceId": {
+            "type": "string",
+            "defaultValue":"/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourcegroups/azureminilab-la/providers/microsoft.operationalinsights/workspaces/azureminilab2019"
+        },
         "_artifactsLocation": {
             "type": "string",
             "defaultValue": "https://azminlandevops.blob.core.windows.net/"
@@ -49,6 +53,14 @@
         "hostpool-token-deployment-name": "[concat('get-hostpool-token-',parameters('utc-value'))]",
         "availability-set-deployment-name": "[concat('compute-availabilitysets-',parameters('utc-value'))]",
         "network-iterfaces-deployment-name": "[concat('network-interfaces-',parameters('utc-value'))]",
+        "key-vault-deployment-name": "[concat('add-key-vault-',parameters('utc-value'))]",
+        "keyVaultName":"[concat(parameters('HostPoolName'),'-KYV')]",
+        "identityName-deployment-name":"[concat(parameters('HostPoolName'),'-diskencrypt-mi',parameters('utc-value'))]",
+        "identityName":"[concat(parameters('HostPoolName'),'-diskencrypt-mi')]",
+        "bootstrapRoleAssignmentId": "[guid(concat(resourceGroup().id, 'contributor'))]",
+        "contributorRoleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
+        "disk-encrypt-set-deployment-name":"[concat(parameters('HostPoolName'),'-disk-encrypt-set-',parameters('utc-value'))]",
+        "disk-encrypt-key-name":"[concat(parameters('HostPoolName'),'-disk-encrypt-key')]",
         "virtual-machines-deployment-name": "[concat('virtual-machines-',parameters('utc-value'))]",
         "domain-join-ext-deployment-name": "[concat('domain-join-ext-',parameters('utc-value'))]",
         "add-session-host-ext-deployment-name": "[concat('add-session-host-',parameters('utc-value'))]",
@@ -115,6 +127,115 @@
                 }
             }
         },
+
+    // Create user assigned identity for deployment script and assign contributor role over the vm rgp
+        {
+      "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+      "apiVersion": "2018-11-30",
+      "name": "[variables('identityName-deployment-name')]",
+      "location": "[resourceGroup().location]"
+        },
+     {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2018-09-01-preview",
+      "name": "[variables('bootstrapRoleAssignmentId')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName'))]"
+      ],
+      "properties": {
+        "roleDefinitionId": "[variables('contributorRoleDefinitionId')]",
+        "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName')), '2018-11-30').principalId]",
+        "scope": "[resourceGroup().id]",
+        "principalType": "ServicePrincipal"
+      }
+    },
+
+        //Deploy KV for the host pool RG
+            {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('key-vault-deployment-name')]",
+            "dependsOn":["[variables('identityName-deployment-name')]"],
+            "resourceGroup": "[resourceGroup().name]",
+            "properties": {
+                "mode": "Incremental",
+                "parameters": {
+                    "keyVaultName": {
+                        "value": "[variables('keyVaultName')]"
+                    },
+                    "neworExistingKeyVault": {
+                        "value":"newKeyVault"
+                    },
+                    "AzDevOpsSPN": {
+                        "value":"[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName')), '2018-11-30').principalId]"
+                    },
+                    "workspaceId": {
+                    "value": "[parameters('workspaceId')]"
+                    }
+                },
+                "templateLink": {
+                    "uri": "[concat(variables('templateURI'),'create-keyvault.json',parameters('artifactsLocationSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                }
+            }
+                },
+
+    // Deployment script to generage key. Add to Key Vault. Create disk encryption set. Set the permissions.
+
+    {
+      "type": "Microsoft.Resources/deploymentScripts",
+      "apiVersion": "2019-10-01-preview",
+      "name": "[variables('disk-encrypt-set-deployment-name')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[variables('key-vault-deployment-name')]",
+        "[resourceId('Microsoft.Authorization/roleAssignments', variables('bootstrapRoleAssignmentId'))]"
+      ],
+      "identity": {
+        "type": "UserAssigned",
+        "userAssignedIdentities": {
+          "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName'))]": {
+          }
+        }
+      },
+      "kind": "AzurePowerShell",
+      "properties": {
+        "forceUpdateTag": "[parameters('utc-value')]",
+        "azPowerShellVersion": "3.0",
+        "timeout": "PT30M",
+        "arguments": "[format(' -vaultName {0} -$vaultRG {1} -keyName {2}', variables('keyVaultName'),resourceGroup().name,variables('disk-encrypt-key-name'))]", // can pass an arguement string, double quotes must be escaped
+        "scriptContent": "
+          param(
+            [string] [Parameter(Mandatory=$true)] $vaultName,
+            [string] [Parameter(Mandatory=$true)] $vaultRG,
+            [string] [Parameter(Mandatory=$true)] $keyName
+          )
+
+          $ErrorActionPreference = 'Stop'
+          $DeploymentScriptOutputs = @{}
+            
+
+            $keyDestination='Software'
+            $key = Add-AzKeyVaultKey -VaultName $vaultName -Name $keyName -Destination $keyDestination
+
+            $keyVault= Get-AzKeyVault -VaultName $vaultName -ResourceGroupName $vaultRG
+
+            $desConfig=New-AzDiskEncryptionSetConfig -Location $keyVault.Location -SourceVaultId $keyVault.ResourceId -KeyUrl $key.Key.Kid -IdentityType SystemAssigned
+
+            $des=New-AzDiskEncryptionSet -Name $keyName -ResourceGroupName $vaultRG -InputObject $desConfig
+            
+            Set-AzKeyVaultAccessPolicy -VaultName $vaultName -ObjectId $des.Identity.PrincipalId -PermissionsToKeys wrapkey,unwrapkey,get
+
+            $DeploymentScriptOutputs['desID'] = $des.Id
+            $des | Out-String
+          }
+        ",
+        "cleanupPreference": "OnSuccess",
+        "retentionInterval": "P1D"
+      }
+    },
+
+
         // Deploy Virtual Machines
         {
             "type": "Microsoft.Resources/deployments",
