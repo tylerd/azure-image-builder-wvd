@@ -29,10 +29,10 @@ stages:
     parameters:
       azureSubscription: ""
       storageAccountName: ""
-  - template: pipeline/deploy-pod-stage.yml
+  - template: deploy-pod-stage.yml
 
-  - template: pipeline/deploy-host-group-stage.yml
+  - template: deploy-host-group-stage.yml
 
-  - template: pipeline/swap-users-stage.yml
+  - template: swap-users-stage.yml
 
-  - template: pipeline/destroy-host-group-stage.yml
+  - template: destroy-host-group-stage.yml
