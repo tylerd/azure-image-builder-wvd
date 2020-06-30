@@ -12,23 +12,8 @@ stages:
       - job: Deploy_Pod_ARM_Template
         displayName: Deploy Pod ARM Template
         steps:
-          - task: AzurePowerShell@4
-            inputs:
-              azureSubscription: ${{ variables.azureConnectionName }}
-              scriptType: inlineScript
-              azurePowerShellVersion: "LatestVersion"
-              inline: |
-                $startTime = Get-Date
-                $expiryTime = $startTime.AddMinutes(30)
-                Set-AzCurrentStorageAccount -ResourceGroupName "$(storageAccountResourceGroupName)" -Name "$(StorageAccountName)"
-                $token = New-AzStorageContainerSASToken -Name "templates" -ExpiryTime $expiryTime -Permission "r"
-                Write-Host "##vso[task.setvariable variable=token]$token"
-
-          - task: AzureResourceGroupDeployment@2
-            inputs:
-              azureSubscription: ${{ variables.azureConnectionName }}
+          - template: deploy-template.yml
+            parameters:
               resourceGroupName: ${{ format('{0}-{1}', variables.resourceGroupPrefix, parameters.podId) }}
               location: ${{ parameters.location }}
-              templateLocation: URL of the file
-              csmFileLink: "https://$(storageAccountName).blob.core.windows.net/templates/patterns/new-pod.json$(token)"
-              overrideParameters: "-artifactsLocationSasToken $(token)"
+              templateFile: patterns/new-pod.json
