@@ -211,7 +211,7 @@
         "forceUpdateTag": "[parameters('utc-value')]",
         "azPowerShellVersion": "3.0",
         "timeout": "PT30M",
-        "arguments": "[format(' -vaultName {0} -$vaultRG {1} -keyName {2}', variables('keyVaultName'),variables('resourceGroup'),variables('disk-encrypt-key-name'))]", // can pass an arguement string, double quotes must be escaped
+        "arguments": "[format(' -vaultName {0} -vaultRG {1} -keyName {2}', variables('keyVaultName'),variables('resourceGroup'),variables('disk-encrypt-key-name'))]", // can pass an arguement string, double quotes must be escaped
         "scriptContent": "
           param(
             [string] [Parameter(Mandatory=$true)] $vaultName,
