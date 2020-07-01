@@ -17,7 +17,7 @@ $TargetWorkspaceResourceGroup = "Azureminilab-WVD-Pod2"
 $HostPoolName = "SBX-HostPool-DEV-rnr-BLUE"
 $VaultName = "SBX-USE2-WVD-DEV-rnr-KV"
 $VaultResourceGroupName="Azureminilab-WVD-Pod2"
-$subnetid="blue-subnetID"
+$subnetid="blue-subnet-id"
 $desID="/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourceGroups/Azureminilab-WVD-DES/providers/Microsoft.Compute/diskEncryptionSets/DEV-disk-encrypt-key"
 
 $rg = Get-AzResourceGroup -Name $TargetResourceGroup -ErrorAction SilentlyContinue
@@ -38,7 +38,7 @@ New-AzResourceGroupDeployment -ResourceGroupName $TargetResourceGroup `
     -VaultName $VaultName `
     -VaultResourceGroupName $VaultResourceGroupName `
     -VaultSubscriptionId $SubscriptionId `
-    -subnet-id $subnetid `
+    -subnetid $subnetid `
     -desID $desID `
     -host-pool-resource-group $TargetWorkspaceResourceGroup `
     -HostPoolName $HostPoolName `

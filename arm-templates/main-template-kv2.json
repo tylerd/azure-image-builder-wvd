@@ -147,7 +147,11 @@
                         },
                         "rdsh-prefix":{
                             "value": "[variables('rdsh-prefix')]"
-                        }},
+                        },
+                        "availability-set-name":{
+                            "value":"[concat(variables('rdsh-prefix'),'-avset')]"
+                        }
+                        },
                 "templateLink": {
                     // "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/compute-virtualmachines.json",
                     "uri": "[concat(variables('templateURI'),'compute-virtualmachines.json',parameters('artifactsLocationSasToken'))]",
