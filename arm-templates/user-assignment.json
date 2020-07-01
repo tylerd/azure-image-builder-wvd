@@ -64,7 +64,7 @@
                         {
                             "type": "Microsoft.DesktopVirtualization/applicationgroups/providers/roleAssignments",
                             "apiVersion": "[if(contains(parameters('location'), 'euap'), '2019-04-01-preview','2018-07-01')]",
-                            "name": "[concat(variables('GuidforAppGroupRole'),guid(parameters('roleAssignments')[CopyIndex()].name))]",
+                            "name": "[concat(variables('GuidforAppGroupRole'),guid(concat(parameters('roleAssignments')[CopyIndex()].name),parameters('appGroupName')))]",
                             "properties": {
                                 "principalId": "[parameters('roleAssignments')[CopyIndex()].principalId]",
                                 "roleDefinitionId": "[variables('desktopVirtualizationUserRoleDefinition')]"
