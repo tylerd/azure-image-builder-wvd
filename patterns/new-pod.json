@@ -376,7 +376,7 @@
                         "value": true
                     },
                     "allApplicationGroupReferences":{
-                        "value":"[resourceId(resourcegroup().id,'Microsoft.DesktopVirtualization/applicationgroups/',variables('appgrp_blue') )]"
+                        "value":"[resourceId('Microsoft.DesktopVirtualization/applicationgroups/',variables('appgrp_blue') )]"
                     },
                     "hostpoolType": {
                         "value":"Pooled"
