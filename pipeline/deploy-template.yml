@@ -4,8 +4,7 @@ parameters:
   - name: templateFile
 
 jobs:
-  - job: Deploy_ARM_Template
-    displayName: Deploy ARM Template
+  - job: ${{ parameters.templateFile }}
     variables:
       - template: vars.yml
     steps:
