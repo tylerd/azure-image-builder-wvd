@@ -176,11 +176,11 @@
                                 "id": "[resourceId(parameters('VaultSubscriptionId'), parameters('VaultResourceGroupName'), 'Microsoft.KeyVault/vaults', parameters('VaultName'))]"
                             },
                             "secretName": "admin-account-password"
-                        },
-                        "rdsh-prefix":{
+                        }
+                    },
+                    "rdsh-prefix":{
                             "value": "[variables('rdsh-prefix')]"
                         }
-                    }
                 },
                 "templateLink": {
                     // "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/extensions-jsonaddomainextension.json",
