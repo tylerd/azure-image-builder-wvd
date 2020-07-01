@@ -1,12 +1,11 @@
 parameters:
   - name: resourceGroupName
   - name: location
-  - name: jobName
   - name: templateFile
 
 jobs:
-  - job: ${{ parameters.jobName }}
-    displayName: Deploy ${{ parameters.jobName }}
+  - job: Deploy_ARM_Template
+    displayName: Deploy ${{ parameters.templateFile }}
     variables:
       - template: vars.yml
     steps:
