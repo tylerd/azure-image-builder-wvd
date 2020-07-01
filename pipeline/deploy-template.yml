@@ -27,5 +27,5 @@ jobs:
           resourceGroupName: ${{ parameters.resourceGroupName }}
           location: ${{ parameters.location }}
           templateLocation: URL of the file
-          csmFileLink: "https://$(storageAccountName).blob.core.windows.net/templates/$(templateFile)$(token)"
+          csmFileLink: "https://$(storageAccountName).blob.core.windows.net/templates/${{parameters.templateFile}}$(token)"
           overrideParameters: "-artifactsLocationSasToken $(token)"
