@@ -81,6 +81,8 @@ $TargetAppGroupName=$TargetAppGroupID.Split('/')[($TargetAppGroupID.Split('/')).
 [string]$TargetHostPoolId=(Get-AzWvdApplicationGroup -Name $TargetAppGroupName -ResourceGroupName $WVDRG).HostPoolArmPath
 $TargetHostPoolName=$TargetHostPoolID.Split('/')[($TargetHostPoolID.Split('/')).count-1]
 $TargetHostPoolNameSecretValue=ConvertTo-SecureString $TargetHostPoolName -AsPlainText -Force
-$newHostsecret=Set-AzKeyVaultSecret -VaultName $VaultName -Name $HostsecretName -SecretValue $TargetHostPoolNameSecretValue
+$RotationTime =(Get-Date).ToUniversalTime()
+$Tags=@{'RotatedOn'=$RotationTime}
+$newHostsecret=Set-AzKeyVaultSecret -VaultName $VaultName -Name $HostsecretName -SecretValue $TargetHostPoolNameSecretValue -Tags $Tags
 
 Write-Host 'Rotated the value of the secret. New active Host Pool is: ' $TargetHostPoolName
