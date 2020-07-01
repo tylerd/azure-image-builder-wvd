@@ -39,6 +39,9 @@
                 "description": "The name of the  hostpool resource group."
             }
         },
+        "subnet-id": {
+            "type": "string"
+        },
         "_artifactsLocation": {
             "type": "string",
             "defaultValue": "https://azminlandevops.blob.core.windows.net/"
@@ -86,6 +89,11 @@
             "name": "[variables('availability-set-deployment-name')]",
             "properties": {
                 "mode": "Incremental",
+                "parameters": {
+                    "availabilitySet1": {
+                        "value":"[concat(variables('rdsh-prefix'),'-avset')]"
+                    }
+                },
                 "templateLink": {
                     //"uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/compute-availabilitysets.json",
                     "uri": "[concat(variables('templateURI'),'compute-availabilitysets.json',parameters('artifactsLocationSasToken'))]",
@@ -108,7 +116,7 @@
                             "keyVault": {
                                 "id": "[resourceId(parameters('VaultSubscriptionId'), parameters('VaultResourceGroupName'), 'Microsoft.KeyVault/vaults', parameters('VaultName'))]"
                             },
-                            "secretName": "subnet-id"
+                            "secretName": "[parameters('subnet-id')]"
                         }
                     },
                         "rdsh-prefix":{

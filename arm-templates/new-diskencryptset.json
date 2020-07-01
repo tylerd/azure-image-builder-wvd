@@ -24,7 +24,7 @@
         },
         "PersonaName": {
             "type": "string",
-            "defaultValue": "poolA"
+            "defaultValue": "DEV"
         },
         "workspaceId": {
             "type": "string",
