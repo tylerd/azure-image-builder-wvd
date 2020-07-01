@@ -367,7 +367,7 @@
                 "mode": "Incremental",
                 "parameters": {
                     "hostpoolName": {"value":"[variables('hostpool_green')]"},
-                    "appGroupName": {"value":"[variables('hostpool_green')]"},
+                    "appGroupName": {"value":"[variables('appgrp_green')]"},
                     "workspaceName": {"value":"[variables('wks')]"},
                     "location": {
                     "value":"[variables('wvd_location')]"
