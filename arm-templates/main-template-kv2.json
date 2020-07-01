@@ -39,7 +39,7 @@
                 "description": "The name of the  hostpool resource group."
             }
         },
-        "subnet-id": {
+        "subnetid": {
             "type": "string"
         },
         "_artifactsLocation": {
@@ -116,7 +116,7 @@
                             "keyVault": {
                                 "id": "[resourceId(parameters('VaultSubscriptionId'), parameters('VaultResourceGroupName'), 'Microsoft.KeyVault/vaults', parameters('VaultName'))]"
                             },
-                            "secretName": "[parameters('subnet-id')]"
+                            "secretName": "[parameters('subnetid')]"
                         }
                     },
                         "rdsh-prefix":{
