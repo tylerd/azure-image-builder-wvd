@@ -204,6 +204,9 @@
                     "host-pool-name": {
                         "value": "[parameters('HostPoolName')]"
                     },
+                        "rdsh-prefix":{
+                            "value": "[variables('rdsh-prefix')]"
+                        },
                     //"host-pool-token":{"value": "[parameters('host-pool-token')]"}
                     "host-pool-token": { "value": "[reference(variables('hostpool-token-deployment-name')).outputs.hostpooltoken.value]" }
                 },
