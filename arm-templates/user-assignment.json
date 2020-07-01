@@ -44,6 +44,7 @@
         "guid":"[guid(variables('unique_string'))]",
         "GuidforAppGroupRole": "[concat(parameters('appGroupName'),'/Microsoft.Authorization/')]",
         "desktopVirtualizationUserRoleDefinition": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '1d18fff3-a72a-46b5-b4a9-0b38a3cd7e63')]",
+        "utc-time":"[utcNow()]"
             },
     "resources": [     
         {
@@ -60,7 +61,7 @@
                         {
                             "type": "Microsoft.DesktopVirtualization/applicationgroups/providers/roleAssignments",
                             "apiVersion": "[if(contains(parameters('location'), 'euap'), '2019-04-01-preview','2018-07-01')]",
-                            "name": "[concat(variables('GuidforAppGroupRole'),guid(parameters('roleAssignments')[CopyIndex()].name))]",
+                            "name": "[concat(variables('GuidforAppGroupRole'),guid(concat(parameters('roleAssignments')[CopyIndex()].name,variables('utc-time'))))]",
                             "properties": {
                                 "principalId": "[parameters('roleAssignments')[CopyIndex()].principalId]",
                                 "roleDefinitionId": "[variables('desktopVirtualizationUserRoleDefinition')]"

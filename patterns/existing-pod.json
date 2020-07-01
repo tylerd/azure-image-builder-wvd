@@ -47,12 +47,12 @@
         },
         "addressPrefix": {
             "type": "string",
-            "defaultValue":"192.168.0.144/28"
+            "defaultValue":"192.168.0.128/28"
         },
 
         "addressPrefix-green": {
             "type": "string",
-            "defaultValue":"10.0.3.0/24"
+            "defaultValue":"10.0.2.0/28"
         },
         "_artifactsLocation": {
             "type": "string",
@@ -302,7 +302,14 @@
             "properties": {
                 "mode": "Incremental",
                 "parameters": {
-                    "workspaceName":{"value":"[variables('wks')]"},
+                    "workspaceName": {
+                            "reference": {
+                            "keyVault": {
+                                "id": "[resourceId(variables('subscriptionId'), variables('resourceGroupName'), 'Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
+                            },
+                            "secretName": "wks"
+                        }
+                    },
                     "location": {
                     "value":"[variables('wvd_location')]"
                     }
@@ -326,9 +333,30 @@
             "properties": {
                 "mode": "Incremental",
                 "parameters": {
-                    "hostpoolName":{"value":"[variables('hostpool_blue')]"},
-                    "appGroupName": {"value":"[variables('appgrp_blue')]"},
-                    "workspaceName": {"value":"[variables('wks')]"},
+                    "hostpoolName":{
+                            "reference": {
+                            "keyVault": {
+                                "id": "[resourceId(variables('subscriptionId'), variables('resourceGroupName'), 'Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
+                            },
+                            "secretName": "host-pool-blue"
+                        }
+                    },
+                    "appGroupName": {
+                            "reference": {
+                            "keyVault": {
+                                "id": "[resourceId(variables('subscriptionId'), variables('resourceGroupName'), 'Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
+                            },
+                            "secretName": "app-group-blue"
+                        }
+                    },
+                    "workspaceName": {
+                            "reference": {
+                            "keyVault": {
+                                "id": "[resourceId(variables('subscriptionId'), variables('resourceGroupName'), 'Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
+                            },
+                            "secretName": "wks"
+                        }
+                    },
                     "location": {
                     "value":"[variables('wvd_location')]"
                     },
@@ -355,6 +383,7 @@
             
         }
            },
+
     //Deploy GREEN POD Container (Host Pool and App Group)
                { "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
@@ -366,9 +395,30 @@
             "properties": {
                 "mode": "Incremental",
                 "parameters": {
-                    "hostpoolName": {"value":"[variables('hostpool_green')]"},
-                    "appGroupName": {"value":"[variables('hostpool_green')]"},
-                    "workspaceName": {"value":"[variables('wks')]"},
+                    "hostpoolName":{
+                            "reference": {
+                            "keyVault": {
+                                "id": "[resourceId(variables('subscriptionId'), variables('resourceGroupName'), 'Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
+                            },
+                            "secretName": "host-pool-green"
+                        }
+                    },
+                    "appGroupName": {
+                            "reference": {
+                            "keyVault": {
+                                "id": "[resourceId(variables('subscriptionId'), variables('resourceGroupName'), 'Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
+                            },
+                            "secretName": "app-group-green"
+                        }
+                    },
+                    "workspaceName": {
+                            "reference": {
+                            "keyVault": {
+                                "id": "[resourceId(variables('subscriptionId'), variables('resourceGroupName'), 'Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
+                            },
+                            "secretName": "wks"
+                        }
+                    },
                     "location": {
                     "value":"[variables('wvd_location')]"
                     },
@@ -403,12 +453,19 @@
             "name": "[variables('user-pod-container-blue-deployment')]",
             "resourceGroup": "[resourceGroup().name]",
             "dependsOn": [
-                "[variables('blue-pod-container-deployment')]"
+                "[variables('green-pod-container-deployment')]"
             ],
             "properties": {
                 "mode": "Incremental",
                 "parameters": {
-                    "appGroupName": {"value":"[variables('appgrp_blue')]"},
+                    "appGroupName": {
+                            "reference": {
+                            "keyVault": {
+                                "id": "[resourceId(variables('subscriptionId'), variables('resourceGroupName'), 'Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
+                            },
+                            "secretName": "app-group-blue"
+                        }
+                    },
                     "location": {
                     "value":"[variables('wvd_location')]"
                     },
@@ -434,7 +491,14 @@
             "properties": {
                 "mode": "Incremental",
                 "parameters": {
-                    "appGroupName": {"value":"[variables('appgrp_green')]"},
+                    "appGroupName": {
+                            "reference": {
+                            "keyVault": {
+                                "id": "[resourceId(variables('subscriptionId'), variables('resourceGroupName'), 'Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
+                            },
+                            "secretName": "app-group-green"
+                        }
+                    },
                     "location": {
                     "value":"[variables('wvd_location')]"
                     },
