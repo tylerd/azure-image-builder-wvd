@@ -41,7 +41,7 @@
     },
     "resources": [
         {
-            "apiVersion": "2018-10-01",
+            "apiVersion": "2019-12-01",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "name": "[concat(parameters('rdsh-prefix'), copyindex(), '-vm/', 'custom-extension')]",
             "location": "[resourceGroup().location]",
@@ -55,7 +55,10 @@
                 "type": "CustomScriptExtension",
                 "typeHandlerVersion": "1.7",
                 "autoUpgradeMinorVersion": true,
-                "protectedSettings": {"managedIdentity" : {"objectId":"f303d02d-7596-421d-953d-1735ff2ca8e6"}},
+                "protectedSettings": {
+            "storageAccountName": "azminlandevops",
+            "storageAccountKey": "e7tAGFvzRzLelmOzYlIHoHazriJI+U1RT8TNe7uKkyGgYnU88cvlf64PAa5ZGVqGOznSKJceZSAgtdAWAGYmlQ=="
+                    },
                 "settings": {
                     "fileUris": [
                        //"[uri(variables('ScriptFileURI'),concat(variables('ScriptFileName'),parameters('artifactsLocationSasToken')))]"
