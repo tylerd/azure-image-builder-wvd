@@ -65,7 +65,7 @@
                        //"[uri(variables('ScriptFileURI'),concat(variables('ScriptFileName'),parameters('artifactsLocationSasToken')))]"
                         "[uri(variables('ScriptFileURI'),variables('ScriptFileName'))]"
                     ],
-                    "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('ScriptFolder'), './misc/', variables('ScriptFileName'), ' ', variables('ScriptParameters'))]"
+                    "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('ScriptFolder'), '/misc/', variables('ScriptFileName'), ' ', variables('ScriptParameters'))]"
                 }
             }
         }
