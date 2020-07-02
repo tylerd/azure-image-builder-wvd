@@ -8,18 +8,36 @@ stages:
     dependsOn: Deploy_Pod
     displayName: Deploy Host Pool VMs
     variables:
-      keyVaultName: $[stageDependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.keyVaultName']]
-      keyVaultRGName: $[stageDependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.keyVaultRGName']]
-      blue-subnetID: $[stageDependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.blue-subnetID']]
-      green-subnetID: $[stageDependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.green-subnetID']]
+      keyVaultName: $[dependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.keyVaultName']]
+      keyVaultRGName: $[dependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.keyVaultRGName']]
+      blue-subnetID: $[dependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.blue-subnetID']]
+      green-subnetID: $[dependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.green-subnetID']]
     jobs:
       - job: PrintOutputs
+        variables:
+          job-keyVaultName: $[stageDependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.keyVaultName']]
+          job-keyVaultRGName: $[stageDependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.keyVaultRGName']]
+          job-blue-subnetID: $[stageDependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.blue-subnetID']]
+          job-green-subnetID: $[stageDependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.green-subnetID']]
         steps:
           - pwsh: |
+              Write-Host 'Job Vars'
+              Write-Host '$(job-keyVaultName)'
+              Write-Host '$(job-keyVaultRGName)'
+              Write-Host '$(job-blue-subnetID)'
+              Write-Host '$(job-green-subnetID)'
+
+              Write-Host 'Stage Vars'
               Write-Host '$(keyVaultName)'
               Write-Host '$(keyVaultRGName)'
               Write-Host '$(blue-subnetID)'
               Write-Host '$(green-subnetID)'
+
+              Write-Host 'inline stageDep'
+              Write-Host '$[stageDependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.keyVaultName']]'
+
+              Write-Host 'inline dep'
+              Write-Host '$[dependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.keyVaultName']]'
 
 #      - template: deploy-template.yml
 #        parameters:
