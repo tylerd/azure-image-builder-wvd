@@ -22,7 +22,7 @@ stages:
     jobs:
       - template: deploy-template.yml
         parameters:
-          resourceGroupName:
+          resourceGroupName: $(resourceGroupName)
           location: ${{ parameters.location }}
           templateFile: arm-templates/main-template-kv2a.json
           templateParameters: "-VaultName $(keyVaultName) -VaultResourceGroupName $(keyVaultRGName) -VaultSubscriptionId $(subscriptionId) -subnetId $(subnetId) -netappshare $(netappShare) -desId $(diskEncryptKeyResourceId) -host-pool-resource-group $(workspaceResourceGroup) -HostPoolName $(hostPoolName)"

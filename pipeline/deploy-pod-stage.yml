@@ -15,16 +15,3 @@ stages:
           location: ${{ parameters.location }}
           templateFile: patterns/new-pod.json
           templateParameters: "-addressPrefix $(subnetAddressPrefix-blue) -addressPrefix-green $(subnetAddressPrefix-green)"
-      - job: PrintOutputs
-        dependsOn: Deploy_ARM_Template
-        variables:
-          keyVaultName: $[dependencies.Deploy_ARM_Template.outputs['Output.keyVaultName']]
-          keyVaultRGName: $[dependencies.Deploy_ARM_Template.outputs['Output.keyVaultRGName']]
-          blue-subnetID: $[dependencies.Deploy_ARM_Template.outputs['Output.blue-subnetID']]
-          green-subnetID: $[dependencies.Deploy_ARM_Template.outputs['Output.green-subnetID']]
-        steps:
-          - pwsh: |
-              Write-Host '$(keyVaultName)'
-              Write-Host '$(keyVaultRGName)'
-              Write-Host '$(blue-subnetID)'
-              Write-Host '$(green-subnetID)'
