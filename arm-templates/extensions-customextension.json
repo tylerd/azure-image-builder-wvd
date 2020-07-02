@@ -58,7 +58,7 @@
                 "protectedSettings": {},
                 "settings": {
                     "fileUris": [
-                        "[concat(variables('ScriptFileURI'),variables('ScriptFileName'),parameters('artifactsLocationSasToken'))]"
+                       "[uri(variables('ScriptFileURI'),concat(variables('ScriptFileName'),parameters('artifactsLocationSasToken')))]"
                     ],
                     "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('ScriptFolder'), '/', variables('ScriptFileName'), ' ', variables('ScriptParameters'))]"
                 }
