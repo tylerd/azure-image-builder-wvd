@@ -7,10 +7,10 @@ stages:
   - stage: Deploy_Host_VMs
     displayName: Deploy Host Pool VMs
     variables:
-      keyVaultName: $[dependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.keyVaultName']]
-      keyVaultRGName: $[dependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.keyVaultRGName']]
-      blue-subnetID: $[dependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.blue-subnetID']]
-      green-subnetID: $[dependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.green-subnetID']]
+      keyVaultName: $[stageDependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.keyVaultName']]
+      keyVaultRGName: $[stageDependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.keyVaultRGName']]
+      blue-subnetID: $[stageDependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.blue-subnetID']]
+      green-subnetID: $[stageDependencies.Deploy_Pod.outputs['Deploy_ARM_Template.Output.green-subnetID']]
     jobs:
       - job: PrintOutputs
         steps:
