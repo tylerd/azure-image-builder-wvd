@@ -36,4 +36,7 @@ jobs:
       - pwsh: |
           Write-Host '$(OutputsJson)'
           $outputs = '$(OutputsJson)' | ConvertFrom-Json
-          Write $outputs
+          $outputs.PSObject.Properties | ForEach-Object {
+            Write-Host "##vso[task.setvariable variable=$($_.Name);isOutput=true]$($_.Value.value)" 
+          }
+        name: Output

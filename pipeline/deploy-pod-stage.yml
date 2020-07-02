@@ -18,7 +18,13 @@ stages:
       - job: PrintOutputs
         dependsOn: Deploy_ARM_Template
         variables:
-          templateOutputs: $[dependencies.Deploy_ARM_Template.outputs['Deployment.OutputsJson']]
+          keyVaultName: $[dependencies.Deploy_ARM_Template.outputs['Output.keyVaultName']]
+          keyVaultRGName: $[dependencies.Deploy_ARM_Template.outputs['Output.keyVaultRGName']]
+          blue-subnetID: $[dependencies.Deploy_ARM_Template.outputs['Output.blue-subnetID']]
+          green-subnetID: $[dependencies.Deploy_ARM_Template.outputs['Output.green-subnetID']]
         steps:
           - pwsh: |
-              Write-Host '$(templateOutputs)'
+              Write-Host '$(keyVaultName)'
+              Write-Host '$(keyVaultRGName)'
+              Write-Host '$(blue-subnetID)'
+              Write-Host '$(green-subnetID)'
