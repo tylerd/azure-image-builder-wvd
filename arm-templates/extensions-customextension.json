@@ -34,7 +34,7 @@
     },
     "functions": [],
     "variables": {
-        "ScriptFileName":"'Set-RegKeys.ps1'",
+        "ScriptFileName":"Set-RegKeys.ps1",
         "ScriptFileURI": "[concat(parameters('artifacts-location'),'templates/misc/')]",
         "ScriptFolder": ".",
         "ScriptParameters":"[concat('-volumeshare ', parameters('netappshare'))]"
