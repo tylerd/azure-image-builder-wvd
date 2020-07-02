@@ -7,11 +7,10 @@ stages:
   - stage: Deploy_Host_VMs
     displayName: Deploy Host Pool VMs
     variables:
-      - template: vars.yml
-      - keyVaultName: $[dependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.keyVaultName']]
-      - keyVaultRGName: $[dependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.keyVaultRGName']]
-      - blue-subnetID: $[dependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.blue-subnetID']]
-      - green-subnetID: $[dependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.green-subnetID']]
+      keyVaultName: $[dependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.keyVaultName']]
+      keyVaultRGName: $[dependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.keyVaultRGName']]
+      blue-subnetID: $[dependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.blue-subnetID']]
+      green-subnetID: $[dependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.green-subnetID']]
     jobs:
       - job: PrintOutputs
         steps:
@@ -22,7 +21,7 @@ stages:
               Write-Host '$(green-subnetID)'
       - template: deploy-template.yml
         parameters:
-          resourceGroupName: ${{ format('{0}-{1}-{2}', variables.resourceGroupPrefix, parameters.podId, parameters.targetContainer) }}
+          resourceGroupName: ${{ format('$(resourceGroupPrefix)-{0}-{1}', parameters.podId, parameters.targetContainer) }}
           location: ${{ parameters.location }}
           templateFile: arm-templates/empty-template.json
           templateParameters: ""
