@@ -256,6 +256,9 @@
                      },
                     "artifactsLocationSasToken": {
                         "value":"[parameters('artifactsLocationSasToken')]"
+                    },
+                    "accountid": {
+                        "value":"[parameters('accountid')]"
                     }
                 },
                 "templateLink": {
