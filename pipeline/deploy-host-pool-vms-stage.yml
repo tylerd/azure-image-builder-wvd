@@ -5,6 +5,7 @@ parameters:
 
 stages:
   - stage: Deploy_Host_VMs
+    dependsOn: Deploy_Pod
     displayName: Deploy Host Pool VMs
 
     jobs:
