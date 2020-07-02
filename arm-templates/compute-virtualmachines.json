@@ -37,6 +37,13 @@
             },
             "defaultValue": "124325678!@#$%^&*asdfgASDFASD"
         },
+        "shared-image-gallery-rg":{
+            "type":"string",
+            "metadata" : {
+                "description":"RG name of the Azure SIG"
+            },
+            "defaultValue":"aib-sig-rg"
+        },
         "shared-image-gallery-name": {
             "type": "string",
             "metadata": {
@@ -112,7 +119,7 @@
             },
             "storageProfile": {
                 "imageReference": {
-                    "id": "[resourceId('Microsoft.Compute/galleries/images/versions', parameters('shared-image-gallery-name'), parameters('shared-image-gallery-definition'), parameters('shared-image-gallery-version'))]"
+                    "id": "[resourceId(parameters('shared-image-gallery-rg'),'Microsoft.Compute/galleries/images/versions', parameters('shared-image-gallery-name'), parameters('shared-image-gallery-definition'), parameters('shared-image-gallery-version'))]"
                 },
             "osDisk": {
                 "createOption": "FromImage",

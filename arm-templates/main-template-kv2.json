@@ -42,6 +42,48 @@
         "subnetid": {
             "type": "string"
         },
+        "instance-count": {
+            "type": "int",
+            "metadata": {
+                "description": "Number of session hosts that will be created and added to the hostpool."
+            },
+            "defaultValue": 2
+        },
+        "vm-size": {
+            "type": "string",
+            "metadata": {
+            "description": "The size of the session host VMs."
+            },
+            "defaultValue": "Standard_A2"
+        },
+        "shared-image-gallery-rg":{
+            "type":"string",
+            "metadata" : {
+                "description":"RG name of the Azure SIG"
+            },
+            "defaultValue":"aib-sig-rg"
+        },
+            "shared-image-gallery-name": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the Azure SIG for your images."
+            },
+            "defaultValue": "myIBSIG"
+        },
+        "shared-image-gallery-definition": {
+            "type": "string",
+            "metadata": {
+                "description": "Defnition of the image to use from SIG."
+            },
+            "defaultValue": "aibWin10365Image"
+        },
+        "shared-image-gallery-version": {
+            "type": "string",
+            "metadata": {
+                "description": "The version of the image definition"
+            },
+            "defaultValue": "0.24299.50491"
+        },
         "_artifactsLocation": {
             "type": "string",
             "defaultValue": "https://azminlandevops.blob.core.windows.net/"
@@ -148,8 +190,26 @@
                         "rdsh-prefix":{
                             "value": "[variables('rdsh-prefix')]"
                         },
+                        "instance-count": {
+                            "value":"[parameters('instance-count')]"
+                        },
+                        "vm-size": {
+                            "value":"[parameters('vm-size')]"
+                        },
                         "availability-set-name":{
                             "value":"[concat(variables('rdsh-prefix'),'-avset')]"
+                        },
+                        "shared-image-gallery-rg":{
+                            "value":"[parameters('shared-image-gallery-rg')]"
+                        },
+                        "shared-image-gallery-name": {
+                            "value":"[parameters('shared-image-gallery-name')]"
+                        },
+                        "shared-image-gallery-definition":{
+                            "value": "[parameters('shared-image-gallery-definition')]"
+                        },
+                        "shared-image-gallery-version":{
+                            "value": "[parameters('shared-image-gallery-version')]"
                         }
                         },
                 "templateLink": {
