@@ -242,6 +242,9 @@
                             "secretName": "[parameters('netappshare')]"
                         }
                     },
+                        "rdsh-prefix":{
+                            "value": "[variables('rdsh-prefix')]"
+                        },
                     "instance-count": {
                             "value":"[parameters('instance-count')]"
                         },
