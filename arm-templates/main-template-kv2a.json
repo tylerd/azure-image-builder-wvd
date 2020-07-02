@@ -42,7 +42,7 @@
         "subnetid": {
             "type": "string"
         },
-        "netapp-share-name": {
+        "netappshare": {
             "type": "string"
         },
         "instance-count": {
@@ -239,7 +239,7 @@
                             "keyVault": {
                                 "id": "[resourceId(parameters('VaultSubscriptionId'), parameters('VaultResourceGroupName'), 'Microsoft.KeyVault/vaults', parameters('VaultName'))]"
                             },
-                            "secretName": "[parameters('netapp-share-name')]"
+                            "secretName": "[parameters('netappshare')]"
                         }
                     },
                     "instance-count": {

@@ -23,7 +23,7 @@
             },
             "defaultValue": "https://wvdportalstorageblob.blob.core.windows.net/galleryartifacts/Configuration.zip"
         },
-        "netapp-share": {
+        "netappshare": {
             "type": "string",
             "metadata": {
                 "description": "The name of the NetApp volume share."
@@ -38,7 +38,7 @@
         "ScriptFileName":"Set-RegKeys.ps1",
         "ScriptFileURI": "[concat(parameters('artifacts-location'),'templates/misc/')]",
         "ScriptFolder": ".",
-        "ScriptParameters":"[concat('-volumeshare ', parameters('netapp-share'))]"
+        "ScriptParameters":"[concat('-volumeshare ', parameters('netappshare'))]"
     },
     "resources": [
         {
