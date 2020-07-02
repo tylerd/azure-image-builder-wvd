@@ -10,3 +10,9 @@ variables:
 
   - name: resourceGroupPrefix
     value: Azureminilab-WVD
+
+  - name: subnetAddressPrefix-blue
+    value: "192.168.0.128/28"
+
+  - name: subnetAddressPrefix-green
+    value: "10.0.2.0/28"
