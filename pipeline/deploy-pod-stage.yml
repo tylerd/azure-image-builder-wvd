@@ -16,6 +16,9 @@ stages:
           templateFile: patterns/new-pod.json
           templateParameters: "-addressPrefix $(subnetAddressPrefix-blue) -addressPrefix-green $(subnetAddressPrefix-green)"
       - job: PrintOutputs
+        dependsOn: Deploy_ARM_Template
+        variables:
+          templateOutputs: $[dependencies.Deploy_ARM_Template.outputs]
         steps:
           - pwsh: |
-              Write-Host "$[dependencies.Deploy_ARM_Template.outputs]"
+              Write-Host $(templateOutputs)
