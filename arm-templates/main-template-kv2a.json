@@ -45,9 +45,6 @@
         "netappshare": {
             "type": "string"
         },
-        "accountid":{
-            "type": "string"
-        },
         "instance-count": {
             "type": "int",
             "metadata": {
@@ -252,13 +249,10 @@
                             "value":"[parameters('instance-count')]"
                         },
                     "artifacts-location": {
-                        "value": "https://azminlandevops.blob.core.windows.net/"
+                        "value": "[parameters('_artifactsLocation')]"
                      },
                     "artifactsLocationSasToken": {
                         "value":"[parameters('artifactsLocationSasToken')]"
-                    },
-                    "accountid": {
-                        "value":"[parameters('accountid')]"
                     }
                 },
                 "templateLink": {

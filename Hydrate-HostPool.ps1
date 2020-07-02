@@ -20,8 +20,6 @@ $VaultResourceGroupName="Azureminilab-WVD-Pod2"
 $subnetid="blue-subnet-id"
 $netappshare="netapp-blue"
 $desID="/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourceGroups/Azureminilab-WVD-DES/providers/Microsoft.Compute/diskEncryptionSets/DEV-disk-encrypt-key"
-[string]$accountid=(Get-AzResource -Name $StorageAccountName -ResourceGroupName $StorageAccountRG).ResourceId
-
 
 $rg = Get-AzResourceGroup -Name $TargetResourceGroup -ErrorAction SilentlyContinue
 if (!$rg) {
@@ -44,7 +42,6 @@ New-AzResourceGroupDeployment -ResourceGroupName $TargetResourceGroup `
     -subnetid $subnetid `
     -netappshare $netappshare `
     -desID $desID `
-    -accountid $accountid `
     -host-pool-resource-group $TargetWorkspaceResourceGroup `
     -HostPoolName $HostPoolName `
     -artifactsLocationSasToken $secureToken
