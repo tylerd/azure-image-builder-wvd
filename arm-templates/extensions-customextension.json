@@ -58,13 +58,14 @@
                 "protectedSettings": {
             "storageAccountName": "azminlandevops",
             "storageAccountKey": "e7tAGFvzRzLelmOzYlIHoHazriJI+U1RT8TNe7uKkyGgYnU88cvlf64PAa5ZGVqGOznSKJceZSAgtdAWAGYmlQ=="
+            //"storageAccountKey":"[listKeys(variables('accountid'),'2019-06-01').keys[0].value]"
                     },
                 "settings": {
                     "fileUris": [
                        //"[uri(variables('ScriptFileURI'),concat(variables('ScriptFileName'),parameters('artifactsLocationSasToken')))]"
                         "[uri(variables('ScriptFileURI'),variables('ScriptFileName'))]"
                     ],
-                    "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('ScriptFolder'), '/', variables('ScriptFileName'), ' ', variables('ScriptParameters'))]"
+                    "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('ScriptFolder'), './misc/', variables('ScriptFileName'), ' ', variables('ScriptParameters'))]"
                 }
             }
         }
