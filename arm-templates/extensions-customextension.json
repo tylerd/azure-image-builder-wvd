@@ -20,8 +20,7 @@
             "type": "string",
             "metadata": {
                 "description": "The base URI where artifacts required by this template are located."
-            },
-            "defaultValue": "https://wvdportalstorageblob.blob.core.windows.net/galleryartifacts/Configuration.zip"
+            }
         },
         "netappshare": {
             "type": "string",
@@ -59,7 +58,7 @@
                 "protectedSettings": {},
                 "settings": {
                     "fileUris": [
-                        "[uri(variables('ScriptFileURI'),concat(variables('ScriptFileName'),parameters('artifactsLocationSasToken')))]"
+                        "[concat(variables('ScriptFileURI'),variables('ScriptFileName'),parameters('artifactsLocationSasToken'))]"
                     ],
                     "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('ScriptFolder'), '/', variables('ScriptFileName'), ' ', variables('ScriptParameters'))]"
                 }
