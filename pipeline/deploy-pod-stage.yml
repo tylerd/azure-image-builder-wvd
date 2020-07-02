@@ -14,4 +14,4 @@ stages:
           resourceGroupName: ${{ format('{0}-{1}', variables.resourceGroupPrefix, parameters.podId) }}
           location: ${{ parameters.location }}
           templateFile: patterns/new-pod.json
-          templateParameters: "-addressPrefix ${{ variables.subnetAddressPrefix-blue }}' -addressPrefix-green '${{ variables.subnetAddressPrefix-green }}'"
+          templateParameters: "-addressPrefix '${{ variables.subnetAddressPrefix-blue }}' -addressPrefix-green '${{ variables.subnetAddressPrefix-green }}'"
