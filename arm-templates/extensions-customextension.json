@@ -58,9 +58,13 @@
                 "protectedSettings": {},
                 "settings": {
                     "fileUris": [
-                       "[uri(variables('ScriptFileURI'),concat(variables('ScriptFileName'),parameters('artifactsLocationSasToken')))]"
+                       //"[uri(variables('ScriptFileURI'),concat(variables('ScriptFileName'),parameters('artifactsLocationSasToken')))]"
+                        "[uri(variables('ScriptFileURI'),variables('ScriptFileName'))]"
                     ],
                     "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('ScriptFolder'), '/', variables('ScriptFileName'), ' ', variables('ScriptParameters'))]"
+                },
+                "protectectedSettings":{
+                    "managedIdentity" : {"objectId":"f303d02d-7596-421d-953d-1735ff2ca8e6"}
                 }
             }
         }
