@@ -33,4 +33,6 @@ jobs:
           overrideParameters: "-artifactsLocationSasToken $(token) ${{ parameters.templateParameters }}"
           deploymentOutputs: OutputsJson
 
-      - pwsh: Write-Host $(OutputsJson)
+      - pwsh: |
+          Write-Host "$(OutputsJson)"
+          $outputs = ConvertFrom-Json "$(OutputsJson)"
