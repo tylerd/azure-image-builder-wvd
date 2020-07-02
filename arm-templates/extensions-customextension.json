@@ -28,8 +28,14 @@
                 "description": "The name of the NetApp volume share."
             }
         },
-       "artifactsLocationSasToken": {
+        "artifactsLocationSasToken": {
             "type": "securestring"
+        },
+       "accountid": {
+            "type": "string",
+            "metadata": {
+                "description": "The storage account resource id which contains the script(s)"
+            }
         } 
     },
     "functions": [],
@@ -56,14 +62,14 @@
                 "typeHandlerVersion": "1.7",
                 "autoUpgradeMinorVersion": true,
                 "protectedSettings": {
-            "storageAccountName": "azminlandevops",
-            "storageAccountKey": "e7tAGFvzRzLelmOzYlIHoHazriJI+U1RT8TNe7uKkyGgYnU88cvlf64PAa5ZGVqGOznSKJceZSAgtdAWAGYmlQ=="
-            //"storageAccountKey":"[listKeys(variables('accountid'),'2019-06-01').keys[0].value]"
+            //"storageAccountName": "azminlandevops",
+            //"storageAccountKey": "e7tAGFvzRzLelmOzYlIHoHazriJI+U1RT8TNe7uKkyGgYnU88cvlf64PAa5ZGVqGOznSKJceZSAgtdAWAGYmlQ=="
+            //"storageAccountKey":"[listKeys(parameters('accountid'),'2019-06-01').keys[0].value]"
                     },
                 "settings": {
                     "fileUris": [
-                       //"[uri(variables('ScriptFileURI'),concat(variables('ScriptFileName'),parameters('artifactsLocationSasToken')))]"
-                        "[uri(variables('ScriptFileURI'),variables('ScriptFileName'))]"
+                       "[uri(variables('ScriptFileURI'),concat(variables('ScriptFileName'),parameters('artifactsLocationSasToken')))]"
+                        //"[uri(variables('ScriptFileURI'),variables('ScriptFileName'))]"
                     ],
                     "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('ScriptFolder'), '/misc/', variables('ScriptFileName'), ' ', variables('ScriptParameters'))]"
                 }
