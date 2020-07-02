@@ -1,0 +1,16 @@
+parameters:
+  - name: podId
+  - name: targetContainer
+
+stages:
+  - stage: Deploy_Host_VMs
+    displayName: Deploy Host Pool VMs
+    variables:
+      - template: vars.json
+    jobs:
+      - template: deploy-template.yml
+        parameters:
+          resourceGroupName: ${{ format('{0}-{1}-{2}', variables.resourceGroupPrefix, parameters.podId, parameters.targetContainer) }}
+          location: ${{ parameters.location }}
+          templateFile: arm-templates/empty-template.json
+          templateParameters: ""

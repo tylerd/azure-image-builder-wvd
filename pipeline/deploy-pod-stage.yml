@@ -15,3 +15,7 @@ stages:
           location: ${{ parameters.location }}
           templateFile: patterns/new-pod.json
           templateParameters: "-addressPrefix $(subnetAddressPrefix-blue) -addressPrefix-green $(subnetAddressPrefix-green)"
+      - job: PrintOutputs
+        steps:
+          - pwsh: |
+              Write-Host "$[dependencies.Deploy_ARM_Template.outputs]"

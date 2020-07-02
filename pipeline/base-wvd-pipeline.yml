@@ -31,8 +31,12 @@ stages:
     parameters:
       podId: ${{ parameters.podId }}
       location: ${{ parameters.targetRegion }}
-#  - template: deploy-host-group-stage.yml
 
+  - template: deploy-host-pool-vms-stage.yml
+    parameters:
+      podId: ${{ parameters.podId }}
+      location: ${{ parameters.targetRegion }}
+      targetContainer: ${{ parameters.targetContainer }}
 #  - template: swap-users-stage.yml
 
 #  - template: destroy-host-group-stage.yml
