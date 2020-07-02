@@ -18,7 +18,7 @@ stages:
       - job: PrintOutputs
         dependsOn: Deploy_ARM_Template
         variables:
-          templateOutputs: $[dependencies.Deploy_ARM_Template.outputs]
+          templateOutputs: $[dependencies.Deploy_ARM_Template.outputs['Deployment.OutputsJson']]
         steps:
           - pwsh: |
               Write-Host $(templateOutputs)

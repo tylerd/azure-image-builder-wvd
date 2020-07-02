@@ -23,6 +23,7 @@ jobs:
             Write-Host "##vso[task.setvariable variable=token]$token"
 
       - task: AzureResourceGroupDeployment@2
+        name: Deployment
         inputs:
           azureSubscription: ${{ variables.azureConnectionName }}
           resourceGroupName: ${{ parameters.resourceGroupName }}
@@ -30,3 +31,6 @@ jobs:
           templateLocation: URL of the file
           csmFileLink: "https://$(storageAccountName).blob.core.windows.net/templates/${{parameters.templateFile}}$(token)"
           overrideParameters: "-artifactsLocationSasToken $(token) ${{ parameters.templateParameters }}"
+          deploymentOutputs: OutputsJson
+
+      - pwsh: Write-Host $(OutputsJson)
