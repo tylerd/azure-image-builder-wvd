@@ -34,5 +34,6 @@ jobs:
           deploymentOutputs: OutputsJson
 
       - pwsh: |
-          Write-Host "$(OutputsJson)"
-          $outputs = ConvertFrom-Json "$(OutputsJson)"
+          Write-Host '$(OutputsJson)'
+          $outputs = '$(OutputsJson)' | ConvertFrom-Json
+          Write $outputs

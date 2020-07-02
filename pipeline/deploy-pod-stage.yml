@@ -21,4 +21,4 @@ stages:
           templateOutputs: $[dependencies.Deploy_ARM_Template.outputs['Deployment.OutputsJson']]
         steps:
           - pwsh: |
-              Write-Host $(templateOutputs)
+              Write-Host '$(templateOutputs)'
