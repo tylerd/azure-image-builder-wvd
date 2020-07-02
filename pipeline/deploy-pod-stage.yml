@@ -11,4 +11,4 @@ stages:
         parameters:
           resourceGroupName: ${{ format('{0}-{1}', variables.resourceGroupPrefix, parameters.podId) }}
           location: ${{ parameters.location }}
-          templateFile: arm-templates/empty-template.json
+          templateFile: patterns/new-pod.json
