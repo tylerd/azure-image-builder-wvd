@@ -7,7 +7,7 @@ stages:
   - stage: Deploy_Host_VMs
     displayName: Deploy Host Pool VMs
     variables:
-      - template: vars.json
+      - template: vars.yml
     jobs:
       - template: deploy-template.yml
         parameters:
