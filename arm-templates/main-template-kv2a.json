@@ -234,7 +234,7 @@
             "properties": {
                 "mode": "Incremental",
                 "parameters": {
-                    "netapp-share": {
+                    "netappshare": {
                         "reference": {
                             "keyVault": {
                                 "id": "[resourceId(parameters('VaultSubscriptionId'), parameters('VaultResourceGroupName'), 'Microsoft.KeyVault/vaults', parameters('VaultName'))]"
