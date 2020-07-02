@@ -6,6 +6,8 @@ stages:
   # Create new pod resource group and resources
   - stage: Deploy_Pod
     displayName: Deploy Pod
+    variables:
+      - template: vars.yml
     jobs:
       - template: deploy-template.yml
         parameters:
