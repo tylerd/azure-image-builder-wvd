@@ -29,4 +29,4 @@ jobs:
           location: ${{ parameters.location }}
           templateLocation: URL of the file
           csmFileLink: "https://$(storageAccountName).blob.core.windows.net/templates/${{parameters.templateFile}}$(token)"
-          overrideParameters: "-artifactsLocationSasToken '$(token)' ${{ parameters.templateParameters"
+          overrideParameters: "-artifactsLocationSasToken '$(token)' ${{ parameters.templateParameters }}"
