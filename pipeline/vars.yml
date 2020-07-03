@@ -29,15 +29,8 @@ variables:
   - name: containerResourceGroup
     value: ${{ format("{0}-{1}", variables.podResourceGroup, parameters.targetContainer) }}
 
-  - name: regionCodes
-    value:
-      canadacentral: CANC
-      canadaeast: CAEA
-      eastus2: USE2
-      centralus: USN
-
   - name: targetRegionCode
-    value: ${{ variables.regionCodes[parameters.targetRegion] }}
+    value: ${{ parameters.regionCodes[parameters.targetRegion] }}
 
   - name: keyVaultName
     value: ${{ format("{0}-{1}-WVD-{2}-KV", parameters.environment, variables.targetRegionCode, parameters.persona) }}

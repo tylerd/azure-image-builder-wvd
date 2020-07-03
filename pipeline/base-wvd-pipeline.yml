@@ -38,6 +38,14 @@ parameters:
     type: string
     default: POD01
 
+  - name: regionCodes
+    type: object
+    default:
+      canadacentral: CANC
+      canadaeast: CAEA
+      eastus2: USE2
+      centralus: USN
+
 stages:
   - template: prep-stage.yml
 
