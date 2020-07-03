@@ -44,15 +44,6 @@
             "type": "string",
             "defaultValue": "Azureminilab-VNET"
         },
-        "addressPrefix": {
-            "type": "string",
-            "defaultValue": "192.168.0.144/28"
-        },
-
-        "addressPrefix-green": {
-            "type": "string",
-            "defaultValue": "10.0.3.0/24"
-        },
         "_artifactsLocation": {
             "type": "string",
             "defaultValue": "https://azminlandevops.blob.core.windows.net/"
@@ -64,16 +55,14 @@
     },
     "functions": [],
     "variables": {
+        "unique_string": "[take(uniqueString(resourceGroup().id),3)]",
         "templateURI": "[concat(parameters('_artifactsLocation'),'templates/arm-templates/')]",
         "subnetName": "[concat('SUB-WVD-',parameters('persona'),'-',variables('unique_string'))]",
-        "unique_string": "[take(uniqueString(resourceGroup().id),3)]",
 
         "blue-subnetID": "[concat(resourceId(parameters('VNETRG'),'Microsoft.Network/virtualNetworks',parameters('VNETName')),'/subnets/',variables('subnetName'))]",
         "green-subnetID": "[concat(resourceId(parameters('VNETRG-green'),'Microsoft.Network/virtualNetworks',parameters('VNETName-green')),'/subnets/',variables('subnetName'))]",
         "netapp-blue": "[concat(parameters('environment'),'-NetAppVol-BLUE',parameters('persona'),'-',variables('unique_string'),'-profiles')]",
         "netapp-green": "[concat(parameters('environment'),'-NetAppVol-GREEN',parameters('persona'),'-',variables('unique_string'),'-profiles')]",
-        "subnetName-deployment-blue": "[concat('BLUE-subnet-for-WVD-',parameters('persona'),'-',variables('unique_string'))]",
-        "subnetName-deployment-green": "[concat('BLUE-subnet-for-WVD-',parameters('persona'),'-',variables('unique_string'))]",
 
         "secrets-deployment": "[concat('secrets-for-WVD-',parameters('persona'),'-',variables('unique_string'))]",
         "wks-deployment": "[concat('WVD-WKS-',parameters('persona'),'-',variables('unique_string'))]",

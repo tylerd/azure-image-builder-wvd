@@ -15,7 +15,4 @@ stages:
           resourceGroupName: ${{ parameters.podResourceGroup }}
           location: ${{ parameters.targetRegion }}
           templateFile: patterns/new-pod.json
-          templateParameters: |
-            -keyVaultName ${{ parameters.keyVaultName }} `
-            -addressPrefix $(subnetAddressPrefix-blue) `
-            -addressPrefix-green $(subnetAddressPrefix-green)
+          templateParameters: -keyVaultName ${{ parameters.keyVaultName }}
