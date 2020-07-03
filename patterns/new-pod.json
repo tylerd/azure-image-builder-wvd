@@ -158,56 +158,10 @@
             }
         },
         //Deploy BLUE subnet for WVD VMs 
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-06-01",
-            "name": "[variables('subnetName-deployment-blue')]",
-            "resourceGroup": "[parameters('VNETRG')]",
-            "properties": {
-                "mode": "Incremental",
-                "parameters": {
-                    "newSubnetAddressPrefix": {
-                        "value": "[parameters('addressPrefix')]"
-                    },
-                    "existingVNETName": {
-                        "value": "[parameters('VNETName')]"
-                    },
-                    "newSubnetName": {
-                        "value": "[variables('subnetName')]"
-                    }
-                },
-                "templateLink": {
-                    "uri": "[concat(variables('templateURI'),'vnet-add-subnet.json',parameters('artifactsLocationSasToken'))]",
-                    "contentVersion": "1.0.0.0"
-                }
-            }
-        },
+
 
         //Deploy GREEN subnet for WVD VMs 
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-06-01",
-            "name": "[variables('subnetName-deployment-green')]",
-            "resourceGroup": "[parameters('VNETRG-green')]",
-            "properties": {
-                "mode": "Incremental",
-                "parameters": {
-                    "newSubnetAddressPrefix": {
-                        "value": "[parameters('addressPrefix-green')]"
-                    },
-                    "existingVNETName": {
-                        "value": "[parameters('VNETName-green')]"
-                    },
-                    "newSubnetName": {
-                        "value": "[variables('subnetName')]"
-                    }
-                },
-                "templateLink": {
-                    "uri": "[concat(variables('templateURI'),'vnet-add-subnet.json',parameters('artifactsLocationSasToken'))]",
-                    "contentVersion": "1.0.0.0"
-                }
-            }
-        },
+
 
         // Deploy NetApp Volume
         // {Insert deployment here}
