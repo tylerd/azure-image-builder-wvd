@@ -3,6 +3,7 @@ parameters:
 
 stages:
   - stage: Swap_Users
+    displayName: Swap Users
     dependsOn:
       - Deploy_Pod
       - Deploy_Host_VMs

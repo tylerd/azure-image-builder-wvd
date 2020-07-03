@@ -5,6 +5,8 @@ param (
     [string]$ActiveHostResourceGroupName
 )
 
+$ErrorView = "NormalView"
+
 #Load up the WVD PS module
 Install-Module -Name Az.DesktopVirtualization -Force -AllowClobber
 
