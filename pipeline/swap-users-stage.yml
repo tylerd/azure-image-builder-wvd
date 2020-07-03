@@ -1,10 +1,6 @@
 parameters:
-  - name: podId
-  - name: targetRegion
-  - name: regionCodes
-    type: object
-  - name: persona
-  - name: targetContainer
+  - name: keyVaultName
+  - name: podResourceGroup
 
 stages:
   - stage: Swap_Users
@@ -15,11 +11,9 @@ stages:
     variables:
       - template: vars.yml
       - name: keyVaultName
-        value: $[stageDependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.keyVaultName']]
-      - name: keyVaultRGName
-        value: $[stageDependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.keyVaultRGName']]
+        value: ${{ parameters.keyVaultName }}
       - name: podResourceGroup
-        value: ${{ format('$(resourceGroupPrefix)-{0}', parameters.podId) }}
+        value: ${{ parameters.podResourceGroup }}
     jobs:
       - job: Swap_App_Group_Users
         displayName: Swap App Group Users
@@ -32,4 +26,4 @@ stages:
               scriptType: filePath
               azurePowerShellVersion: "LatestVersion"
               scriptPath: $(Build.Repository.LocalPath)\misc\Switch-Users-App-Group.ps1
-              scriptArguments: -VaultName $(keyVaultName) -VaultResourceGroupName $(keyVaultRGName) -SubscriptionId $(subscriptionId) -ActiveHostResourceGroupName $(podResourceGroup)
+              scriptArguments: -VaultName $(keyVaultName) -VaultResourceGroupName $(podResourceGroup) -SubscriptionId $(subscriptionId) -ActiveHostResourceGroupName $(podResourceGroup)

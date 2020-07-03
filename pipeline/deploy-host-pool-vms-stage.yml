@@ -1,9 +1,8 @@
 parameters:
-  - name: podId
+  - name: keyVaultName
+  - name: podResourceGroup
+  - name: containerResourceGroup
   - name: targetRegion
-  - name: regionCodes
-    type: object
-  - name: persona
   - name: targetContainer
 
 stages:
@@ -22,7 +21,7 @@ stages:
     jobs:
       - template: deploy-template.yml
         parameters:
-          resourceGroupName: $(containerResourceGroup)
+          resourceGroupName: ${{ parameters.containerResourceGroup }}
           location: ${{ parameters.targetRegion }}
           templateFile: arm-templates/main-template-kv2a.json
-          templateParameters: "-VaultName $(keyVaultName) -VaultResourceGroupName $(podResourceGroup) -VaultSubscriptionId $(subscriptionId) -subnetId $(subnetId) -netappshare $(netappShare) -desId $(diskEncryptKeyResourceId) -host-pool-resource-group $(podResourceGroup) -HostPoolName $(hostPoolName)"
+          templateParameters: "-VaultName ${{ parameters.keyVaultName }} -VaultResourceGroupName ${{ parameters.podResourceGroup }} -VaultSubscriptionId $(subscriptionId) -subnetId $(subnetId) -netappshare $(netappShare) -desId $(diskEncryptKeyResourceId) -host-pool-resource-group ${{ parameters.podResourceGroup }} -HostPoolName $(hostPoolName)"

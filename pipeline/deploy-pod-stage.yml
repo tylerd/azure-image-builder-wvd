@@ -1,9 +1,7 @@
 parameters:
-  - name: podId
+  - name: podResourceGroup
   - name: targetRegion
-  - name: regionCodes
-    type: object
-  - name: persona
+  - name: keyVaultName
 
 stages:
   # Create new pod resource group and resources
@@ -14,10 +12,10 @@ stages:
     jobs:
       - template: deploy-template.yml
         parameters:
-          resourceGroupName: $(podResourceGroup)
+          resourceGroupName: ${{ parameters.podResourceGroup }}
           location: ${{ parameters.targetRegion }}
           templateFile: patterns/new-pod.json
           templateParameters: |
-            -keyVaultName $(keyVaultName) `
+            -keyVaultName ${{ parameters.keyVaultName }} `
             -addressPrefix $(subnetAddressPrefix-blue) `
             -addressPrefix-green $(subnetAddressPrefix-green)

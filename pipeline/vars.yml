@@ -22,15 +22,3 @@ variables:
 
   - name: diskEncryptKeyResourceId
     value: "/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourceGroups/Azureminilab-WVD-DES/providers/Microsoft.Compute/diskEncryptionSets/DEV-disk-encrypt-key"
-
-  - name: podResourceGroup
-    value: ${{ format('$(resourceGroupPrefix)-{0}', parameters.podId) }}
-
-  - name: containerResourceGroup
-    value: ${{ format('$(podResourceGroup)-{0}', parameters.targetContainer) }}
-
-  - name: targetRegionCode
-    value: ${{ parameters.regionCodes[parameters.targetRegion] }}
-
-  - name: keyVaultName
-    value: ${{ format('{0}-$(targetRegionCode)-WVD-{1}-KV', parameters.environment, parameters.persona) }}
