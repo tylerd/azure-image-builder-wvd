@@ -2,6 +2,7 @@ parameters:
   - name: podId
   - name: targetRegion
   - name: regionCodes
+    type: object
   - name: persona
   - name: targetContainer
 
