@@ -52,15 +52,23 @@ stages:
   - template: deploy-pod-stage.yml
     parameters:
       podId: ${{ parameters.podId }}
-      location: ${{ parameters.targetRegion }}
+      targetRegion: ${{ parameters.targetRegion }}
+      regionCodes: ${{ parameters.regionCodes }}
+      persona: ${{ parameters.persona }}
 
   - template: deploy-host-pool-vms-stage.yml
     parameters:
       podId: ${{ parameters.podId }}
-      location: ${{ parameters.targetRegion }}
+      targetRegion: ${{ parameters.targetRegion }}
+      regionCodes: ${{ parameters.regionCodes }}
+      persona: ${{ parameters.persona }}
       targetContainer: ${{ parameters.targetContainer }}
 
   - template: swap-users-stage.yml
     parameters:
       podId: ${{ parameters.podId }}
+      targetRegion: ${{ parameters.targetRegion }}
+      regionCodes: ${{ parameters.regionCodes }}
+      persona: ${{ parameters.persona }}
+      targetContainer: ${{ parameters.targetContainer }}
 #  - template: destroy-host-group-stage.yml

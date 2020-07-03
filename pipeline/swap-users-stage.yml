@@ -1,5 +1,9 @@
 parameters:
   - name: podId
+  - name: targetRegion
+  - name: regionCodes
+  - name: persona
+  - name: targetContainer
 
 stages:
   - stage: Swap_Users
