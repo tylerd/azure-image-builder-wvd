@@ -157,12 +157,6 @@
                 }
             }
         },
-        //Deploy BLUE subnet for WVD VMs 
-
-
-        //Deploy GREEN subnet for WVD VMs 
-
-
         // Deploy NetApp Volume
         // {Insert deployment here}
 
@@ -173,8 +167,6 @@
             "name": "[variables('secrets-deployment')]",
             "resourceGroup": "[resourceGroup().name]",
             "dependsOn": [
-                "[variables('subnetName-deployment-green')]",
-                "[variables('subnetName-deployment-blue')]",
                 "[parameters('keyVaultName')]"
             ],
             "properties": {
