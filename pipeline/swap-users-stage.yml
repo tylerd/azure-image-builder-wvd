@@ -22,6 +22,7 @@ stages:
           - task: AzurePowerShell@4
             displayName: Swap Users Script
             inputs:
+              pwsh: true
               azureSubscription: ${{ variables.azureConnectionName }}
               scriptType: filePath
               azurePowerShellVersion: "LatestVersion"
