@@ -11,6 +11,8 @@ jobs:
       - template: vars.yml
     steps:
       - task: AzurePowerShell@4
+        name: Generate_SAS_Token
+        displayName: Generate SAS Token
         inputs:
           azureSubscription: ${{ variables.azureConnectionName }}
           scriptType: inlineScript

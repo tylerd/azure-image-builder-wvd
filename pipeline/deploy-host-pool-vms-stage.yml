@@ -11,10 +11,12 @@ stages:
       workspaceResourceGroup: ${{ format('$(resourceGroupPrefix)-{0}', parameters.podId) }}
       keyVaultName: $[stageDependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.keyVaultName']]
       keyVaultRGName: $[stageDependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.keyVaultRGName']]
+
       ${{ if eq( parameters.targetContainer, 'blue') }}:
         hostPoolName: $[stageDependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.blue-hostPoolName']]
         subnetId: blue-subnet-id
         netappShare: netapp-blue
+
       ${{ if eq( parameters.targetContainer, 'green') }}:
         hostPoolName: $[stageDependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.green-hostPoolName']]
         subnetId: green-subnet-id
