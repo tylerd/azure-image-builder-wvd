@@ -23,6 +23,6 @@ stages:
       - template: deploy-template.yml
         parameters:
           resourceGroupName: $(containerResourceGroup)
-          location: ${{ parameters.location }}
+          location: ${{ parameters.targetRegion }}
           templateFile: arm-templates/main-template-kv2a.json
           templateParameters: "-VaultName $(keyVaultName) -VaultResourceGroupName $(podResourceGroup) -VaultSubscriptionId $(subscriptionId) -subnetId $(subnetId) -netappshare $(netappShare) -desId $(diskEncryptKeyResourceId) -host-pool-resource-group $(podResourceGroup) -HostPoolName $(hostPoolName)"
