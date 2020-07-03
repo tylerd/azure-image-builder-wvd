@@ -1,0 +1,28 @@
+parameters:
+  - name: podId
+
+stages:
+  - stage: Swap_Users
+    dependsOn:
+      - Deploy_Pod
+      - Deploy_Host_VMs
+    variables:
+      - template: vars.yml
+      - name: keyVaultName
+        value: $[stageDependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.keyVaultName']]
+      - name: keyVaultRGName
+        value: $[stageDependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.keyVaultRGName']]
+      - name: podResourceGroup
+        value: ${{ format('$(resourceGroupPrefix)-{0}', parameters.podId) }}
+    jobs:
+      - job: Swap_App_Group_Users
+        displayName: Swap App Group Users
+        steps:
+          - task: AzurePowerShell@4
+            displayName: Swap Users Script
+            inputs:
+              azureSubscription: ${{ variables.azureConnectionName }}
+              scriptType: filePath
+              azurePowerShellVersion: "LatestVersion"
+              scriptPath: $(Build.Repository.LocalPath)\misc\Switch-Users-App-Group.ps1
+              scriptArguments: -VaultName $(keyVaultName) -VaultResourceGroupName $(keyVaultRGName) -SubscriptionId $(subscriptionId) -ActiveHostResourceGroupName $(podResourceGroup)

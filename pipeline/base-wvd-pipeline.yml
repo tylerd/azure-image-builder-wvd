@@ -37,6 +37,8 @@ stages:
       podId: ${{ parameters.podId }}
       location: ${{ parameters.targetRegion }}
       targetContainer: ${{ parameters.targetContainer }}
-#  - template: swap-users-stage.yml
 
+  - template: swap-users-stage.yml
+    parameters:
+      podId: ${{ parameters.podId }}
 #  - template: destroy-host-group-stage.yml
