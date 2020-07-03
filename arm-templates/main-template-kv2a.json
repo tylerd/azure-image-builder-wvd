@@ -28,6 +28,10 @@
         "desID": {
             "type": "string"
         },
+        "workspaceId": {
+            "type": "string"
+           // "defaultValue":"/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourcegroups/azureminilab-la/providers/microsoft.operationalinsights/workspaces/azureminilab2019"
+        },
         "HostPoolName": {
             "type": "string",
             "defaultValue": "poolA"
@@ -190,6 +194,9 @@
                 "parameters": {                    
                     "diskEncryptionSetId": {
                         "value": "[parameters('desID')]"
+                        },
+                        "workspaceId":{
+                            "value":"/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourcegroups/azureminilab-la/providers/microsoft.operationalinsights/workspaces/azureminilab2019"
                         },
                         "rdsh-prefix":{
                             "value": "[variables('rdsh-prefix')]"

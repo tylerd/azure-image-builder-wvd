@@ -65,6 +65,10 @@
             },
             "defaultValue": "0.24299.50491"
         },
+        "osType": {
+            "type": "string",
+            "defaultValue":"windows"
+        },
         "vm-disk-type": {
             "type": "string",
             "allowedValues": [
@@ -87,12 +91,21 @@
     "diskEncryptionSetId": {
       "type": "string",
       "defaultValue": ""
-    }
+    },
+    "workspaceId": {
+        "type": "string"
+        }
     },
     "functions": [],
     "variables": {
         "availability-set-id": "[resourceId('Microsoft.Compute/availabilitySets/', parameters('availability-set-name'))]",
-        "existing-domain-username": "[first(split(parameters('administrator-account-username'), '@'))]"
+        "existing-domain-username": "[first(split(parameters('administrator-account-username'), '@'))]",
+        "daExtensionName": "[if(equals(toLower(parameters('osType')), 'windows'), 'DependencyAgentWindows', 'DependencyAgentLinux')]",
+        "daExtensionType": "[if(equals(toLower(parameters('osType')), 'windows'), 'DependencyAgentWindows', 'DependencyAgentLinux')]",
+        "daExtensionVersion": "9.5",
+        "mmaExtensionName": "[if(equals(toLower(parameters('osType')), 'windows'), 'MMAExtension', 'OMSExtension')]",
+        "mmaExtensionType": "[if(equals(toLower(parameters('osType')), 'windows'), 'MicrosoftMonitoringAgent', 'OmsAgentForLinux')]",
+        "mmaExtensionVersion": "[if(equals(toLower(parameters('osType')), 'windows'), '1.0', '1.4')]"
     },
     "resources": [
         {
@@ -144,6 +157,53 @@
                 }
             },
             "licenseType": "Windows_Client"
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2019-12-01",
+            "name": "[concat(parameters('rdsh-prefix'), copyindex(), '-vm/', variables('daExtensionName'))]",
+            "location": "[resourceGroup().location]",
+            "copy": {
+                "name": "rdsh-vm-loop",
+                "count": "[parameters('instance-count')]"
+            },
+            "dependsOn": [
+                "[concat(parameters('rdsh-prefix'), copyindex(), '-vm')]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Monitoring.DependencyAgent",
+                "type": "[variables('daExtensionType')]",
+                "typeHandlerVersion": "[variables('daExtensionVersion')]",
+                "autoUpgradeMinorVersion": true,
+                "enableAutomaticUpgrade": true,
+                "settings": {}
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('rdsh-prefix'), copyindex(), '-vm/', variables('mmaExtensionName'))]",
+            "location": "[resourceGroup().location]",
+            "copy": {
+                "name": "rdsh-vm-loop",
+                "count": "[parameters('instance-count')]"
+            },
+            "dependsOn": [
+                        "[concat(parameters('rdsh-prefix'), copyindex(), '-vm')]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.EnterpriseCloud.Monitoring",
+                "type": "[variables('mmaExtensionType')]",
+                "typeHandlerVersion": "[variables('mmaExtensionVersion')]",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "workspaceId": "[reference(parameters('workspaceId'), '2015-03-20').customerId]",
+                    "stopOnMultipleConnections": true
+                },
+                "protectedSettings": {
+                    "workspaceKey": "[listKeys(parameters('workspaceId'), '2015-03-20').primarySharedKey]"
+                }
             }
         }    
     ],
