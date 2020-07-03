@@ -479,6 +479,23 @@
         "green-subnetID": {
             "type": "string",
             "value": "[variables('green-subnetID')]"
+        },
+        "workspaceName": {
+            "type": "string",
+            "value": "[variables('wks')]"
+        },
+        "workspaceResourceGroup": {
+            "type": "string",
+            "value": "[resourceGroup().name]"
+        },
+        "blue-hostPoolName": {
+            "type": "string",
+            "value": "[variables('hostpool_blue')]"
+        },
+        "green-hostPoolName": {
+            "type": "string",
+            "value": "[variables('hostpool_green')]"
         }
+
     }
 }

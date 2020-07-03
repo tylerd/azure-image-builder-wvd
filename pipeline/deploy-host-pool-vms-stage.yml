@@ -7,24 +7,24 @@ stages:
   - stage: Deploy_Host_VMs
     displayName: Deploy Host Pool VMs
     variables:
+      resourceGroupName: ${{ format('$(resourceGroupPrefix)-{0}-{1}', parameters.podId, parameters.targetContainer) }}
+      workspaceResourceGroup: ${{ format('$(resourceGroupPrefix)-{0}', parameters.podId) }}
       keyVaultName: $[stageDependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.keyVaultName']]
       keyVaultRGName: $[stageDependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.keyVaultRGName']]
-      blue-subnetID: $[stageDependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.blue-subnetID']]
-      green-subnetID: $[stageDependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.green-subnetID']]
+
+      ${{ if eq( parameters.targetContainer, 'blue') }}:
+        hostPoolName: $[stageDependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.blue-hostPoolName']]
+        subnetId: blue-subnet-id
+        netappShare: netapp-blue
+
+      ${{ if eq( parameters.targetContainer, 'green') }}:
+        hostPoolName: $[stageDependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.green-hostPoolName']]
+        subnetId: green-subnet-id
+        netappShare: netapp-green
     jobs:
-      - job: PrintOutputs
-        steps:
-          - pwsh: |
-
-              Write-Host 'Stage Vars'
-              Write-Host '$(keyVaultName)'
-              Write-Host '$(keyVaultRGName)'
-              Write-Host '$(blue-subnetID)'
-              Write-Host '$(green-subnetID)'
-
-#      - template: deploy-template.yml
-#        parameters:
-#          resourceGroupName: ${{ format('$(resourceGroupPrefix)-{0}-{1}', parameters.podId, parameters.targetContainer) }}
-#          location: ${{ parameters.location }}
-#          templateFile: arm-templates/empty-template.json
-#          templateParameters: ""
+      - template: deploy-template.yml
+        parameters:
+          resourceGroupName: $(resourceGroupName)
+          location: ${{ parameters.location }}
+          templateFile: arm-templates/main-template-kv2a.json
+          templateParameters: "-VaultName $(keyVaultName) -VaultResourceGroupName $(keyVaultRGName) -VaultSubscriptionId $(subscriptionId) -subnetId $(subnetId) -netappshare $(netappShare) -desId $(diskEncryptKeyResourceId) -host-pool-resource-group $(workspaceResourceGroup) -HostPoolName $(hostPoolName)"
