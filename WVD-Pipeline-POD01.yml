@@ -30,3 +30,5 @@ extends:
     targetRegion: ${{ parameters.targetRegion }}
     targetContainer: ${{ parameters.targetContainer }}
     podId: "POD01"
+    persona: DEV
+    environment: SBX

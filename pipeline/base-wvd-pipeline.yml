@@ -19,6 +19,20 @@ parameters:
       - blue
       - green
 
+  - name: environment
+    displayName: Environment
+    type: string
+    values:
+      - SBX
+      - DEV
+      - PRD
+    default: SBX
+
+  - name: persona
+    displayName: Persona
+    type: string
+    default: DEV
+
   - name: podId
     displayName: Pod ID (format:POD##, ex POD01)
     type: string
