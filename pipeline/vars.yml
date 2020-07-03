@@ -24,10 +24,10 @@ variables:
     value: "/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourceGroups/Azureminilab-WVD-DES/providers/Microsoft.Compute/diskEncryptionSets/DEV-disk-encrypt-key"
 
   - name: podResourceGroup
-    value: ${{ format('{0}-{1}'', variables.resourceGroupPrefix, parameters.podId) }}
+    value: ${{ format('{0}-{1}', variables.resourceGroupPrefix, parameters.podId) }}
 
   - name: containerResourceGroup
-    value: ${{ format('{0}-{1}'', variables.podResourceGroup, parameters.targetContainer) }}
+    value: ${{ format('{0}-{1}', variables.podResourceGroup, parameters.targetContainer) }}
 
   - name: targetRegionCode
     value: ${{ parameters.regionCodes[parameters.targetRegion] }}
