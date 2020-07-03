@@ -7,11 +7,6 @@ stages:
   - stage: Deploy_Host_VMs
     displayName: Deploy Host Pool VMs
     variables:
-      resourceGroupName: ${{ format('$(resourceGroupPrefix)-{0}-{1}', parameters.podId, parameters.targetContainer) }}
-      workspaceResourceGroup: ${{ format('$(resourceGroupPrefix)-{0}', parameters.podId) }}
-      keyVaultName: $[stageDependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.keyVaultName']]
-      keyVaultRGName: $[stageDependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.keyVaultRGName']]
-
       ${{ if eq( parameters.targetContainer, 'blue') }}:
         hostPoolName: $[stageDependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.blue-hostPoolName']]
         subnetId: blue-subnet-id
@@ -24,7 +19,7 @@ stages:
     jobs:
       - template: deploy-template.yml
         parameters:
-          resourceGroupName: $(resourceGroupName)
+          resourceGroupName: $(containerResourceGroup)
           location: ${{ parameters.location }}
           templateFile: arm-templates/main-template-kv2a.json
-          templateParameters: "-VaultName $(keyVaultName) -VaultResourceGroupName $(keyVaultRGName) -VaultSubscriptionId $(subscriptionId) -subnetId $(subnetId) -netappshare $(netappShare) -desId $(diskEncryptKeyResourceId) -host-pool-resource-group $(workspaceResourceGroup) -HostPoolName $(hostPoolName)"
+          templateParameters: "-VaultName $(keyVaultName) -VaultResourceGroupName $(podResourceGroup) -VaultSubscriptionId $(subscriptionId) -subnetId $(subnetId) -netappshare $(netappShare) -desId $(diskEncryptKeyResourceId) -host-pool-resource-group $(podResourceGroup) -HostPoolName $(hostPoolName)"

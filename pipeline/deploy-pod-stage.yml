@@ -11,7 +11,10 @@ stages:
     jobs:
       - template: deploy-template.yml
         parameters:
-          resourceGroupName: ${{ format('{0}-{1}', variables.resourceGroupPrefix, parameters.podId) }}
+          resourceGroupName: $(podResourceGroup)
           location: ${{ parameters.location }}
           templateFile: patterns/new-pod.json
-          templateParameters: "-addressPrefix $(subnetAddressPrefix-blue) -addressPrefix-green $(subnetAddressPrefix-green)"
+          templateParameters: |
+            -keyVaultName $(keyVaultName) `
+            -addressPrefix $(subnetAddressPrefix-blue) `
+            -addressPrefix-green $(subnetAddressPrefix-green)

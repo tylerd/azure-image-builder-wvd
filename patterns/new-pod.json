@@ -2,6 +2,9 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "keyVaultName": {
+            "type": "string"
+        },
         "environment": {
             "type": "string",
             "allowedValues": [
@@ -11,10 +14,6 @@
                 "WVD"
             ],
             "defaultValue": "SBX"
-        },
-        "location": {
-            "type": "string",
-            "defaultValue": "[resourceGroup().location]"
         },
         "persona": {
             "type": "string",
@@ -66,29 +65,23 @@
     "functions": [],
     "variables": {
         "templateURI": "[concat(parameters('_artifactsLocation'),'templates/arm-templates/')]",
-        "regionCode": {
-            "canadacentral": "CANC",
-            "canadaeast": "CAEA",
-            "eastus2": "USE2",
-            "centralus": "USN"
-        },
         "subnetName": "[concat('SUB-WVD-',parameters('persona'),'-',variables('unique_string'))]",
         "unique_string": "[take(uniqueString(resourceGroup().id),3)]",
-        "subscriptionId": "[subscription().subscriptionId]",
-        "resourceGroupName": "[resourceGroup().name]",
-        "keyVaultName": "[concat(parameters('environment'),'-',variables('regionCode')[parameters('location')],'-WVD-',parameters('persona'),'-',variables('unique_string'),'-KV')]",
+
         "blue-subnetID": "[concat(resourceId(parameters('VNETRG'),'Microsoft.Network/virtualNetworks',parameters('VNETName')),'/subnets/',variables('subnetName'))]",
         "green-subnetID": "[concat(resourceId(parameters('VNETRG-green'),'Microsoft.Network/virtualNetworks',parameters('VNETName-green')),'/subnets/',variables('subnetName'))]",
         "netapp-blue": "[concat(parameters('environment'),'-NetAppVol-BLUE',parameters('persona'),'-',variables('unique_string'),'-profiles')]",
         "netapp-green": "[concat(parameters('environment'),'-NetAppVol-GREEN',parameters('persona'),'-',variables('unique_string'),'-profiles')]",
         "subnetName-deployment-blue": "[concat('BLUE-subnet-for-WVD-',parameters('persona'),'-',variables('unique_string'))]",
         "subnetName-deployment-green": "[concat('BLUE-subnet-for-WVD-',parameters('persona'),'-',variables('unique_string'))]",
+
         "secrets-deployment": "[concat('secrets-for-WVD-',parameters('persona'),'-',variables('unique_string'))]",
         "wks-deployment": "[concat('WVD-WKS-',parameters('persona'),'-',variables('unique_string'))]",
         "blue-pod-container-deployment": "[concat('WVD-POD-Container-BLUE',parameters('persona'),'-',variables('unique_string'))]",
         "green-pod-container-deployment": "[concat('WVD-POD-Container-GREEN',parameters('persona'),'-',variables('unique_string'))]",
         "user-pod-container-blue-deployment": "[concat('WVD-POD-Containers-BLUE-UsersAssignmt',parameters('persona'),'-',variables('unique_string'))]",
         "user-pod-container-green-deployment": "[concat('WVD-POD-Containers-GREEN-UsersAssignmt',parameters('persona'),'-',variables('unique_string'))]",
+
         "wvd_location": "eastus2",
         "wks": "[concat(parameters('environment'),'-WKS-',parameters('persona'),'-',variables('unique_string'))]",
         "appgrp_blue": "[concat(parameters('environment'),'-AppGroup-',parameters('persona'),'-',variables('unique_string'),'-BLUE')]",
@@ -113,13 +106,13 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
-            "name": "[variables('keyVaultName')]",
+            "name": "[parameters('keyVaultName')]",
             "resourceGroup": "[resourceGroup().name]",
             "properties": {
                 "mode": "Incremental",
                 "parameters": {
                     "keyVaultName": {
-                        "value": "[variables('keyVaultName')]"
+                        "value": "[parameters('keyVaultName')]"
                     },
                     "neworExistingKeyVault": {
                         "value": "newKeyVault"
@@ -228,13 +221,13 @@
             "dependsOn": [
                 "[variables('subnetName-deployment-green')]",
                 "[variables('subnetName-deployment-blue')]",
-                "[variables('keyVaultName')]"
+                "[parameters('keyVaultName')]"
             ],
             "properties": {
                 "mode": "Incremental",
                 "parameters": {
                     "keyVaultName": {
-                        "value": "[variables('keyVaultName')]"
+                        "value": "[parameters('keyVaultName')]"
                     },
                     "AzDevOpsSPN": {
                         "value": "[parameters('AzDevOpsSPN')]"
@@ -301,7 +294,7 @@
             "name": "[variables('wks-deployment')]",
             "resourceGroup": "[resourceGroup().name]",
             "dependsOn": [
-                "[variables('keyVaultName')]",
+                "[parameters('keyVaultName')]",
                 "[variables('secrets-deployment')]"
             ],
             "properties": {
@@ -464,14 +457,6 @@
 
     ],
     "outputs": {
-        "keyVaultName": {
-            "type": "string",
-            "value": "[variables('keyVaultName')]"
-        },
-        "keyVaultRGName": {
-            "type": "string",
-            "value": "[resourceGroup().name]"
-        },
         "blue-subnetID": {
             "type": "string",
             "value": "[variables('blue-subnetID')]"
