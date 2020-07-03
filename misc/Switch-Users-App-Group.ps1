@@ -7,8 +7,7 @@ param (
 
 $ErrorView = "NormalView"
 
-#Load up the WVD PS module
-Install-Module -Name Az.DesktopVirtualization -Force -AllowClobber
+#Load up the WVD PS module: Install-Module -Name Az.DesktopVirtualization -Force -AllowClobber
 
 #Get the active/production host pool from the POD's Key Vault.
 $HostsecretName = "active-host-pool"
