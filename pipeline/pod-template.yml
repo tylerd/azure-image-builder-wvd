@@ -31,14 +31,14 @@ stages:
 
   - template: deploy-pod-stage.yml
     parameters:
-      podId: ${{ parameters.podid }}
+      podId: ${{ parameters.podId }}
       podResourceGroup: ${{ parameters.podResourceGroup }}
       targetRegion: ${{ parameters.targetRegion }}
       keyVaultName: ${{ format('WVD-KVL-{0}', parameters.podId) }}
 
   - template: deploy-host-pool-vms-stage.yml
     parameters:
-      podId: ${{ parameters.podid }}
+      podId: ${{ parameters.podId }}
       keyVaultName: ${{ format('WVD-KVL-{0}', parameters.podId) }}
       podResourceGroup: ${{ parameters.podResourceGroup }}
       containerResourceGroup: ${{ format('{0}-{1}', parameters.podResourceGroup, parameters.targetContainer) }}
@@ -47,6 +47,6 @@ stages:
 
   - template: swap-users-stage.yml
     parameters:
-      podId: ${{ parameters.podid }}
+      podId: ${{ parameters.podId }}
       keyVaultName: ${{ format('WVD-KVL-{0}', parameters.podId) }}
       podResourceGroup: ${{ parameters.podResourceGroup }}

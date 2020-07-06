@@ -5,7 +5,7 @@ parameters:
   - name: podResourceGroup
 
 stages:
-  - stage: Swap_Users_${{ parameters.podId }}
+  - stage: Swap_Users_${{ replace(parameters.podId, '-', '') }}
     displayName: Swap Users
     dependsOn:
       - Deploy_Pod
