@@ -34,7 +34,7 @@ extends:
     image: ${{ parameters.image }}
     primaryKeyVault: PR01-CACN-KVL
     primaryNetAppInstance: WVD-CACN-NETAPP-PR01
-    primaryNetAppCpacity: PR01-CACN-CPOOL
+    primaryNetAppCapacity: PR01-CACN-CPOOL
     primaryNetAppVolume: PR01-CACN-VOL
     targetContainer: ${{ parameters.targetContainer }}
     pods:
