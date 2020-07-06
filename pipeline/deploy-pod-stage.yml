@@ -8,6 +8,7 @@ parameters:
 stages:
   # Create new pod resource group and resources
   - stage: DeployPod_${{ replace(parameters.podId, '-', '') }}
+    dependsOn: Prep_Deployment
     displayName: Deploy Pod ${{ parameters.podId }}
     variables:
       - template: vars.yml

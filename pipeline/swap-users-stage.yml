@@ -8,8 +8,7 @@ stages:
   - stage: Swap_Users_${{ replace(parameters.podId, '-', '') }}
     displayName: Swap Users
     dependsOn:
-      - Deploy_Pod
-      - Deploy_Host_VMs
+      - Deploy_Host_VMs_${{ replace(parameters.podId, '-', '') }}
     variables:
       - template: vars.yml
       - name: keyVaultName

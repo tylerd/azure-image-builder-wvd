@@ -9,6 +9,7 @@ parameters:
 
 stages:
   - stage: Deploy_Host_VMs_${{ replace(parameters.podId, '-', '') }}
+    dependsOn: DeployPod_${{ replace(parameters.podId, '-', '') }}
     displayName: Deploy Host Pool VMs
     variables:
       ${{ if eq( parameters.targetContainer, 'blue') }}:
