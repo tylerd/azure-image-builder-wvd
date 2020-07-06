@@ -1,0 +1,74 @@
+
+parameters:
+  - name: personaId
+    displayName: Persona ID
+    type: string
+
+  - name: personaName
+    displayName: Persona Name
+    type: string
+
+  - name: primaryRegion
+    displayName: Primary Region
+    type: string
+    values:
+      - canadacentral
+      - canadaeast
+    default: canadacentral
+
+  - name: primaryRegionCode
+    displayName: Primary Region Code
+    type: string
+    values:
+      - CACN
+      - CAET
+    default: CACN
+
+  - name: image
+    displayName: Persona Image
+    type: string
+
+  - name: primaryKeyVault
+    displayName: Key Vault Resource Id  - Primary Region
+    type: string
+
+  - name: primaryNetAppInstance
+    displayName: NetApp Instance - Primary Region
+    type: string
+
+  - name: primaryNetAppCapacity
+    displayName: NetApp Capacity Pool - Primary Region
+    type: string
+
+  - name: primaryNetAppVolume
+    displayName: NetApp Capacity Pool - Primary Region
+    type: string
+
+  - name: pods
+    displayName: Pods
+    type: object
+    default:
+      - POD01
+      - POD02
+  
+  - name: targetContainer
+    displayName: Target Container
+    type: string
+    default: blue
+    values:
+      - blue
+      - green
+
+stages:
+  - template: prep-stage.yml
+  - ${{ each podId in parameters.pods }}:
+    - template: pod-template.yml
+      parameters:
+        personaId: ${{ parameters.personaId }}
+        personaName: ${{ parameters.personaName }}
+        image: ${{ parameters.image }}
+        podId: ${{ format('{0}-{1}', parameters.personaId, podId) }}
+        podDiscription: ${{ format('{0} {1}', parameters.personaName, podId)}}
+        podResourceGroup: ${{ format('WVD-RGP-{0}-{1}', parameters.personaId, podId)}}
+        targetRegion: ${{ parameters.primaryRegion }}
+        targetContainer: ${{ parameters.targetContainer }}

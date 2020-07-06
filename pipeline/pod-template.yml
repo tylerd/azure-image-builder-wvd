@@ -1,0 +1,49 @@
+parameters:
+  - name: personaId
+    displayName: Persona ID
+    type: string
+
+  - name: personaName
+    displayName: Persona Name
+    type: string
+
+  - name: image
+    displayName: Persona Image
+    type: string
+
+  - name: podId
+    displayName: Pod ID
+    type: string
+
+  - name: podDiscription
+    type: string
+
+  - name: podResourceGroup
+    type: string
+
+  - name: targetRegion
+    type: string
+
+  - name: targetContainer
+    type: string
+
+stages:
+
+  - template: deploy-pod-stage.yml
+    parameters:
+      podResourceGroup: ${{ parameters.podResourceGroup }}
+      targetRegion: ${{ parameters.targetRegion }}
+      keyVaultName: ${{ format('WVD-KVL-{0}', parameters.podId }}
+
+  - template: deploy-host-pool-vms-stage.yml
+    parameters:
+      keyVaultName: ${{ format('WVD-KVL-{0}', parameters.podId }}
+      podResourceGroup: ${{ parameters.podResourceGroup }}
+      containerResourceGroup: ${{ format('{0}-{1}', parameters.podResourceGroup, parameters.targetContainer) }}
+      targetRegion: ${{ parameters.targetRegion }}
+      targetContainer: ${{ parameters.targetContainer }}
+
+  - template: swap-users-stage.yml
+    parameters:
+      keyVaultName: ${{ format('WVD-KVL-{0}', parameters.podId }}
+      podResourceGroup: ${{ parameters.podResourceGroup }}
