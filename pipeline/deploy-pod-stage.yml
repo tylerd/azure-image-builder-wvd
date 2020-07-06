@@ -1,12 +1,13 @@
 parameters:
+  - name: podId
   - name: podResourceGroup
   - name: targetRegion
   - name: keyVaultName
 
 stages:
   # Create new pod resource group and resources
-  - stage: Deploy_Pod
-    displayName: Deploy Pod
+  - stage: DeployPod_${{ parameters.podId }}
+    displayName: Deploy Pod ${{ parameters.podId }}
     variables:
       - template: vars.yml
     jobs:
