@@ -13,12 +13,12 @@ stages:
     displayName: Deploy Host Pool VMs
     variables:
       ${{ if eq( parameters.targetContainer, 'blue') }}:
-        hostPoolName: $[stageDependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.blue-hostPoolName']]
+        hostPoolName: $[stageDependencies.DeployPod_${{ replace(parameters.podId, '-', '') }}.Deploy_ARM_Template.outputs['Output.blue-hostPoolName']]
         subnetId: blue-subnet-id
         netappShare: netapp-blue
 
       ${{ if eq( parameters.targetContainer, 'green') }}:
-        hostPoolName: $[stageDependencies.Deploy_Pod.Deploy_ARM_Template.outputs['Output.green-hostPoolName']]
+        hostPoolName: $[stageDependencies.DeployPod_${{ replace(parameters.podId, '-', '') }}.Deploy_ARM_Template.outputs['Output.green-hostPoolName']]
         subnetId: green-subnet-id
         netappShare: netapp-green
     jobs:
