@@ -51,12 +51,14 @@ stages:
 
   - template: deploy-pod-stage.yml
     parameters:
+      podId: ${{ parameters.podId }}
       podResourceGroup: ${{ format('$(resourceGroupPrefix)-{0}', parameters.podId) }}
       targetRegion: ${{ parameters.targetRegion }}
       keyVaultName: ${{ format('{0}-{1}-WVD-{2}-KV', parameters.environment, parameters.regionCodes[parameters.targetRegion], parameters.persona) }}
 
   - template: deploy-host-pool-vms-stage.yml
     parameters:
+      podId: ${{ parameters.podId }}
       keyVaultName: ${{ format('{0}-{1}-WVD-{2}-KV', parameters.environment, parameters.regionCodes[parameters.targetRegion], parameters.persona) }}
       podResourceGroup: ${{ format('$(resourceGroupPrefix)-{0}', parameters.podId) }}
       containerResourceGroup: ${{ format('$(resourceGroupPrefix)-{0}-{1}', parameters.podId, parameters.targetContainer) }}
@@ -65,6 +67,7 @@ stages:
 
   - template: swap-users-stage.yml
     parameters:
+      podId: ${{ parameters.podId }}
       keyVaultName: ${{ format('{0}-{1}-WVD-{2}-KV', parameters.environment, parameters.regionCodes[parameters.targetRegion], parameters.persona) }}
       podResourceGroup: ${{ format('$(resourceGroupPrefix)-{0}', parameters.podId) }}
 #  - template: destroy-host-group-stage.yml

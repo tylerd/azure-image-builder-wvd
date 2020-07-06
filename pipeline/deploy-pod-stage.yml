@@ -1,5 +1,6 @@
 parameters:
   - name: podId
+    default: ''
   - name: podResourceGroup
   - name: targetRegion
   - name: keyVaultName

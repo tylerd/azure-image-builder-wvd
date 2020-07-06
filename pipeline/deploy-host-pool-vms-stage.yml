@@ -1,4 +1,6 @@
 parameters:
+  - name: podId
+    default: ''
   - name: keyVaultName
   - name: podResourceGroup
   - name: containerResourceGroup
@@ -6,7 +8,7 @@ parameters:
   - name: targetContainer
 
 stages:
-  - stage: Deploy_Host_VMs
+  - stage: Deploy_Host_VMs_${{ parameters.podId }}
     displayName: Deploy Host Pool VMs
     variables:
       ${{ if eq( parameters.targetContainer, 'blue') }}:

@@ -1,9 +1,11 @@
 parameters:
+  - name: podId
+    default: ''
   - name: keyVaultName
   - name: podResourceGroup
 
 stages:
-  - stage: Swap_Users
+  - stage: Swap_Users_${{ parameters.podId }}
     displayName: Swap Users
     dependsOn:
       - Deploy_Pod
