@@ -22,7 +22,10 @@ param (
     $SubnetCidr = 25,
     [Parameter()]
     [string]
-    $DevOpsStorageAccountName = "azminlandevops01"
+    $DevOpsStorageAccountName = "azminlandevops01",
+    [Parameter()]
+    [string]
+    $LogAnalyticsWorkspaceName = "WVD-LA-Workspace02"
 )
 
 
@@ -60,3 +63,9 @@ if (!$container) {
     $container = $sa | New-AzStorageContainer -Name "templates"
 }
 
+$workspace = $rg | Get-AzOperationalInsightsWorkspace -Name $LogAnalyticsWorkspaceName -ErrorAction SilentlyContinue
+
+if (!$workspace) {
+    Write-Host "Log Analytics Workspace $LogAnalyticsWorkspaceName does not exist. Creating."
+    $workspace = $rg | New-AzOperationalInsightsWorkspace -Name $LogAnalyticsWorkspaceName
+}
