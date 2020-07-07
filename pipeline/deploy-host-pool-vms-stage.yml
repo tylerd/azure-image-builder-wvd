@@ -27,4 +27,4 @@ stages:
           resourceGroupName: ${{ parameters.containerResourceGroup }}
           location: ${{ parameters.targetRegion }}
           templateFile: arm-templates/main-template-kv2a.json
-          templateParameters: -_artifactsLocation "https://$(storageAccountName).blob.core.windows.net/" -VaultName ${{ parameters.keyVaultName }} -VaultResourceGroupName ${{ parameters.podResourceGroup }} -VaultSubscriptionId $(subscriptionId) -useSharedImage $(useSharedImage) -subnetId $(subnetId) -netappshare $(netappShare) -desId $(diskEncryptKeyResourceId) -host-pool-resource-group ${{ parameters.podResourceGroup }} -HostPoolName $(hostPoolName)
+          templateParameters: -_artifactsLocation "https://$(storageAccountName).blob.core.windows.net/" -VaultName ${{ parameters.keyVaultName }} -VaultResourceGroupName ${{ parameters.podResourceGroup }} -VaultSubscriptionId $(subscriptionId) -useSharedImage $(useSharedImage) -subnetId $(subnetId) -netappshare $(netappShare) -desId $(diskEncryptKeyResourceId) -host-pool-resource-group ${{ parameters.podResourceGroup }} -HostPoolName $(hostPoolName) -workspaceId $(workspaceId) -joinDomain $(joinDomain)

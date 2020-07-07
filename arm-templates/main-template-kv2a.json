@@ -101,6 +101,10 @@
         },
         "artifactsLocationSasToken": {
             "type": "securestring"
+        },
+        "joinDomain": {
+            "type": "bool",
+            "defaultValue": true
         }
     },
     "functions": [],
@@ -282,6 +286,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "[variables('domain-join-ext-deployment-name')]",
+            "condition": "[parameters('joinDomain')]",
             "dependsOn": [
                 "[variables('vm-customization-deployment-name')]"
             ],
