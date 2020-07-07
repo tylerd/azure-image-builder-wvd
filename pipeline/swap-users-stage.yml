@@ -8,7 +8,7 @@ parameters:
 
 stages:
   - stage: Swap_Users_${{ parameters.podId }}
-    displayName: Swap Users
+    displayName: Swap Users ${{ parameters.podId }}
     dependsOn:
       - Deploy_Host_VMs_${{ parameters.podId }}
     variables:

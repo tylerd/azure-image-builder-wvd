@@ -8,9 +8,9 @@ parameters:
   - name: targetContainer
 
 stages:
-  - stage: Deploy_Host_VMs_${{ replace(parameters.podId, '-', '') }}
-    dependsOn: DeployPod_${{ replace(parameters.podId, '-', '') }}
-    displayName: Deploy Host Pool VMs
+  - stage: Deploy_Host_VMs_${{ parameters.podId }}
+    dependsOn: DeployPod_${{ parameters.podId }}
+    displayName: Deploy VMs ${{ parameters.podId}}
     variables:
       ${{ if eq( parameters.targetContainer, 'blue') }}:
         hostPoolName: $[stageDependencies.DeployPod_${{ parameters.podId }}.Deploy_ARM_Template.outputs['Output.blue-hostPoolName']]
