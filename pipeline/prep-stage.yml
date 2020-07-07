@@ -19,9 +19,9 @@ stages:
 
           - task: AzureFileCopy@4
             inputs:
-              azureSubscription: ${{ variables.azureConnectionName }}
+              azureSubscription: $(azureConnectionName)
               SourcePath: '$(Build.Repository.LocalPath)\*'
               Destination: "AzureBlob"
-              storage: ${{ variables.storageAccountName }}
+              storage: $(storageAccountName)
               ContainerName: "templates"
               sasTokenTimeOutInMinutes: "240"
