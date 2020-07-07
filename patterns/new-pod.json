@@ -411,11 +411,11 @@
     "outputs": {
         "blue-subnetID": {
             "type": "string",
-            "value": "[variables('blue-subnetID')]"
+            "value": "[variables('subnetID')]"
         },
         "green-subnetID": {
             "type": "string",
-            "value": "[variables('green-subnetID')]"
+            "value": "[variables('subnetID')]"
         },
         "workspaceName": {
             "type": "string",
