@@ -29,4 +29,4 @@ stages:
           jobName: DeployDiskEncryptSet
           location: ${{ parameters.targetRegion }}
           templateFile: arm-templates/new-diskencryptset.json
-          templateParameters: -_artifactsLocation "https://$(storageAccountName).blob.core.windows.net/" -environment WVD -PersonaName ${{ parameters.personaId }} -workspaceId $(workspaceId)
+          templateParameters: -_artifactsLocation "https://$(storageAccountName).blob.core.windows.net/" -location ${{ parameters.targetRegion }} -environment WVD -PersonaName ${{ parameters.personaId }} -workspaceId $(workspaceId)
