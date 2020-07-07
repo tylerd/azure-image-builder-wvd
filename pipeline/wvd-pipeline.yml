@@ -67,7 +67,7 @@ stages:
         personaId: ${{ parameters.personaId }}
         personaName: ${{ parameters.personaName }}
         image: ${{ parameters.image }}
-        podId: ${{ format('{0}-{1}', parameters.personaId, podId) }}
+        podId: ${{ podId }}
         podDiscription: ${{ format('{0} {1}', parameters.personaName, podId)}}
         podResourceGroup: ${{ format('WVD-RGP-{0}-{1}', parameters.personaId, podId)}}
         targetRegion: ${{ parameters.primaryRegion }}

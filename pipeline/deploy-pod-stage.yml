@@ -1,13 +1,16 @@
 parameters:
   - name: podId
     default: ''
+  - name: personaId
+  - name: environment
+    default: WVD
   - name: podResourceGroup
   - name: targetRegion
   - name: keyVaultName
 
 stages:
   # Create new pod resource group and resources
-  - stage: DeployPod_${{ replace(parameters.podId, '-', '') }}
+  - stage: DeployPod_${{ parameters.podId }}
     dependsOn: Prep_Deployment
     displayName: Deploy Pod ${{ parameters.podId }}
     variables:
@@ -18,4 +21,4 @@ stages:
           resourceGroupName: ${{ parameters.podResourceGroup }}
           location: ${{ parameters.targetRegion }}
           templateFile: patterns/new-pod.json
-          templateParameters: -keyVaultName ${{ parameters.keyVaultName }} -workspaceId $(workspaceId) -_artifactsLocation "https://$(storageAccountName).blob.core.windows.net/" -userGroupName $(userGroupName) -userGroupObjectId $(userGroupObjectId) -testUserGroupName $(testUserGroupName) -testUserGroupObjectId $(testUserGroupObjectId)
+          templateParameters: -keyVaultName ${{ parameters.keyVaultName }} -environment ${{ parameters.environment }} -persona ${{ parameters.personaId }} -pod ${{ parameters.podId }} -workspaceId $(workspaceId) -_artifactsLocation "https://$(storageAccountName).blob.core.windows.net/" -userGroupName $(userGroupName) -userGroupObjectId $(userGroupObjectId) -testUserGroupName $(testUserGroupName) -testUserGroupObjectId $(testUserGroupObjectId)

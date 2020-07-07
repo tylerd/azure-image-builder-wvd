@@ -93,10 +93,10 @@
 
         "secrets-deployment": "[concat('secrets-for-WVD-',variables('fullPodId'),'-',variables('unique_string'))]",
         "wks-deployment": "[concat('WVD-WKS-',variables('fullPodId'),'-',variables('unique_string'))]",
-        "blue-pod-container-deployment": "[concat('WVD-POD-Container-BLUE',variables('fullPodId'),'-',variables('unique_string'))]",
-        "green-pod-container-deployment": "[concat('WVD-POD-Container-GREEN',variables('fullPodId'),'-',variables('unique_string'))]",
-        "user-pod-container-blue-deployment": "[concat('WVD-POD-Containers-BLUE-UsersAssignmt',variables('fullPodId'),'-',variables('unique_string'))]",
-        "user-pod-container-green-deployment": "[concat('WVD-POD-Containers-GREEN-UsersAssignmt',variables('fullPodId'),'-',variables('unique_string'))]",
+        "blue-pod-container-deployment": "[concat('WVD-POD-Container-BLUE-',variables('fullPodId'),'-',variables('unique_string'))]",
+        "green-pod-container-deployment": "[concat('WVD-POD-Container-GREEN-',variables('fullPodId'),'-',variables('unique_string'))]",
+        "user-pod-container-blue-deployment": "[concat('WVD-POD-Containers-BLUE-UsersAssignmt-',variables('fullPodId'),'-',variables('unique_string'))]",
+        "user-pod-container-green-deployment": "[concat('WVD-POD-Containers-GREEN-UsersAssignmt-',variables('fullPodId'),'-',variables('unique_string'))]",
 
         "wvd_location": "eastus2",
         "wks": "[concat(parameters('environment'),'-WKS-',variables('fullPodId'))]",
