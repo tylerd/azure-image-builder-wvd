@@ -49,5 +49,6 @@ stages:
   - template: swap-users-stage.yml
     parameters:
       podId: ${{ parameters.podId }}
+      personaId: ${{ parameters.personaId }}
       keyVaultName: ${{ format('WVD-KVL-{0}-{1}', parameters.personaId, parameters.podId) }}
       podResourceGroup: ${{ parameters.podResourceGroup }}
