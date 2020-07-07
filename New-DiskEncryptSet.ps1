@@ -3,15 +3,16 @@
 
 $startTime = Get-Date
 $expiryTime = $startTime.AddMinutes(30)
-$StorageAccountRG = "aib-devops-rg"
-$StorageAccountName = "azminlandevops"
+$StorageAccountRG = "WVD-CACN-Core-Infra"
+$StorageAccountName = "azminlandevops01"
 $RootContainer = "templates"
 $folder = "arm-templates"
+$workspaceId = "/subscriptions/45a36c26-54ca-48a8-b3c8-e582d6c8627b/resourcegroups/wvd-cacn-core-infra/providers/microsoft.operationalinsights/workspaces/wvd-la-workspace02"
 
 $MainTemplate = "new-diskencryptset.json"
 
 $TargetResourceGroup = "Azureminilab-WVD-DES"
-$Location="canadacentral"
+$Location = "canadacentral"
 
 $rg = Get-AzResourceGroup -Name $TargetResourceGroup -ErrorAction SilentlyContinue
 if (!$rg) {
@@ -31,6 +32,12 @@ $secureToken = ConvertTo-SecureString -String $token -AsPlainText -Force
     -artifactsLocationSasToken $secureToken
     #>
 
-    New-AzResourceGroupDeployment -ResourceGroupName $TargetResourceGroup `
-    -TemplateFile $MainTemplate -Verbose `
-    -artifactsLocationSasToken $secureToken
+New-AzResourceGroupDeployment -ResourceGroupName $TargetResourceGroup `
+    -TemplateFile "$folder\$MainTemplate" -Verbose `
+    -location "canadacentral" `
+    -KeyVaultLocation "canadacentral" `
+    -artifactsLocationSasToken $secureToken `
+    -_artifactsLocation "https://$StorageAccountName.blob.core.windows.net/" `
+    -workspaceId $workspaceId `
+    -PersonaName "PR02" `
+    -environment "WVD"

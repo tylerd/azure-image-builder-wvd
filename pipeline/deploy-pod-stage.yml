@@ -23,10 +23,3 @@ stages:
           templateFile: patterns/new-pod.json
           templateParameters: -keyVaultName ${{ parameters.keyVaultName }} -environment ${{ parameters.environment }} -persona ${{ parameters.personaId }} -pod ${{ parameters.podId }} -workspaceId $(workspaceId) -_artifactsLocation "https://$(storageAccountName).blob.core.windows.net/" -userGroupName $(userGroupName) -userGroupObjectId $(userGroupObjectId) -testUserGroupName $(testUserGroupName) -testUserGroupObjectId $(testUserGroupObjectId) -VNETName $(VnetName) -VNETRG $(VnetResourceGroup)
 
-      - template: deploy-template.yml
-        parameters:
-          resourceGroupName: ${{ parameters.podResourceGroup }}-DES
-          jobName: DeployDiskEncryptSet
-          location: ${{ parameters.targetRegion }}
-          templateFile: arm-templates/new-diskencryptset.json
-          templateParameters: -_artifactsLocation "https://$(storageAccountName).blob.core.windows.net/" -location ${{ parameters.targetRegion }} -environment WVD -PersonaName ${{ parameters.personaId }} -workspaceId $(workspaceId)
