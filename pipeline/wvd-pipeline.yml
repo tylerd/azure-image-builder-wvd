@@ -56,8 +56,8 @@ parameters:
     type: string
     default: blue
     values:
-      - blue
-      - green
+      - BLUE
+      - GREEN
 
 stages:
   - template: prep-stage.yml

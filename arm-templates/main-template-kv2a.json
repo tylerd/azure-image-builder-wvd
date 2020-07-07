@@ -109,8 +109,15 @@
     },
     "functions": [],
     "variables": {
+        "regionCode": {
+            "canadacentral": "CC",
+            "canadaeast": "CE",
+            "eastus2": "U2",
+            "centralus": "UC"
+        },
+        "vmRegionCode": "[variables('regionCode')[resourceGroup().location]]",
         "hostpool-token-deployment-name": "[concat('get-hostpool-token-',parameters('utc-value'))]",
-        "rdsh-prefix": "[take(uniqueString(parameters('HostPoolName')),7)]",
+        "rdsh-prefix": "[concat('WVD',variables('vmRegionCode'),uniqueString(parameters('HostPoolName')),6)]",
         "availability-set-deployment-name": "[concat('compute-availabilitysets-',parameters('utc-value'))]",
         "network-iterfaces-deployment-name": "[concat('network-interfaces-',parameters('utc-value'))]",
         "virtual-machines-deployment-name": "[concat('virtual-machines-',parameters('utc-value'))]",

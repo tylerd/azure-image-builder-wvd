@@ -16,8 +16,8 @@ parameters:
     displayName: Target Host Container
     type: string
     values:
-      - blue
-      - green
+      - BLUE
+      - GREEN
 
   - name: image
     displayName: Image
