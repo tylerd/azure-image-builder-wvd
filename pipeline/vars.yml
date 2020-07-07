@@ -1,15 +1,15 @@
 variables:
-  - name: storageAccountName
-    value: ${{ coalesce(variables.storageAccountName, 'azminlandevops') }}
+#  - name: storageAccountName
+#    value: azminlandevops
 
-  - name: storageAccountResourceGroupName
-    value: ${{ coalesce(variables.storageAccountResourceGroupName, 'aib-devops-rg') }}
+#  - name: storageAccountResourceGroupName
+#    value: aib-devops-rg
 
   - name: azureConnectionName
     value: AzDevOPS
 
-  - name: subscriptionId
-    value: ${{ coalesce(variables.subscriptionId, '1965c25a-b7fd-48b5-a393-c9e785c1c4d9') }}
+#  - name: subscriptionId
+#    value: "1965c25a-b7fd-48b5-a393-c9e785c1c4d9"
 
   - name: resourceGroupPrefix
     value: Azureminilab-WVD
