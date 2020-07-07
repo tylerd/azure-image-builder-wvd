@@ -1,14 +1,16 @@
 parameters:
   - name: podId
     default: ''
+  - name: personaId
+    default: ''
   - name: keyVaultName
   - name: podResourceGroup
 
 stages:
-  - stage: Swap_Users_${{ replace(parameters.podId, '-', '') }}
+  - stage: Swap_Users_${{ parameters.podId }}
     displayName: Swap Users
     dependsOn:
-      - Deploy_Host_VMs_${{ replace(parameters.podId, '-', '') }}
+      - Deploy_Host_VMs_${{ parameters.podId }}
     variables:
       - template: vars.yml
       - name: keyVaultName
@@ -16,15 +18,19 @@ stages:
       - name: podResourceGroup
         value: ${{ parameters.podResourceGroup }}
     jobs:
-      - job: Swap_App_Group_Users
+      - deployment: Swap_App_Group_Users
         displayName: Swap App Group Users
-        steps:
-          - task: AzurePowerShell@4
-            displayName: Swap Users Script
-            inputs:
-              pwsh: true
-              azureSubscription: ${{ variables.azureConnectionName }}
-              scriptType: filePath
-              azurePowerShellVersion: "LatestVersion"
-              scriptPath: $(Build.Repository.LocalPath)\misc\Switch-Users-App-Group.ps1
-              scriptArguments: -VaultName $(keyVaultName) -VaultResourceGroupName $(podResourceGroup) -SubscriptionId $(subscriptionId) -ActiveHostResourceGroupName $(podResourceGroup)
+        environment: ${{ format('WVD-{0}-{1}', parameters.personaId, parameters.podId)}}
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: AzurePowerShell@4
+                  displayName: Swap Users Script
+                  inputs:
+                    pwsh: true
+                    azureSubscription: ${{ variables.azureConnectionName }}
+                    scriptType: filePath
+                    azurePowerShellVersion: "LatestVersion"
+                    scriptPath: $(Build.Repository.LocalPath)\misc\Switch-Users-App-Group.ps1
+                    scriptArguments: -VaultName $(keyVaultName) -VaultResourceGroupName $(podResourceGroup) -SubscriptionId $(subscriptionId) -ActiveHostResourceGroupName $(podResourceGroup)
