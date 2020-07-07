@@ -30,7 +30,7 @@
         },
         "workspaceId": {
             "type": "string",
-           "defaultValue":"/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourcegroups/azureminilab-la/providers/microsoft.operationalinsights/workspaces/azureminilab2019"
+            "defaultValue": "/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourcegroups/azureminilab-la/providers/microsoft.operationalinsights/workspaces/azureminilab2019"
         },
         "HostPoolName": {
             "type": "string",
@@ -59,18 +59,22 @@
         "vm-size": {
             "type": "string",
             "metadata": {
-            "description": "The size of the session host VMs."
+                "description": "The size of the session host VMs."
             },
             "defaultValue": "Standard_A2"
         },
-        "shared-image-gallery-rg":{
-            "type":"string",
-            "metadata" : {
-                "description":"RG name of the Azure SIG"
-            },
-            "defaultValue":"aib-sig-rg"
+        "useSharedImage": {
+            "type": "bool",
+            "defaultValue": true
         },
-            "shared-image-gallery-name": {
+        "shared-image-gallery-rg": {
+            "type": "string",
+            "metadata": {
+                "description": "RG name of the Azure SIG"
+            },
+            "defaultValue": "aib-sig-rg"
+        },
+        "shared-image-gallery-name": {
             "type": "string",
             "metadata": {
                 "description": "The name of the Azure SIG for your images."
@@ -102,7 +106,7 @@
     "functions": [],
     "variables": {
         "hostpool-token-deployment-name": "[concat('get-hostpool-token-',parameters('utc-value'))]",
-        "rdsh-prefix":"[take(uniqueString(parameters('HostPoolName')),7)]",
+        "rdsh-prefix": "[take(uniqueString(parameters('HostPoolName')),7)]",
         "availability-set-deployment-name": "[concat('compute-availabilitysets-',parameters('utc-value'))]",
         "network-iterfaces-deployment-name": "[concat('network-interfaces-',parameters('utc-value'))]",
         "virtual-machines-deployment-name": "[concat('virtual-machines-',parameters('utc-value'))]",
@@ -141,7 +145,7 @@
                 "mode": "Incremental",
                 "parameters": {
                     "availabilitySet1": {
-                        "value":"[concat(variables('rdsh-prefix'),'-avset')]"
+                        "value": "[concat(variables('rdsh-prefix'),'-avset')]"
                     }
                 },
                 "templateLink": {
@@ -169,9 +173,9 @@
                             "secretName": "[parameters('subnetid')]"
                         }
                     },
-                        "rdsh-prefix":{
-                            "value": "[variables('rdsh-prefix')]"
-                        }
+                    "rdsh-prefix": {
+                        "value": "[variables('rdsh-prefix')]"
+                    }
                 },
                 "templateLink": {
                     //"uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/network-networkinterfaces.json",
@@ -191,38 +195,41 @@
             ],
             "properties": {
                 "mode": "Incremental",
-                "parameters": {                    
+                "parameters": {
                     "diskEncryptionSetId": {
                         "value": "[parameters('desID')]"
-                        },
-                        "workspaceId":{
-                            "value": "[parameters('workspaceId')]"
-                        },
-                        "rdsh-prefix":{
-                            "value": "[variables('rdsh-prefix')]"
-                        },
-                        "instance-count": {
-                            "value":"[parameters('instance-count')]"
-                        },
-                        "vm-size": {
-                            "value":"[parameters('vm-size')]"
-                        },
-                        "availability-set-name":{
-                            "value":"[concat(variables('rdsh-prefix'),'-avset')]"
-                        },
-                        "shared-image-gallery-rg":{
-                            "value":"[parameters('shared-image-gallery-rg')]"
-                        },
-                        "shared-image-gallery-name": {
-                            "value":"[parameters('shared-image-gallery-name')]"
-                        },
-                        "shared-image-gallery-definition":{
-                            "value": "[parameters('shared-image-gallery-definition')]"
-                        },
-                        "shared-image-gallery-version":{
-                            "value": "[parameters('shared-image-gallery-version')]"
-                            }
-                        },
+                    },
+                    "workspaceId": {
+                        "value": "[parameters('workspaceId')]"
+                    },
+                    "rdsh-prefix": {
+                        "value": "[variables('rdsh-prefix')]"
+                    },
+                    "instance-count": {
+                        "value": "[parameters('instance-count')]"
+                    },
+                    "vm-size": {
+                        "value": "[parameters('vm-size')]"
+                    },
+                    "availability-set-name": {
+                        "value": "[concat(variables('rdsh-prefix'),'-avset')]"
+                    },
+                    "use-shared-image": {
+                        "value": "[parameters('useSharedImage')]"
+                    },
+                    "shared-image-gallery-rg": {
+                        "value": "[parameters('shared-image-gallery-rg')]"
+                    },
+                    "shared-image-gallery-name": {
+                        "value": "[parameters('shared-image-gallery-name')]"
+                    },
+                    "shared-image-gallery-definition": {
+                        "value": "[parameters('shared-image-gallery-definition')]"
+                    },
+                    "shared-image-gallery-version": {
+                        "value": "[parameters('shared-image-gallery-version')]"
+                    }
+                },
                 "templateLink": {
                     // "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/compute-virtualmachines.json",
                     "uri": "[concat(variables('templateURI'),'compute-virtualmachines.json',parameters('artifactsLocationSasToken'))]",
@@ -231,7 +238,7 @@
             }
         },
         // Deploy Custom extension to apply Registry keys for FSLogix
-                    {
+        {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "[variables('vm-customization-deployment-name')]",
@@ -249,17 +256,17 @@
                             "secretName": "[parameters('netappshare')]"
                         }
                     },
-                        "rdsh-prefix":{
-                            "value": "[variables('rdsh-prefix')]"
-                        },
+                    "rdsh-prefix": {
+                        "value": "[variables('rdsh-prefix')]"
+                    },
                     "instance-count": {
-                            "value":"[parameters('instance-count')]"
-                        },
+                        "value": "[parameters('instance-count')]"
+                    },
                     "artifacts-location": {
                         "value": "[parameters('_artifactsLocation')]"
-                     },
+                    },
                     "artifactsLocationSasToken": {
-                        "value":"[parameters('artifactsLocationSasToken')]"
+                        "value": "[parameters('artifactsLocationSasToken')]"
                     }
                 },
                 "templateLink": {
@@ -289,12 +296,12 @@
                             "secretName": "admin-account-password"
                         }
                     },
-                    "rdsh-prefix":{
-                            "value": "[variables('rdsh-prefix')]"
-                        },
+                    "rdsh-prefix": {
+                        "value": "[variables('rdsh-prefix')]"
+                    },
                     "instance-count": {
-                            "value":"[parameters('instance-count')]"
-                        }
+                        "value": "[parameters('instance-count')]"
+                    }
                 },
                 "templateLink": {
                     // "uri":"https://raw.githubusercontent.com/mariuszdotnet/azure-image-builder-wvd/master/arm-templates/extensions-jsonaddomainextension.json",
@@ -318,12 +325,12 @@
                     "host-pool-name": {
                         "value": "[parameters('HostPoolName')]"
                     },
-                        "rdsh-prefix":{
-                            "value": "[variables('rdsh-prefix')]"
-                        },
+                    "rdsh-prefix": {
+                        "value": "[variables('rdsh-prefix')]"
+                    },
                     "instance-count": {
-                            "value":"[parameters('instance-count')]"
-                        },
+                        "value": "[parameters('instance-count')]"
+                    },
                     //"host-pool-token":{"value": "[parameters('host-pool-token')]"}
                     "host-pool-token": { "value": "[reference(variables('hostpool-token-deployment-name')).outputs.hostpooltoken.value]" }
                 },

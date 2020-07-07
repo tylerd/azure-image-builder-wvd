@@ -19,7 +19,7 @@
         "vm-size": {
             "type": "string",
             "metadata": {
-            "description": "The size of the session host VMs."
+                "description": "The size of the session host VMs."
             },
             "defaultValue": "Standard_A2"
         },
@@ -37,12 +37,16 @@
             },
             "defaultValue": "124325678!@#$%^&*asdfgASDFASD"
         },
-        "shared-image-gallery-rg":{
-            "type":"string",
-            "metadata" : {
-                "description":"RG name of the Azure SIG"
+        "use-shared-image": {
+            "type": "bool",
+            "defaultValue": true
+        },
+        "shared-image-gallery-rg": {
+            "type": "string",
+            "metadata": {
+                "description": "RG name of the Azure SIG"
             },
-            "defaultValue":"aib-sig-rg"
+            "defaultValue": "aib-sig-rg"
         },
         "shared-image-gallery-name": {
             "type": "string",
@@ -67,7 +71,7 @@
         },
         "osType": {
             "type": "string",
-            "defaultValue":"windows"
+            "defaultValue": "windows"
         },
         "vm-disk-type": {
             "type": "string",
@@ -88,12 +92,12 @@
             },
             "defaultValue": "availabilitySet1"
         },
-    "diskEncryptionSetId": {
-      "type": "string",
-      "defaultValue": ""
-    },
-    "workspaceId": {
-        "type": "string"
+        "diskEncryptionSetId": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "workspaceId": {
+            "type": "string"
         }
     },
     "functions": [],
@@ -105,7 +109,16 @@
         "daExtensionVersion": "9.5",
         "mmaExtensionName": "[if(equals(toLower(parameters('osType')), 'windows'), 'MMAExtension', 'OMSExtension')]",
         "mmaExtensionType": "[if(equals(toLower(parameters('osType')), 'windows'), 'MicrosoftMonitoringAgent', 'OmsAgentForLinux')]",
-        "mmaExtensionVersion": "[if(equals(toLower(parameters('osType')), 'windows'), '1.0', '1.4')]"
+        "mmaExtensionVersion": "[if(equals(toLower(parameters('osType')), 'windows'), '1.0', '1.4')]",
+        "sharedGalleryImageRef": {
+            "id": "[resourceId(parameters('shared-image-gallery-rg'),'Microsoft.Compute/galleries/images/versions', parameters('shared-image-gallery-name'), parameters('shared-image-gallery-definition'), parameters('shared-image-gallery-version'))]"
+        },
+        "win10ImageRef": {
+            "publisher": "MicrosoftWindowsDesktop",
+            "offer": "office-365",
+            "sku": "19h2-evd-o365pp",
+            "version": "latest"
+        }
     },
     "resources": [
         {
@@ -121,42 +134,40 @@
             "properties": {
                 "hardwareProfile": {
                     "vmSize": "[parameters('vm-size')]"
-            },
-            "availabilitySet": {
-                "id": "[variables('availability-set-id')]"
-            },
-            "osProfile": {
-                "computerName": "[concat(parameters('rdsh-prefix'), copyindex(),'-vm')]",
-                "adminUsername": "[variables('existing-domain-username')]",
-                "adminPassword": "[parameters('administrator-account-password')]"
-            },
-            "storageProfile": {
-                "imageReference": {
-                    "id": "[resourceId(parameters('shared-image-gallery-rg'),'Microsoft.Compute/galleries/images/versions', parameters('shared-image-gallery-name'), parameters('shared-image-gallery-definition'), parameters('shared-image-gallery-version'))]"
                 },
-            "osDisk": {
-                "createOption": "FromImage",
-                "managedDisk": {
-                    "storageAccountType": "[parameters('vm-disk-type')]", 
-                    "diskEncryptionSet": {
-                        "id": "[parameters('diskEncryptionSetId')]"
+                "availabilitySet": {
+                    "id": "[variables('availability-set-id')]"
+                },
+                "osProfile": {
+                    "computerName": "[concat(parameters('rdsh-prefix'), copyindex(),'-vm')]",
+                    "adminUsername": "[variables('existing-domain-username')]",
+                    "adminPassword": "[parameters('administrator-account-password')]"
+                },
+                "storageProfile": {
+                    "imageReference": "[if(parameters('use-shared-image'), variables('sharedGalleryImageRef'), variables('win10ImageRef'))]",
+                    "osDisk": {
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "[parameters('vm-disk-type')]",
+                            "diskEncryptionSet": {
+                                "id": "[parameters('diskEncryptionSetId')]"
+                            }
+                        }
                     }
-                }
-            }
-            },
-            "networkProfile": {
-                "networkInterfaces": [
-                    {
-                        "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('rdsh-prefix'), copyindex(), '-nic'))]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('rdsh-prefix'), copyindex(), '-nic'))]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": false
                     }
-                ]
-            },
-            "diagnosticsProfile": {
-                "bootDiagnostics": {
-                    "enabled": false
-                }
-            },
-            "licenseType": "Windows_Client"
+                },
+                "licenseType": "Windows_Client"
             }
         },
         {
@@ -190,7 +201,7 @@
                 "count": "[parameters('instance-count')]"
             },
             "dependsOn": [
-                        "[concat(parameters('rdsh-prefix'), copyindex(), '-vm')]"
+                "[concat(parameters('rdsh-prefix'), copyindex(), '-vm')]"
             ],
             "properties": {
                 "publisher": "Microsoft.EnterpriseCloud.Monitoring",
@@ -205,7 +216,7 @@
                     "workspaceKey": "[listKeys(parameters('workspaceId'), '2015-03-20').primarySharedKey]"
                 }
             }
-        }    
+        }
     ],
     "outputs": {}
 }
