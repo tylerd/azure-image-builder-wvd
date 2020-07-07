@@ -19,7 +19,10 @@ param (
     [Parameter()]
     [ValidateRange(1, 32)]
     [int]
-    $SubnetCidr = 25
+    $SubnetCidr = 25,
+    [Parameter()]
+    [string]
+    $DevOpsStorageAccountName = "azminlandevops01"
 )
 
 
@@ -42,3 +45,18 @@ if (!$vnet) {
     Write-Host "Virtual Network $VirtualNetworkName does not exist. Creating."
     $vnet = $rg | New-AzVirtualNetwork -Name $VirtualNetworkName -AddressPrefix "$VNETAddress/$VnetCidr"
 }
+
+$sa = $rg | Get-AzStorageAccount -Name $DevOpsStorageAccountName -ErrorAction SilentlyContinue
+
+if (!$sa) {
+    Write-Host "Storage account $DevOpsStorageAccountName does not exist. Creating."
+    $sa = $rg | New-AzStorageAccount -Name $DevOpsStorageAccountName -SkuName Standard_LRS
+}
+
+$container = $sa | Get-AzStorageContainer -Name "templates" -ErrorAction SilentlyContinue
+
+if (!$container) {
+    Write-Host "templates container does not exist. Creating."
+    $container = $sa | New-AzStorageContainer -Name "templates"
+}
+
