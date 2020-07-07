@@ -25,7 +25,7 @@ stages:
 
       - template: deploy-template.yml
         parameters:
-          resourceGroupName: ${{ parameters.podResourceGroup }}
+          resourceGroupName: ${{ parameters.podResourceGroup }}-DES
           jobName: DeployDiskEncryptSet
           location: ${{ parameters.targetRegion }}
           templateFile: arm-templates/new-diskencryptset.json
