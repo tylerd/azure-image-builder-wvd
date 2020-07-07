@@ -36,15 +36,6 @@
             "type": "string",
             "defaultValue": "wvdspring-vnet"
         },
-        "VNETName-green": {
-            "type": "string",
-            "defaultValue": "vnet_ca_central"
-        },
-
-        "VNETRG-green": {
-            "type": "string",
-            "defaultValue": "azure144"
-        },
         "VNETRG": {
             "type": "string",
             "defaultValue": "Azureminilab-VNET"
@@ -84,10 +75,9 @@
         "unique_string": "[take(uniqueString(resourceGroup().id),3)]",
         "fullPodId": "[concat(parameters('persona'),'-',parameters('pod'))]",
         "templateURI": "[concat(parameters('_artifactsLocation'),'templates/arm-templates/')]",
-        "subnetName": "[concat('SUB-WVD-',parameters('persona'),'-',variables('unique_string'))]",
+        "subnetName": "[variables('fullPodId')]",
 
-        "blue-subnetID": "[concat(resourceId(parameters('VNETRG'),'Microsoft.Network/virtualNetworks',parameters('VNETName')),'/subnets/',variables('subnetName'))]",
-        "green-subnetID": "[concat(resourceId(parameters('VNETRG-green'),'Microsoft.Network/virtualNetworks',parameters('VNETName-green')),'/subnets/',variables('subnetName'))]",
+        "subnetID": "[concat(resourceId(parameters('VNETRG'),'Microsoft.Network/virtualNetworks',parameters('VNETName')),'/subnets/',variables('subnetName'))]",
         "netapp-blue": "[concat(parameters('environment'),'-NetAppVol-BLUE',parameters('persona'),'-',variables('unique_string'),'-profiles')]",
         "netapp-green": "[concat(parameters('environment'),'-NetAppVol-GREEN',parameters('persona'),'-',variables('unique_string'),'-profiles')]",
 
@@ -199,11 +189,11 @@
                             "secrets": [
                                 {
                                     "secretName": "blue-subnet-id",
-                                    "secretValue": "[variables('blue-subnetID')]"
+                                    "secretValue": "[variables('subnetID')]"
                                 },
                                 {
                                     "secretName": "green-subnet-id",
-                                    "secretValue": "[variables('green-subnetID')]"
+                                    "secretValue": "[variables('subnetID')]"
                                 },
 
                                 {
