@@ -3,9 +3,11 @@ parameters:
   - name: location
   - name: templateFile
   - name: templateParameters
+  - name: jobName
+    default: Deploy_ARM_Template
 
 jobs:
-  - job: Deploy_ARM_Template
+  - job: ${{ parameters.jobName }}
     displayName: Deploy ${{ parameters.templateFile }}
     variables:
       - template: vars.yml
