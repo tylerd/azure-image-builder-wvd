@@ -15,5 +15,5 @@ variables:
   - name: resourceGroupPrefix
     value: Azureminilab-WVD
 
-  - name: diskEncryptKeyResourceId
-    value: "/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourceGroups/Azureminilab-WVD-DES/providers/Microsoft.Compute/diskEncryptionSets/DEV-disk-encrypt-key"
+#  - name: diskEncryptKeyResourceId
+#    value: "/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourceGroups/Azureminilab-WVD-DES/providers/Microsoft.Compute/diskEncryptionSets/DEV-disk-encrypt-key"
