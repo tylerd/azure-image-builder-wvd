@@ -9,15 +9,15 @@ param (
     # Persona ID
     [Parameter()]
     [string]
-    $PersonaId = "PR01",
+    $PersonaId = "PR02",
     # Pod amount
     [Parameter()]
     [hashtable]
     $Pods = @{
-        POD01 = "10.100.0.0/25";
-        POD02 = "10.100.0.128/25";
-        POD03 = "10.100.1.0/25";
-        POD04 = "10.100.1.128/25";
+        POD01 = "10.100.2.0/25";
+        POD02 = "10.100.2.128/25";
+        POD03 = "10.100.3.0/25";
+        POD04 = "10.100.3.128/25";
     }
 )
 
