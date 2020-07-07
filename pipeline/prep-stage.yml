@@ -19,7 +19,7 @@ stages:
 
           - task: AzureFileCopy@4
             inputs:
-              azureSubscription: $(azureConnectionName)
+              azureSubscription: ${{ variables.azureConnectionName }}
               SourcePath: '$(Build.Repository.LocalPath)\*'
               Destination: "AzureBlob"
               storage: $(storageAccountName)
