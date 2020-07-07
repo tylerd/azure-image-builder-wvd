@@ -18,4 +18,4 @@ stages:
           resourceGroupName: ${{ parameters.podResourceGroup }}
           location: ${{ parameters.targetRegion }}
           templateFile: patterns/new-pod.json
-          templateParameters: -keyVaultName ${{ parameters.keyVaultName }} -workspaceId $(workspaceId) -_artifactsLocation "https://$(storageAccountName).blob.core.windows.net/"
+          templateParameters: -keyVaultName ${{ parameters.keyVaultName }} -workspaceId $(workspaceId) -_artifactsLocation "https://$(storageAccountName).blob.core.windows.net/" -userGroupName $(userGroupName) -userGroupObjectId $(userGroupObjectId) -testUserGroupName $(testUserGroupName) -testUserGroupObjectId $(testUserGroupObjectId)
