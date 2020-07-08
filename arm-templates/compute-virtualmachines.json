@@ -124,7 +124,7 @@
         {
             "apiVersion": "2019-07-01",
             "type": "Microsoft.Compute/virtualMachines",
-            "name": "[concat(parameters('rdsh-prefix'), copyindex(), '-vm')]",
+            "name": "[concat(parameters('rdsh-prefix'), copyindex())]",
             "location": "[resourceGroup().location]",
             "copy": {
                 "name": "rdsh-vm-loop",
@@ -139,7 +139,7 @@
                     "id": "[variables('availability-set-id')]"
                 },
                 "osProfile": {
-                    "computerName": "[concat(parameters('rdsh-prefix'), copyindex(),'-vm')]",
+                    "computerName": "[concat(parameters('rdsh-prefix'), copyindex())]",
                     "adminUsername": "[variables('existing-domain-username')]",
                     "adminPassword": "[parameters('administrator-account-password')]"
                 },
@@ -180,7 +180,7 @@
                 "count": "[parameters('instance-count')]"
             },
             "dependsOn": [
-                "[concat(parameters('rdsh-prefix'), copyindex(), '-vm')]"
+                "[concat(parameters('rdsh-prefix'), copyindex())]"
             ],
             "properties": {
                 "publisher": "Microsoft.Azure.Monitoring.DependencyAgent",
@@ -194,14 +194,14 @@
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "2017-12-01",
-            "name": "[concat(parameters('rdsh-prefix'), copyindex(), '-vm/', variables('mmaExtensionName'))]",
+            "name": "[concat(parameters('rdsh-prefix'), copyindex(), '/', variables('mmaExtensionName'))]",
             "location": "[resourceGroup().location]",
             "copy": {
                 "name": "rdsh-vm-loop",
                 "count": "[parameters('instance-count')]"
             },
             "dependsOn": [
-                "[concat(parameters('rdsh-prefix'), copyindex(), '-vm')]"
+                "[concat(parameters('rdsh-prefix'), copyindex())]"
             ],
             "properties": {
                 "publisher": "Microsoft.EnterpriseCloud.Monitoring",
