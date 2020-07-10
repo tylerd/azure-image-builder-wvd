@@ -24,6 +24,9 @@ parameters:
     type: string
     default: PR01-WIN10-1909-0620
 
+variables:
+  - template: pipeline/vars.yml
+
 extends:
   template: pipeline/wvd-pipeline.yml
   parameters:
