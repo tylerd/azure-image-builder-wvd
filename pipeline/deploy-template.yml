@@ -6,6 +6,12 @@ parameters:
     type: object
   - name: jobName
     default: Deploy_ARM_Template
+  - name: preDeploySteps
+    type: stepList
+    default: []
+  - name: postDeploySteps
+    type: stepList
+    default: []
 
 jobs:
   - job: ${{ parameters.jobName }}
@@ -13,6 +19,8 @@ jobs:
     variables:
       - template: vars.yml
     steps:
+      - ${{ parameters.preDeploySteps }}
+      
       - task: AzurePowerShell@4
         name: Generate_SAS_Token
         displayName: Generate SAS Token
@@ -47,3 +55,5 @@ jobs:
             Write-Host "##vso[task.setvariable variable=$($_.Name);isOutput=true]$($_.Value.value)" 
           }
         name: Output
+
+      - ${{ parameters.postDeploySteps }}
