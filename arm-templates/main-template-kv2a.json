@@ -184,6 +184,9 @@
                             "secretName": "[parameters('subnetid')]"
                         }
                     },
+                    "instance-count": {
+                        "value": "[parameters('instance-count')]"
+                    },
                     "rdsh-prefix": {
                         "value": "[variables('rdsh-prefix')]"
                     }
