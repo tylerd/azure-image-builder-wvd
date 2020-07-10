@@ -1,6 +1,8 @@
 parameters:
   - name: podId
     default: ''
+  - name: numberOfVMs
+    type: number
   - name: keyVaultName
   - name: podResourceGroup
   - name: containerResourceGroup
@@ -40,3 +42,4 @@ stages:
             - HostPoolName $(hostPoolName)
             - workspaceId $(workspaceId)
             - joinDomain $(joinDomain)
+            - instance-count ${{ parameters.numberOfVMs }}

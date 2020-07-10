@@ -38,7 +38,10 @@ extends:
     primaryNetAppVolume: PR02-CACN-VOL
     targetContainer: ${{ parameters.targetContainer }}
     pods:
-      - POD01
-      - POD02
-      - POD03
+      - podId: POD01
+        numberOfVMs: 3
+      - podId: POD02
+        numberOfVMs: 2
+      - podId: POD03
+        numberOfVMs: 2
 
