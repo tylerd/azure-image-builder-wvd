@@ -55,6 +55,7 @@ stages:
   - template: deploy-host-pool-vms-stage.yml
     parameters:
       podId: ${{ parameters.podId }}
+      personaId: ${{ parameters.personaId }}
       numberOfVMs: ${{ parameters.numberOfVMs }}
       keyVaultName: ${{ format('{0}-KVL-{1}-{2}', parameters.environment, parameters.personaId, parameters.podId) }}
       podResourceGroup: ${{ parameters.podResourceGroup }}
