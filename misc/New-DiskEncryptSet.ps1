@@ -34,7 +34,6 @@ $secureToken = ConvertTo-SecureString -String $token -AsPlainText -Force
 
 New-AzResourceGroupDeployment -ResourceGroupName $TargetResourceGroup `
     -TemplateFile "$folder\$MainTemplate" -Verbose `
-    -location "canadacentral" `
     -KeyVaultLocation "canadacentral" `
     -artifactsLocationSasToken $secureToken `
     -_artifactsLocation "https://$StorageAccountName.blob.core.windows.net/" `
