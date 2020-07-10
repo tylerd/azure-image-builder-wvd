@@ -34,16 +34,16 @@
     },
     "functions": [],
     "variables": {
-        "ScriptFileName":"Set-RegKeys.ps1",
+        "ScriptFileName": "Set-RegKeys.ps1",
         "ScriptFileURI": "[concat(parameters('artifacts-location'),'templates/misc/')]",
         "ScriptFolder": ".",
-        "ScriptParameters":"[concat('-volumeshare ', parameters('netappshare'))]"
+        "ScriptParameters": "[concat('-volumeshare ', parameters('netappshare'))]"
     },
     "resources": [
         {
             "apiVersion": "2019-12-01",
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(parameters('rdsh-prefix'), copyindex(), '-vm/', 'custom-extension')]",
+            "name": "[concat(parameters('rdsh-prefix'), copyindex(), '/', 'custom-extension')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [],
             "copy": {
@@ -58,7 +58,7 @@
                 "protectedSettings": {},
                 "settings": {
                     "fileUris": [
-                       "[uri(variables('ScriptFileURI'),concat(variables('ScriptFileName'),parameters('artifactsLocationSasToken')))]"
+                        "[uri(variables('ScriptFileURI'),concat(variables('ScriptFileName'),parameters('artifactsLocationSasToken')))]"
                     ],
                     "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('ScriptFolder'), '/misc/', variables('ScriptFileName'), ' ', variables('ScriptParameters'))]"
                 }

@@ -35,7 +35,7 @@
             "metadata": {
                 "description": "The token for adding VMs to the hostpool."
             }
-        } 
+        }
     },
     "functions": [],
     "variables": {},
@@ -43,7 +43,7 @@
         {
             "apiVersion": "2018-10-01",
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(parameters('rdsh-prefix'), copyindex(), '-vm/', 'dscextension')]",
+            "name": "[concat(parameters('rdsh-prefix'), copyindex(), '/', 'dscextension')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [],
             "copy": {
@@ -60,8 +60,8 @@
                     "modulesUrl": "[parameters('artifacts-location')]",
                     "configurationFunction": "Configuration.ps1\\AddSessionHost",
                     "properties": {
-                            "hostPoolName": "[parameters('host-pool-name')]",
-                            "registrationInfoToken": "[parameters('host-pool-token')]"
+                        "hostPoolName": "[parameters('host-pool-name')]",
+                        "registrationInfoToken": "[parameters('host-pool-token')]"
                     }
                 }
             }
