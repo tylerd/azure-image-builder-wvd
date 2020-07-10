@@ -7,7 +7,6 @@ parameters:
   - name: podResourceGroup
   - name: targetRegion
   - name: keyVaultName
-  - name: environment
 
 stages:
   # Create new pod resource group and resources
@@ -35,5 +34,4 @@ stages:
             - testUserGroupObjectId $(testUserGroupObjectId) 
             - VNETName $(VnetName) 
             - VNETRG $(VnetResourceGroup)
-            - environment ${{ parameters.environment }}
 
