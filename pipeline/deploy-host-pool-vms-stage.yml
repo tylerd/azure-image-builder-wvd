@@ -32,7 +32,7 @@ stages:
               displayName: Get latest image version
               inputs:
                 pwsh: true
-                azureSubscription: ${{ variables.azureConnectionName }}
+                azureSubscription: $(azureConnectionName)
                 scriptType: inlineScript
                 azurePowerShellVersion: LatestVersion
                 inline: |
