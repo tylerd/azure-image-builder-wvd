@@ -61,6 +61,16 @@ parameters:
       - BLUE
       - GREEN
 
+  - name: environment
+    displayName: Environment
+    type: string
+    default: WVD
+    values:
+      - SBX
+      - DEV
+      - PRD
+      - WVD
+
 stages:
   - template: prep-stage.yml
   - ${{ each pod in parameters.pods }}:
@@ -71,7 +81,7 @@ stages:
         image: ${{ parameters.image }}
         podId: ${{ pod.podId }}
         numberOfVMs: ${{ pod.numberOfVMs }}
-        podDiscription: ${{ format('{0} {1}', parameters.personaName, podId)}}
-        podResourceGroup: ${{ format('WVD-RGP-{0}-{1}', parameters.personaId, podId)}}
+        podDiscription: ${{ format('{0} {1}', parameters.personaName, pod.podId)}}
+        podResourceGroup: ${{ format('{0}-RGP-{1}-{2}', parameters.environment, parameters.personaId, pod.podId)}}
         targetRegion: ${{ parameters.primaryRegion }}
         targetContainer: ${{ parameters.targetContainer }}

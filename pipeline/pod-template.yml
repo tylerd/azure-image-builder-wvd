@@ -31,6 +31,16 @@ parameters:
   - name: targetContainer
     type: string
 
+  - name: environment
+    displayName: Environment
+    type: string
+    default: WVD
+    values:
+      - SBX
+      - DEV
+      - PRD
+      - WVD
+
 stages:
 
   - template: deploy-pod-stage.yml
@@ -39,13 +49,14 @@ stages:
       personaId: ${{ parameters.personaId }}
       podResourceGroup: ${{ parameters.podResourceGroup }}
       targetRegion: ${{ parameters.targetRegion }}
-      keyVaultName: ${{ format('WVD-KVL-{0}-{1}', parameters.personaId, parameters.podId) }}
+      keyVaultName: ${{ format('{0}-KVL-{1}-{2}', parameters.environment, parameters.personaId, parameters.podId) }}
+      environment: ${{ parameters.environment }}
 
   - template: deploy-host-pool-vms-stage.yml
     parameters:
       podId: ${{ parameters.podId }}
       numberOfVMs: ${{ parameters.numberOfVMs }}
-      keyVaultName: ${{ format('WVD-KVL-{0}-{1}', parameters.personaId, parameters.podId) }}
+      keyVaultName: ${{ format('{0}-KVL-{1}-{2}', parameters.environment, parameters.personaId, parameters.podId) }}
       podResourceGroup: ${{ parameters.podResourceGroup }}
       containerResourceGroup: ${{ format('{0}-{1}', parameters.podResourceGroup, parameters.targetContainer) }}
       targetRegion: ${{ parameters.targetRegion }}
@@ -55,5 +66,5 @@ stages:
     parameters:
       podId: ${{ parameters.podId }}
       personaId: ${{ parameters.personaId }}
-      keyVaultName: ${{ format('WVD-KVL-{0}-{1}', parameters.personaId, parameters.podId) }}
+      keyVaultName: ${{ format('{0}-KVL-{1}-{2}', parameters.environment, parameters.personaId, parameters.podId) }}
       podResourceGroup: ${{ parameters.podResourceGroup }}
