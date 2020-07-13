@@ -46,4 +46,5 @@ stages:
             - instance-count ${{ parameters.numberOfVMs }}
             - shared-image-gallery-rg $(sigRG)
             - shared-image-gallery-name $(sigName)
-            - shared-image-gallery-definition ${{ parameters.personaId }}
+            
+            # - shared-image-gallery-definition ${{ parameters.personaId }}
