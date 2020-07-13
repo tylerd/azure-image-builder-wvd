@@ -62,13 +62,6 @@
             },
             "defaultValue": "aibWin10365Image"
         },
-        "shared-image-gallery-version": {
-            "type": "string",
-            "metadata": {
-                "description": "The version of the image definition"
-            },
-            "defaultValue": "0.24299.50491"
-        },
         "osType": {
             "type": "string",
             "defaultValue": "windows"
@@ -111,7 +104,7 @@
         "mmaExtensionType": "[if(equals(toLower(parameters('osType')), 'windows'), 'MicrosoftMonitoringAgent', 'OmsAgentForLinux')]",
         "mmaExtensionVersion": "[if(equals(toLower(parameters('osType')), 'windows'), '1.0', '1.4')]",
         "sharedGalleryImageRef": {
-            "id": "[resourceId(parameters('shared-image-gallery-rg'),'Microsoft.Compute/galleries/images/versions', parameters('shared-image-gallery-name'), parameters('shared-image-gallery-definition'), parameters('shared-image-gallery-version'))]"
+            "id": "[resourceId(parameters('shared-image-gallery-rg'),'Microsoft.Compute/galleries/images', parameters('shared-image-gallery-name'), parameters('shared-image-gallery-definition'))]"
         },
         "win10ImageRef": {
             "publisher": "MicrosoftWindowsDesktop",

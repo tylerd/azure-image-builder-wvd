@@ -86,14 +86,7 @@
             "metadata": {
                 "description": "Defnition of the image to use from SIG."
             },
-            "defaultValue": "aibWin10365Image"
-        },
-        "shared-image-gallery-version": {
-            "type": "string",
-            "metadata": {
-                "description": "The version of the image definition"
-            },
-            "defaultValue": "0.24299.50491"
+            "defaultValue": "WIN10"
         },
         "_artifactsLocation": {
             "type": "string",
@@ -239,9 +232,6 @@
                     },
                     "shared-image-gallery-definition": {
                         "value": "[parameters('shared-image-gallery-definition')]"
-                    },
-                    "shared-image-gallery-version": {
-                        "value": "[parameters('shared-image-gallery-version')]"
                     }
                 },
                 "templateLink": {

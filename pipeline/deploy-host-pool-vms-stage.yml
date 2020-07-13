@@ -27,29 +27,6 @@ stages:
     jobs:
       - template: deploy-template.yml
         parameters:
-          preDeploySteps:
-            - task: AzurePowerShell@4
-              displayName: Get latest image version
-              inputs:
-                pwsh: true
-                azureSubscription: $(azureConnectionName)
-                scriptType: inlineScript
-                azurePowerShellVersion: LatestVersion
-                inline: |
-                  $ImageDef = "${{ parameters.personaId }}"
-
-                  $LatestVersion = Get-AzGalleryImageVersion -ResourceGroupName $(sigRG) -GalleryName $(sigName) -GalleryImageDefinitionName $ImageDef |
-                    Select -Property Name,@{l="PublishedDate";e={$_.PublishingProfile.PublishedDate}} |
-                    Sort-Object PublishedDate -Descending |
-                    Select -First 1
-                  
-                  if(!$LatestVersion) { 
-                    throw "Latest image version not found for SigRG: $(sigRG), Name: $(sigName), Def: $ImageDef"
-                  }
-
-                  Write-Host "Latest Version: $LatestVersion"
-                  Write-Host "##vso[task.setvariable variable=sigVersion]$LatestVersion"
-
           resourceGroupName: ${{ parameters.containerResourceGroup }}
           location: ${{ parameters.targetRegion }}
           templateFile: arm-templates/main-template-kv2a.json
@@ -70,4 +47,3 @@ stages:
             - shared-image-gallery-rg $(sigRG)
             - shared-image-gallery-name $(sigName)
             - shared-image-gallery-definition ${{ parameters.personaId }}
-            - shared-image-gallery-version $(sigVersion)
