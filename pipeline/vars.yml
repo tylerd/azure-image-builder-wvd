@@ -8,6 +8,8 @@ variables:
 
   - name: azureConnectionName
     value: AzDevOPS
+  - name: SPNObjectId
+    value: acd80e8c-235f-4c6d-81b4-dfa0edb2bb3d
 
 #  - name: subscriptionId
 #    value: "1965c25a-b7fd-48b5-a393-c9e785c1c4d9"

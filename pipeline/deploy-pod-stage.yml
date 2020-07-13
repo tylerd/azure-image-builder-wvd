@@ -34,4 +34,5 @@ stages:
             - testUserGroupObjectId $(testUserGroupObjectId) 
             - VNETName $(VnetName) 
             - VNETRG $(VnetResourceGroup)
+            - AzDevOpsSPN $(SPNObjectId)
 
