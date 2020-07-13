@@ -25,6 +25,8 @@ stages:
           runOnce:
             deploy:
               steps:
+                - checkout: self
+                  displayName: Clone Git Repo
                 - task: AzurePowerShell@4
                   displayName: Swap Users Script
                   inputs:
