@@ -5,6 +5,9 @@
           "utc-value": {
             "type": "string",
             "defaultValue": "[utcNow('u')]"
+        },        
+        "workspaceId": {
+            "type": "string"
         },
         "hostpoolName": {
             "type": "string",
@@ -136,7 +139,7 @@
         }
     },
     "variables": {
-        //"resourceGroup": "[replace(parameters('TargetresourceGroup'),'\"','')]",
+        "settingName": "Send_to_LGA",
         "registration-token-expiration-time": "[dateTimeAdd(parameters('utc-value'), 'P7D')]",
         "hostpoolName": "[replace(parameters('hostpoolName'),'\"','')]",
         "hostpoolFriendlyName": "[parameters('hostpoolFriendlyName')]",
@@ -213,7 +216,63 @@
             "dependsOn": [
                 "[resourceId('Microsoft.DesktopVirtualization/applicationgroups/', parameters('appGroupName'))]"
             ]
-        } 
+        },
+            {
+    "type": "Microsoft.DesktopVirtualization/hostpools/providers/diagnosticSettings",
+    "name": "[concat(parameters('hostpoolName'),'/microsoft.Insights/', variables('settingName'))]",
+    "dependsOn": ["[resourceId('Microsoft.DesktopVirtualization/hostpools', parameters('hostpoolName'))]"],
+     "apiVersion": "2017-05-01-preview",
+     "properties":{
+        "name": "[variables('settingName')]",
+        "workspaceId": "[parameters('workspaceId')]",
+        "logs": [
+        {
+          "category": "Checkpoint",
+          "enabled": true
+        },
+        {
+         "category": "Error",
+          "enabled": true
+        },
+        {
+         "category": "Management",
+          "enabled": true
+        },       
+        {
+         "category": "Connection",
+          "enabled": true
+        },       
+        {
+         "category": "HostRegistration",
+          "enabled": true
+        }
+         ]
+     }
+        },
+                    {
+    "type": "Microsoft.DesktopVirtualization/applicationgroups/providers/diagnosticSettings",
+    "name": "[concat(parameters('appGroupName'),'/microsoft.Insights/', variables('settingName'))]",
+    "dependsOn": ["[resourceId('Microsoft.DesktopVirtualization/applicationgroups', parameters('appGroupName'))]"],
+     "apiVersion": "2017-05-01-preview",
+     "properties":{
+        "name": "[variables('settingName')]",
+        "workspaceId": "[parameters('workspaceId')]",
+        "logs": [
+        {
+          "category": "Checkpoint",
+          "enabled": true
+        },
+        {
+         "category": "Error",
+          "enabled": true
+        },
+        {
+         "category": "Management",
+          "enabled": true
+        }
+         ]
+     }
+        }
         
     ],
     "outputs": {

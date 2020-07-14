@@ -9,6 +9,9 @@
             "type": "string",
             "defaultValue": ""
         },
+            "workspaceId": {
+            "type": "string"
+        },
         "location": {
             "type": "string",
             "defaultValue": "eastus2"
@@ -26,6 +29,9 @@
             "defaultValue": {}
         }
     },
+        "variables": {
+        "settingName": "Send_to_LGA"
+    },
     "resources": [
         {
             "name": "[parameters('workspaceName')]",
@@ -38,6 +44,34 @@
                 "description": "[parameters('workspaceDescription')]",
                 "applicationGroupReferences": "[parameters('appGroups')]"
             }
+        },
+                   {
+    "type": "Microsoft.DesktopVirtualization/workspaces/providers/diagnosticSettings",
+    "name": "[concat(parameters('workspaceName'),'/microsoft.Insights/', variables('settingName'))]",
+    "dependsOn": ["[resourceId('Microsoft.DesktopVirtualization/hostpools', parameters('workspaceName'))]"],
+     "apiVersion": "2017-05-01-preview",
+     "properties":{
+        "name": "[variables('settingName')]",
+        "workspaceId": "[parameters('workspaceId')]",
+        "logs": [
+        {
+          "category": "Checkpoint",
+          "enabled": true
+        },
+        {
+         "category": "Error",
+          "enabled": true
+        },
+        {
+         "category": "Management",
+          "enabled": true
+        },       
+        {
+         "category": "Feed",
+          "enabled": true
+        }
+         ]
+     }
         }
     ]
 }
