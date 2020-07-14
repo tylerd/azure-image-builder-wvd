@@ -7,7 +7,18 @@
         }
     },
     "functions": [],
-    "variables": {},
+    "variables": {
+        "templateUri": "[deployment().properties.templateLink.uri]",
+        "sasToken": "[substring(variables('templateUri'), indexOf(variables('templateUri'), '?'))]",
+        "baseUri": "[substring(variables('templateUri'), 0, add(lastIndexOf(variables('templateUri'),'/'), 1))]",
+
+        "nestedTemplate": "[concat(uri(variables('baseUri'), 'nested-template.json'), variables('sasToken'))]"
+    },
     "resources": [],
-    "outputs": {}
+    "outputs": {
+        "nestedTemplate": {
+            "type": "string",
+            "value": "[variables('nestedTemplate')]"
+        }
+    }
 }
