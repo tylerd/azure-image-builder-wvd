@@ -48,7 +48,7 @@
                    {
     "type": "Microsoft.DesktopVirtualization/workspaces/providers/diagnosticSettings",
     "name": "[concat(parameters('workspaceName'),'/microsoft.Insights/', variables('settingName'))]",
-    "dependsOn": ["[resourceId('Microsoft.DesktopVirtualization/hostpools', parameters('workspaceName'))]"],
+    "dependsOn": ["[resourceId('Microsoft.DesktopVirtualization/workspaces', parameters('workspaceName'))]"],
      "apiVersion": "2017-05-01-preview",
      "properties":{
         "name": "[variables('settingName')]",
