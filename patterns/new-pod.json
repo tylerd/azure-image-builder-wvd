@@ -29,8 +29,7 @@
             "defaultValue": "f303d02d-7596-421d-953d-1735ff2ca8e6"
         },
         "workspaceId": {
-            "type": "string",
-            "defaultValue": "/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourcegroups/azureminilab-la/providers/microsoft.operationalinsights/workspaces/azureminilab2019"
+            "type": "string"
         },
         "VNETName": {
             "type": "string",
@@ -255,6 +254,9 @@
                     "workspaceName": { "value": "[variables('wks')]" },
                     "location": {
                         "value": "[variables('wvd_location')]"
+                    },
+                    "workspaceId": {
+                    "value":"[parameters('workspaceId')]"
                     }
                 },
                 "templateLink": {
@@ -288,6 +290,9 @@
                     },
                     "hostpoolType": {
                         "value": "Pooled"
+                    },
+                    "workspaceId": {
+                        "value":"[parameters('workspaceId')]"
                     },
                     "personalDesktopAssignmentType": {
                         "value": ""
@@ -332,6 +337,9 @@
                     },
                     "hostpoolType": {
                         "value": "Pooled"
+                    },
+                    "workspaceId": {
+                    "value":"[parameters('workspaceId')]"
                     },
                     "personalDesktopAssignmentType": {
                         "value": ""
