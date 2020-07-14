@@ -46,8 +46,8 @@
             }
         },
                    {
-    "type": "Microsoft.DesktopVirtualization/workspaces/providers/diagnosticSettings",
-    "name": "[concat(parameters('workspaceName'),'/microsoft.Insights/', variables('settingName'))]",
+    "type": "microsoft.desktopvirtualization/workspaces/providers/diagnosticSettings",
+    "name": "[concat(parameters('workspaceName'),'/microsoft.insights/', variables('settingName'))]",
     "dependsOn": ["[resourceId('Microsoft.DesktopVirtualization/workspaces', parameters('workspaceName'))]"],
      "apiVersion": "2020-01-01-preview",
      "properties":{
