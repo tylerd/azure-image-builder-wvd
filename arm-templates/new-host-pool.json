@@ -221,7 +221,7 @@
     "type": "Microsoft.DesktopVirtualization/hostpools/providers/diagnosticSettings",
     "name": "[concat(parameters('hostpoolName'),'/microsoft.Insights/', variables('settingName'))]",
     "dependsOn": ["[resourceId('Microsoft.DesktopVirtualization/hostpools', parameters('hostpoolName'))]"],
-     "apiVersion": "2017-05-01-preview",
+     "apiVersion": "2020-01-01-preview",
      "properties":{
         "name": "[variables('settingName')]",
         "workspaceId": "[parameters('workspaceId')]",
@@ -253,7 +253,7 @@
     "type": "Microsoft.DesktopVirtualization/applicationgroups/providers/diagnosticSettings",
     "name": "[concat(parameters('appGroupName'),'/microsoft.Insights/', variables('settingName'))]",
     "dependsOn": ["[resourceId('Microsoft.DesktopVirtualization/applicationgroups', parameters('appGroupName'))]"],
-     "apiVersion": "2017-05-01-preview",
+     "apiVersion": "2020-01-01-preview",
      "properties":{
         "name": "[variables('settingName')]",
         "workspaceId": "[parameters('workspaceId')]",
