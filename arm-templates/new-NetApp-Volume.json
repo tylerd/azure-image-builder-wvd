@@ -20,6 +20,10 @@
             },
             "defaultValue": 107374182400
         },
+        "numberOfVolumes": {
+            "type": "int",
+            "defaultValue": 1
+        },
         "serviceLevel": {
             "type": "string",
             "allowedValues": [
@@ -58,9 +62,13 @@
     "resources": [
                 {
             "apiVersion": "2018-05-01",
-            "name": "[concat('NetAppCapacityPool-Nestedtemplate-', parameters('netAppAccounts_volume'))]",
+            "name": "[concat('NetAppCapacityPool-Nestedtemplate-', parameters('netAppAccounts_volume'),copyIndex())]",
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[resourceGroup().name]",
+            "copy": {
+                                "name": "netappvolumecount",
+                                "count":"[parameters('numberOfVolumes')]"
+                            },
             "properties": {
                 "mode": "Incremental",
                 "expressionEvaluationOptions": {
@@ -70,7 +78,7 @@
                 "location": {"value": "[parameters('location')]"},
                 "netAppAccounts_name":{"value":"[parameters('netAppAccounts_name')]"},
                 "netAppAccounts_pool":{"value":"[parameters('netAppAccounts_pool')]"},
-                "netAppAccounts_volume":{"value":"[parameters('netAppAccounts_volume')]"},
+                "netAppAccounts_volume":{"value":"[concat(parameters('netAppAccounts_volume'),copyIndex())]"},
                 "subnetid":{"reference":{
                         "keyVault":{
                             "id":"[variables('keyVaultID')]"
@@ -128,8 +136,11 @@
     ],
     "outputs" : {
             "NetAppVolumesmbFQDN": {
-                "type": "string",
-                "value":"[reference(concat('NetAppCapacityPool-Nestedtemplate-', parameters('netAppAccounts_volume'))).outputs.NetAppVolume.value.smbServerFQDN]"
+                "type": "array",
+                "copy": {
+                    "count":"[parameters('numberOfVolumes')]",
+                    "input": "[reference(concat('NetAppCapacityPool-Nestedtemplate-', parameters('netAppAccounts_volume'),copyIndex())).outputs.NetAppVolume.value.smbServerFQDN]"
+                }
             }
     }
 }
