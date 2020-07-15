@@ -16,26 +16,23 @@
             },
             "defaultValue": "rdsh"
         },
-        "artifacts-location": {
-            "type": "string",
-            "metadata": {
-                "description": "The base URI where artifacts required by this template are located."
-            }
-        },
         "netappshare": {
             "type": "string",
             "metadata": {
                 "description": "The name of the NetApp volume share."
             }
-        },
-        "artifactsLocationSasToken": {
-            "type": "securestring"
         }
     },
     "functions": [],
     "variables": {
         "ScriptFileName": "Set-RegKeys.ps1",
-        "ScriptFileURI": "[concat(parameters('artifacts-location'),'templates/misc/')]",
+
+        "templateUri": "[deployment().properties.templateLink.uri]",
+        "sasToken": "[substring(variables('templateUri'), indexOf(variables('templateUri'), '?'))]",
+
+        "scriptUri": "[concat(uri(variables('templateUri'),concat('/templates/misc/', variables('ScriptFileName'))),variables('sasToken'))]",
+
+
         "ScriptFolder": ".",
         "ScriptParameters": "[concat('-volumeshare ', parameters('netappshare'))]"
     },
@@ -58,7 +55,7 @@
                 "protectedSettings": {},
                 "settings": {
                     "fileUris": [
-                        "[uri(variables('ScriptFileURI'),concat(variables('ScriptFileName'),parameters('artifactsLocationSasToken')))]"
+                        "[variables('scriptUri')]"
                     ],
                     "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('ScriptFolder'), '/misc/', variables('ScriptFileName'), ' ', variables('ScriptParameters'))]"
                 }

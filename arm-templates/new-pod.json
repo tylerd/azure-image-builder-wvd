@@ -60,10 +60,6 @@
             "type": "string",
             "defaultValue": "green"
         },
-        "_artifactsLocation": {
-            "type": "string",
-            "defaultValue": "https://azminlandevops.blob.core.windows.net/"
-        },
         "artifactsLocationSasToken": {
             "type": "securestring"
         }
@@ -71,9 +67,18 @@
     },
     "functions": [],
     "variables": {
+        "templateUri": "[deployment().properties.templateLink.uri]",
+        "sasToken": "[substring(variables('templateUri'), indexOf(variables('templateUri'), '?'))]",
+        "baseUri": "[substring(variables('templateUri'), 0, add(lastIndexOf(variables('templateUri'),'/'), 1))]",
         "unique_string": "[take(uniqueString(resourceGroup().id),3)]",
+
+        "keyVault-template": "[concat(uri(variables('baseUri'), 'create-keyvault.json'), variables('sasToken'))]",
+        "secrets-template": "[concat(uri(variables('baseUri'), 'add-secrets.json'), variables('sasToken'))]",
+        "wks-template": "[concat(uri(variables('baseUri'), 'new-workspace.json'), variables('sasToken'))]",
+        "pod-template": "[concat(uri(variables('baseUri'), 'new-host-pool.json'), variables('sasToken'))]",
+        "pod-user-template": "[concat(uri(variables('baseUri'), 'user-assignment.json'), variables('sasToken'))]",
+
         "fullPodId": "[concat(parameters('persona'),'-',parameters('pod'))]",
-        "templateURI": "[concat(parameters('_artifactsLocation'),'templates/arm-templates/')]",
         "subnetName": "[variables('fullPodId')]",
 
         "subnetID": "[concat(resourceId(parameters('VNETRG'),'Microsoft.Network/virtualNetworks',parameters('VNETName')),'/subnets/',variables('subnetName'))]",
@@ -157,7 +162,7 @@
                     }
                 },
                 "templateLink": {
-                    "uri": "[concat(variables('templateURI'),'create-keyvault.json',parameters('artifactsLocationSasToken'))]",
+                    "uri": "[variables('keyVault-template')]",
                     "contentVersion": "1.0.0.0"
                 }
             }
@@ -233,7 +238,7 @@
                     }
                 },
                 "templateLink": {
-                    "uri": "[concat(variables('templateURI'),'add-secrets.json',parameters('artifactsLocationSasToken'))]",
+                    "uri": "[variables('secrets-template')]",
                     "contentVersion": "1.0.0.0"
                 }
             }
@@ -256,11 +261,11 @@
                         "value": "[variables('wvd_location')]"
                     },
                     "workspaceId": {
-                    "value":"[parameters('workspaceId')]"
+                        "value": "[parameters('workspaceId')]"
                     }
                 },
                 "templateLink": {
-                    "uri": "[concat(variables('templateURI'),'new-workspace.json',parameters('artifactsLocationSasToken'))]",
+                    "uri": "[variables('wks-template')]",
                     "contentVersion": "1.0.0.0"
                 }
 
@@ -292,7 +297,7 @@
                         "value": "Pooled"
                     },
                     "workspaceId": {
-                        "value":"[parameters('workspaceId')]"
+                        "value": "[parameters('workspaceId')]"
                     },
                     "personalDesktopAssignmentType": {
                         "value": ""
@@ -305,7 +310,7 @@
                     }
                 },
                 "templateLink": {
-                    "uri": "[concat(variables('templateURI'),'new-host-pool.json',parameters('artifactsLocationSasToken'))]",
+                    "uri": "[variables('pod-template')]",
                     "contentVersion": "1.0.0.0"
                 }
 
@@ -339,7 +344,7 @@
                         "value": "Pooled"
                     },
                     "workspaceId": {
-                    "value":"[parameters('workspaceId')]"
+                        "value": "[parameters('workspaceId')]"
                     },
                     "personalDesktopAssignmentType": {
                         "value": ""
@@ -352,7 +357,7 @@
                     }
                 },
                 "templateLink": {
-                    "uri": "[concat(variables('templateURI'),'new-host-pool.json',parameters('artifactsLocationSasToken'))]",
+                    "uri": "[variables('pod-template')]",
                     "contentVersion": "1.0.0.0"
                 }
 
@@ -381,7 +386,7 @@
                     }
                 },
                 "templateLink": {
-                    "uri": "[concat(variables('templateURI'),'user-assignment.json',parameters('artifactsLocationSasToken'))]",
+                    "uri": "[variables('pod-user-template')]",
                     "contentVersion": "1.0.0.0"
                 }
 
@@ -408,7 +413,7 @@
                     }
                 },
                 "templateLink": {
-                    "uri": "[concat(variables('templateURI'),'user-assignment.json',parameters('artifactsLocationSasToken'))]",
+                    "uri": "[variables('pod-user-template')]",
                     "contentVersion": "1.0.0.0"
                 }
 

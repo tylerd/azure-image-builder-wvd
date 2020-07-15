@@ -31,7 +31,6 @@ stages:
           location: ${{ parameters.targetRegion }}
           templateFile: arm-templates/main-template-kv2a.json
           parameterArray:
-            - _artifactsLocation "https://$(storageAccountName).blob.core.windows.net/"
             - VaultName ${{ parameters.keyVaultName }}
             - VaultResourceGroupName ${{ parameters.podResourceGroup }}
             - VaultSubscriptionId $(subscriptionId)

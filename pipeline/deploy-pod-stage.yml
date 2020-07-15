@@ -20,9 +20,8 @@ stages:
         parameters:
           resourceGroupName: ${{ parameters.podResourceGroup }}
           location: ${{ parameters.targetRegion }}
-          templateFile: patterns/new-pod.json
+          templateFile: arm-templates/new-pod.json
           parameterArray:
-            - _artifactsLocation "https://$(storageAccountName).blob.core.windows.net/" 
             - keyVaultName ${{ parameters.keyVaultName }}
             - environment ${{ parameters.environment }}
             - persona ${{ parameters.personaId }} 
