@@ -135,7 +135,7 @@
                                 },
                                 {
                                     "secretName": "ou-path",
-                                    "secretValue": "",
+                                    "secretValue": "CN=Computers",
                                     "contentType": "secretValue"
                                 },
                                 {

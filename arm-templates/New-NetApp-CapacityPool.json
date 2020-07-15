@@ -1,0 +1,79 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "netAppAccounts_name": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "netAppAccounts_pool": {
+            "type": "string"
+        },
+        "serviceLevel": {
+            "type": "string",
+            "allowedValues": [
+                "Standard",
+                "Premium",
+                "Ultra"
+            ]
+        }
+  
+    },
+    "variables": {
+        "apiVersion": "2019-11-01"
+    },
+    "resources": [
+                {
+            "apiVersion": "2018-05-01",
+            "name": "[concat('NetAppCapacityPool-Nestedtemplate-', parameters('netAppAccounts_pool'))]",
+            "type": "Microsoft.Resources/deployments",
+            "resourceGroup": "[resourceGroup().name]",
+            "properties": {
+                "mode": "Incremental",
+                "expressionEvaluationOptions": {
+                "scope":"inner"
+            },
+            "parameters":{
+                "location": "[parameters('location')]",
+                "netAppAccounts_name":"[parameters('netAppAccounts_name')]",
+                "netAppAccounts_pool":"[parameters('netAppAccounts_pool')]",
+                "serviceLevel":"[parameters('serviceLevel')]",
+                "apiVersion":"[variables('apiVersion')]"
+            },
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters" : {
+                        "location": {"type":"string"},
+                        "netAppAccounts_name": {"type":"string"},
+                        "netAppAccounts_pool": {"type":"string"},
+                        "serviceLevel": {"type": "string"},
+                        "apiVersion":{"type": "string"}
+                    },
+                    "variables":{},
+                    "resources": [
+                        {
+                            "apiVersion": "[parameters('apiVersion')]",
+                            "name": "[concat(parameters('netAppAccounts_name'), '/', parameters('netAppAccounts_pool'))]",
+                            "type": "Microsoft.NetApp/netAppAccounts/capacityPools",
+                            "location": "[parameters('location')]",
+                            "properties": {
+                                "size": "integer",
+                                "serviceLevel": "[parameters('serviceLevel')]"
+                            }
+                        }
+                    ],
+                    "outputs": {
+                        "NetAppAccountResourceId": {
+                            "type": "object",
+                            "value": "[reference(concat(parameters('netAppAccounts_name'), '/', parameters('netAppAccounts_pool')))]"
+                                    }
+                    }
+                }
+            },
+            "dependsOn": []
+}
+    ]
+}

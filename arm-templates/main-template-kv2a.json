@@ -301,6 +301,14 @@
                             "secretName": "admin-account-password"
                         }
                     },
+                    "admin-account-user":{
+                        "reference": {
+                            "keyVault": {
+                                "id": "[resourceId(parameters('VaultSubscriptionId'), parameters('VaultResourceGroupName'), 'Microsoft.KeyVault/vaults', parameters('VaultName'))]"
+                            },
+                            "secretName": "admin-account-user"
+                        }
+                    },
                     "rdsh-prefix": {
                         "value": "[variables('rdsh-prefix')]"
                     },
