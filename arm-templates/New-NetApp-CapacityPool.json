@@ -11,6 +11,9 @@
         "netAppAccounts_pool": {
             "type": "string"
         },
+        "size":{
+            "type": "int"
+        },
         "serviceLevel": {
             "type": "string",
             "allowedValues": [
@@ -39,6 +42,7 @@
                 "location": "[parameters('location')]",
                 "netAppAccounts_name":"[parameters('netAppAccounts_name')]",
                 "netAppAccounts_pool":"[parameters('netAppAccounts_pool')]",
+                "size":"[parameters('size')]",
                 "serviceLevel":"[parameters('serviceLevel')]",
                 "apiVersion":"[variables('apiVersion')]"
             },
@@ -49,6 +53,7 @@
                         "location": {"type":"string"},
                         "netAppAccounts_name": {"type":"string"},
                         "netAppAccounts_pool": {"type":"string"},
+                        "size":{"type": "int"},
                         "serviceLevel": {"type": "string"},
                         "apiVersion":{"type": "string"}
                     },
@@ -60,7 +65,7 @@
                             "type": "Microsoft.NetApp/netAppAccounts/capacityPools",
                             "location": "[parameters('location')]",
                             "properties": {
-                                "size": "integer",
+                                "size": "[parameters('size')]",
                                 "serviceLevel": "[parameters('serviceLevel')]"
                             }
                         }
