@@ -6,7 +6,8 @@
             "type": "string"
         },
         "location": {
-            "type": "string"
+            "type": "string",
+            "defaultValue":"[resourceGroup().location]"
         },
         "VaultName": {
             "type": "string",
@@ -44,9 +45,9 @@
                 "scope":"inner"
             },
             "parameters":{
-                "location": "[parameters('location')]",
-                "accountName":"[parameters('accountName')]",
-                "apiVersion":"[variables('apiVersion')]",
+                "location": {"value":"[parameters('location')]"},
+                "accountName":{"value":"[parameters('accountName')]"},
+                "apiVersion": {"value":"[variables('apiVersion')]"},
                 "admin-password":{
                     "reference":{
                         "keyVault": {
@@ -103,8 +104,7 @@
                     },
                     "variables":{
                         "admin-username":"[first(split(parameters('admin-username'), '@'))]",
-                        "domain-name":"[last(split(parameters('admin-username'), '@'))]",
-                        "activeDirectoryGUID":"[guid(variables('domain-name'))]"
+                        "domain-name":"[last(split(parameters('admin-username'), '@'))]"
                     },
                     "resources": [
                         {
@@ -115,7 +115,6 @@
                             "properties": {
                             "activeDirectories": [
                                     {
-                                        "activeDirectoryId": "[variables('activeDirectoryGUID')]",
                                         "username": "[variables('admin-username')]",
                                         "password": "[parameters('admin-password')]",
                                         "domain": "[variables('domain-name')]",

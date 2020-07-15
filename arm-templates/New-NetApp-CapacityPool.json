@@ -6,13 +6,18 @@
             "type": "string"
         },
         "location": {
-            "type": "string"
+            "type": "string",
+            "defaultValue":"[resourceGroup().location]"
         },
         "netAppAccounts_pool": {
             "type": "string"
         },
         "size":{
-            "type": "int"
+            "type": "int",
+            "metadata": {
+                "description": "Provisioned size of the pool (in bytes). Allowed values are in 4TiB chunks (value must be multiply of 4398046511104)."
+            },
+            "defaultValue": 4398046511104
         },
         "serviceLevel": {
             "type": "string",
@@ -20,7 +25,8 @@
                 "Standard",
                 "Premium",
                 "Ultra"
-            ]
+            ],
+            "defaultValue":"Standard"
         }
   
     },
@@ -39,12 +45,12 @@
                 "scope":"inner"
             },
             "parameters":{
-                "location": "[parameters('location')]",
-                "netAppAccounts_name":"[parameters('netAppAccounts_name')]",
-                "netAppAccounts_pool":"[parameters('netAppAccounts_pool')]",
-                "size":"[parameters('size')]",
-                "serviceLevel":"[parameters('serviceLevel')]",
-                "apiVersion":"[variables('apiVersion')]"
+                "location": {"value": "[parameters('location')]"},
+                "netAppAccounts_name":{"value":"[parameters('netAppAccounts_name')]"},
+                "netAppAccounts_pool":{"value":"[parameters('netAppAccounts_pool')]"},
+                "size":{"value":"[parameters('size')]"},
+                "serviceLevel":{"value":"[parameters('serviceLevel')]"},
+                "apiVersion":{"value":"[variables('apiVersion')]"}
             },
                 "template": {
                     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
