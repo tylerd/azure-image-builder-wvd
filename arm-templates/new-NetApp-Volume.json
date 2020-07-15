@@ -118,7 +118,7 @@
                     "outputs": {
                                 "NetAppVolume": {
                                     "type": "object",
-                                    "value":"[reference(concat('Microsoft.NetApp/netAppAccounts/capacityPools/volumes/',parameters('netAppAccounts_volume')),providers('Microsoft.NetApp/netAppAccounts/capacityPools/volumes/').apiVersions[0])]"
+                                    "value":"[reference(parameters('netAppAccounts_volume')).mountTargets[0]]"
         }
                     }
                 }
@@ -127,9 +127,9 @@
 }
     ],
     "outputs" : {
-        "NetAppVolume": {
-            "type": "object",
-            "value":"[reference(concat('NetAppCapacityPool-Nestedtemplate-', parameters('netAppAccounts_volume')).outputs.NetAppVolume.value)]"
-        }
+            "NetAppVolumesmbFQDN": {
+                "type": "string",
+                "value":"[reference(concat('NetAppCapacityPool-Nestedtemplate-', parameters('netAppAccounts_volume'))).outputs.NetAppVolume.value.smbServerFQDN]"
+            }
     }
 }
