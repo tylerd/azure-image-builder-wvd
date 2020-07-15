@@ -77,10 +77,6 @@
                         }
                     ],
                     "outputs": {
-                        "NetAppAccountResourceId": {
-                            "type": "object",
-                            "value": "[reference(concat(parameters('netAppAccounts_name'), '/', parameters('netAppAccounts_pool')))]"
-                                    }
                     }
                 }
             },
