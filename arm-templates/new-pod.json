@@ -92,7 +92,7 @@
         "wks-template": "[concat(uri(variables('baseUri'), 'new-workspace.json'), variables('sasToken'))]",
         "pod-template": "[concat(uri(variables('baseUri'), 'new-host-pool.json'), variables('sasToken'))]",
         "pod-user-template": "[concat(uri(variables('baseUri'), 'user-assignment.json'), variables('sasToken'))]",
-        "netapp-volume-template": "[concat(uri(variables('baseUri'), 'new-NetApp-Volume.json'), variables('sasToken'))]",
+        "netapp-volume-template": "[concat(uri(variables('baseUri'), 'new-NetApp-volume-2.json'), variables('sasToken'))]",
 
         "fullPodId": "[concat(parameters('persona'),'-',parameters('pod'))]",
         "subnetName": "[variables('fullPodId')]",
