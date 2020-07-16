@@ -69,7 +69,7 @@
     "outputs": {
         "NetAppVolumeFQDN": {
             "type": "string",
-            "value": "[reference(variables('volumeResourceName')).mountTargets[0].smbServerFQDN]"
+            "value": "[reference(parameters('netAppAccounts_volume')).mountTargets[0].smbServerFQDN]"
         }
     }
 }

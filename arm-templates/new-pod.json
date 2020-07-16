@@ -494,7 +494,7 @@
         },
         "NetAppVolumeFQDN": {
             "type": "string",
-            "value": "[reference(variables('netapp-volume-deployment')).outputs.NetAppVolumeFQDN]"
+            "value": "[reference(variables('netapp-volume-deployment')).outputs.NetAppVolumeFQDN.value]"
         }
 
     }
