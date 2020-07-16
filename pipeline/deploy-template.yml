@@ -27,7 +27,7 @@ jobs:
         name: Generate_SAS_Token
         displayName: Generate SAS Token
         inputs:
-          azureSubscription: $(azureConnectionName)
+          azureSubscription: ${{ parameters.azureConnectionName }}
           scriptType: inlineScript
           azurePowerShellVersion: "LatestVersion"
           inline: |
