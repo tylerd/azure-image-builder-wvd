@@ -59,9 +59,6 @@
         "testContainer": {
             "type": "string",
             "defaultValue": "green"
-        },
-        "artifactsLocationSasToken": {
-            "type": "securestring"
         }
 
     },

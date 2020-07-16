@@ -88,9 +88,6 @@
             },
             "defaultValue": "WIN10"
         },
-        "artifactsLocationSasToken": {
-            "type": "securestring"
-        },
         "joinDomain": {
             "type": "bool",
             "defaultValue": true
@@ -303,7 +300,7 @@
                             "secretName": "admin-account-password"
                         }
                     },
-                    "admin-account-user":{
+                    "admin-account-user": {
                         "reference": {
                             "keyVault": {
                                 "id": "[resourceId(parameters('VaultSubscriptionId'), parameters('VaultResourceGroupName'), 'Microsoft.KeyVault/vaults', parameters('VaultName'))]"
