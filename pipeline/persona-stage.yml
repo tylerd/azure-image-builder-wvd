@@ -19,7 +19,6 @@ stages:
           resourceGroupName: ${{ parameters.NetAppResourceGroup }}
           location: ${{ parameters.targetRegion }}
           templateFile: arm-templates/New-NetApp-CapacityPool.json
-          includeSasToken: false
           parameterArray:
             - netAppAccounts_name $(NetAppAccountName)
             - netAppAccounts_pool ${{ parameters.personaId }}-${{ parameters.regionCode }}-CPOOL

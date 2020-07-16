@@ -1,7 +1,7 @@
 # Pipleine for deploying multiple pods supporting a single persona
 
 trigger:
-  - persona-stage
+  - none
 
 pr:
   - none
