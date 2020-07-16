@@ -13,6 +13,9 @@ parameters:
   - name: postDeploySteps
     type: stepList
     default: []
+  - name: azureConnectionName
+    type: string
+    default: AzDevOps2
 
 jobs:
   - job: ${{ parameters.jobName }}
@@ -38,7 +41,7 @@ jobs:
         name: Deploy_Template
         displayName: Deploy Template to ${{ parameters.resourceGroupName }}
         inputs:
-          azureSubscription: $(azureConnectionName)
+          azureSubscription: ${{ parameters.azureConnectionName }}
           resourceGroupName: ${{ parameters.resourceGroupName }}
           location: ${{ parameters.location }}
           templateLocation: URL of the file
