@@ -1,0 +1,22 @@
+parameters:
+  - name: personaId
+    type: string
+  - name: pods
+    type: object
+  - name: coreInfraResourceGroup
+    type: string
+  - name: targetRegion
+    type: string
+
+stages:
+  - stage: Deploy_Persona
+    displayName: Deploy Persona ${{ parameters.personaId }}
+    variables:
+      - template: vars.yml
+    jobs:
+      - template: deploy-template.yml
+        parameters:
+          resourceGroupName: ${{ parameters.coreInfraResourceGroup }}
+          location: ${{ parameters.targetRegion }}
+          templateFile: arm-templates/new-persona.json
+

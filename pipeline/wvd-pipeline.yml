@@ -73,6 +73,12 @@ parameters:
 
 stages:
   - template: prep-stage.yml
+  - template: persona-stage.yml
+    parameters:
+      personaId: ${{ parameters.personaId }}
+      pods: ${{ parameters.pods}}
+      coreInfraResourceGroup: $(coreInfraResourceGroup)
+      targetRegion: ${{ parameters.primaryRegion }}
   - ${{ each pod in parameters.pods }}:
     - template: pod-template.yml
       parameters:
