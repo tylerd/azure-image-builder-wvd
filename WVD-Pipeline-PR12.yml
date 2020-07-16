@@ -26,9 +26,7 @@ parameters:
     default: PR01-WIN10-1909-0620
 
 variables:
-  - group: nataliak
-  - name: azureConnectionName
-    value: AzDevOps2
+  - template: pipeline/vars.yml
 
 extends:
   template: pipeline/wvd-pipeline.yml
