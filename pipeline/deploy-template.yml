@@ -24,7 +24,7 @@ jobs:
         name: Generate_SAS_Token
         displayName: Generate SAS Token
         inputs:
-          azureSubscription: ${{ variables.azureConnectionName }}
+          azureSubscription: $(azureConnectionName)
           scriptType: inlineScript
           azurePowerShellVersion: "LatestVersion"
           inline: |
@@ -38,7 +38,7 @@ jobs:
         name: Deploy_Template
         displayName: Deploy Template to ${{ parameters.resourceGroupName }}
         inputs:
-          azureSubscription: ${{ variables.azureConnectionName }}
+          azureSubscription: $(azureConnectionName)
           resourceGroupName: ${{ parameters.resourceGroupName }}
           location: ${{ parameters.location }}
           templateLocation: URL of the file

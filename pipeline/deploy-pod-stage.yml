@@ -11,7 +11,7 @@ parameters:
 stages:
   # Create new pod resource group and resources
   - stage: DeployPod_${{ parameters.podId }}
-    dependsOn: Prep_Deployment
+    dependsOn: Deploy_Persona
     displayName: Deploy Pod ${{ parameters.podId }}
     jobs:
       - template: deploy-template.yml
