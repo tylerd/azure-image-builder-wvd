@@ -48,11 +48,12 @@ jobs:
           location: ${{ parameters.location }}
           templateLocation: URL of the file
           csmFileLink: "https://$(storageAccountName).blob.core.windows.net/templates/${{parameters.templateFile}}$(token)"
+          deploymentOutputs: OutputsJson
           ${{ if parameters.includeSasToken }}:
             overrideParameters: -artifactsLocationSasToken $(token) -${{ join(' -', parameters.parameterArray) }}
           ${{ if not(parameters.includeSasToken) }}:
             overrideParameters: -${{ join(' -', parameters.parameterArray) }}
-          deploymentOutputs: OutputsJson
+          
     
       - pwsh: |
           Write-Host $Env:OUTPUT_JSON
