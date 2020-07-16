@@ -3,7 +3,7 @@ parameters:
     type: string
   - name: pods
     type: object
-  - name: coreInfraResourceGroup
+  - name: NetAppResourceGroup
     type: string
   - name: targetRegion
     type: string
@@ -14,7 +14,7 @@ stages:
     jobs:
       - template: deploy-template.yml
         parameters:
-          resourceGroupName: ${{ parameters.coreInfraResourceGroup }}
+          resourceGroupName: ${{ parameters.NetAppResourceGroup }}
           location: ${{ parameters.targetRegion }}
           templateFile: arm-templates/new-persona.json
 
