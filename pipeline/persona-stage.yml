@@ -17,4 +17,5 @@ stages:
           resourceGroupName: ${{ parameters.NetAppResourceGroup }}
           location: ${{ parameters.targetRegion }}
           templateFile: arm-templates/new-persona.json
+          includeSasToken: false
 

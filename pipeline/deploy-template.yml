@@ -2,6 +2,9 @@ parameters:
   - name: resourceGroupName
   - name: location
   - name: templateFile
+  - name: includeSasToken
+    type: boolean
+    default: true
   - name: parameterArray
     type: object
     default: []
@@ -45,7 +48,10 @@ jobs:
           location: ${{ parameters.location }}
           templateLocation: URL of the file
           csmFileLink: "https://$(storageAccountName).blob.core.windows.net/templates/${{parameters.templateFile}}$(token)"
-          overrideParameters: -artifactsLocationSasToken $(token) -${{ join(' -', parameters.parameterArray) }}
+          ${{ if parameters.includeSasToken }}:
+            overrideParameters: -artifactsLocationSasToken $(token) -${{ join(' -', parameters.parameterArray) }}
+          ${{ if not(parameters.includeSasToken) }}:
+            overrideParameters: -${{ join(' -', parameters.parameterArray) }}
           deploymentOutputs: OutputsJson
     
       - pwsh: |
