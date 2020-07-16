@@ -78,6 +78,12 @@
             "metadata": {
                 "description": "NetApp Account Name"
             }
+        },
+        "NetAppSubnetId": {
+            "type": "string",
+            "metadata": {
+                "description": "Subnet Resource ID to attach NetApp Volume"
+            }
         }
     },
     "functions": [],
@@ -454,7 +460,7 @@
                         "value": "[variables('netapp-volume-name')]"
                     },
                     "subnetId": {
-                        "value": "[variables('subnetID')]"
+                        "value": "[parameters('NetAppSubnetId')]"
                     }
                 }
             }

@@ -37,4 +37,5 @@ stages:
             - RegionCode ${{ parameters.regionCode }}
             - NetAppResourceGroup $(NetAppResourceGroup)
             - NetAppAccountName $(NetAppAccountName)
+            - NetAppSubnetId $(NetAppSubnetId)
 
