@@ -13,8 +13,6 @@ stages:
   - stage: DeployPod_${{ parameters.podId }}
     dependsOn: Prep_Deployment
     displayName: Deploy Pod ${{ parameters.podId }}
-    variables:
-      - template: vars.yml
     jobs:
       - template: deploy-template.yml
         parameters:

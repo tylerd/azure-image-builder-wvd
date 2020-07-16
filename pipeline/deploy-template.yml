@@ -17,8 +17,6 @@ parameters:
 jobs:
   - job: ${{ parameters.jobName }}
     displayName: Deploy ${{ parameters.templateFile }}
-    variables:
-      - template: vars.yml
     steps:
       - ${{ parameters.preDeploySteps }}
       

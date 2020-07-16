@@ -6,10 +6,10 @@ variables:
 #  - name: storageAccountResourceGroupName
 #    value: aib-devops-rg
 
-  - name: azureConnectionName
-    value: AzDevOPS
-  - name: SPNApplicationId
-    value: 31e6399b-491f-4a38-acdb-38aeb0dfcbbd
+#  - name: azureConnectionName
+#    value: AzDevOPS
+#  - name: SPNApplicationId
+#    value: 31e6399b-491f-4a38-acdb-38aeb0dfcbbd
 
 #  - name: subscriptionId
 #    value: "1965c25a-b7fd-48b5-a393-c9e785c1c4d9"
