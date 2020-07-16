@@ -7,6 +7,8 @@ parameters:
   - name: podResourceGroup
   - name: targetRegion
   - name: keyVaultName
+  - name: regionCode
+    type: string
 
 stages:
   # Create new pod resource group and resources
@@ -32,4 +34,7 @@ stages:
             - VNETName $(VnetName) 
             - VNETRG $(VnetResourceGroup)
             - AzDevOpsSPN $(SPNApplicationId)
+            - RegionCode ${{ parameters.regionCode }}
+            - NetAppResourceGroup $(NetAppResourceGroup)
+            - NetAppAccountName $(NetAppAccountName)
 

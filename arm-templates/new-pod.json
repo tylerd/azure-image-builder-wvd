@@ -59,8 +59,26 @@
         "testContainer": {
             "type": "string",
             "defaultValue": "green"
+        },
+        "RegionCode": {
+            "type": "string",
+            "metadata": {
+                "description": "Region Code (CACN for Canada Central)"
+            },
+            "defaultValue": "CACN"
+        },
+        "NetAppResourceGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "NetApp Account Resource Group"
+            }
+        },
+        "NetAppAccountName": {
+            "type": "string",
+            "metadata": {
+                "description": "NetApp Account Name"
+            }
         }
-
     },
     "functions": [],
     "variables": {
@@ -74,13 +92,14 @@
         "wks-template": "[concat(uri(variables('baseUri'), 'new-workspace.json'), variables('sasToken'))]",
         "pod-template": "[concat(uri(variables('baseUri'), 'new-host-pool.json'), variables('sasToken'))]",
         "pod-user-template": "[concat(uri(variables('baseUri'), 'user-assignment.json'), variables('sasToken'))]",
+        "netapp-volume-template": "[concat(uri(variables('baseUri'), 'new-NetApp-Volume.json'), variables('sasToken'))]",
 
         "fullPodId": "[concat(parameters('persona'),'-',parameters('pod'))]",
         "subnetName": "[variables('fullPodId')]",
 
         "subnetID": "[concat(resourceId(parameters('VNETRG'),'Microsoft.Network/virtualNetworks',parameters('VNETName')),'/subnets/',variables('subnetName'))]",
-        "netapp-blue": "[concat(parameters('environment'),'-NetAppVol-BLUE',parameters('persona'),'-',variables('unique_string'),'-profiles')]",
-        "netapp-green": "[concat(parameters('environment'),'-NetAppVol-GREEN',parameters('persona'),'-',variables('unique_string'),'-profiles')]",
+        "netapp-capacity-name": "[concat(parameters('persona'),'-',parameters('RegionCode'),'-CPOOL')]",
+        "netapp-volume-name": "[concat(variables('fullPodId'),'-',parameters('RegionCode'),'-VOL')]",
 
         "secrets-deployment": "[concat('secrets-for-WVD-',variables('fullPodId'),'-',variables('unique_string'))]",
         "wks-deployment": "[concat('WVD-WKS-',variables('fullPodId'),'-',variables('unique_string'))]",
@@ -88,6 +107,7 @@
         "green-pod-container-deployment": "[concat('WVD-POD-Container-GREEN-',variables('fullPodId'),'-',variables('unique_string'))]",
         "user-pod-container-blue-deployment": "[concat('WVD-POD-Containers-BLUE-UsersAssignmt-',variables('fullPodId'),'-',variables('unique_string'))]",
         "user-pod-container-green-deployment": "[concat('WVD-POD-Containers-GREEN-UsersAssignmt-',variables('fullPodId'),'-',variables('unique_string'))]",
+        "netapp-volume-deployment": "[concat('WVD-NetApp-Volume-',variables('fullPodId'),'-',variables('unique_string'))]",
 
         "wvd_location": "eastus2",
         "wks": "[concat(parameters('environment'),'-WKS-',variables('fullPodId'))]",
@@ -218,12 +238,8 @@
                                     "secretValue": "[variables('hostpool_green')]"
                                 },
                                 {
-                                    "secretName": "netapp-blue",
-                                    "secretValue": "[variables('netapp-blue')]"
-                                },
-                                {
-                                    "secretName": "netapp-green",
-                                    "secretValue": "[variables('netapp-green')]"
+                                    "secretName": "netapp",
+                                    "secretValue": "[variables('netapp-volume-name')]"
                                 },
 
                                 {
@@ -415,6 +431,30 @@
                 }
 
             }
+        },
+        {
+            "name": "[variables('netapp-volume-deployment')]",
+            "type": "Microsoft.Resources/deployments",
+            "resourceGroup": "[parameters('NetAppResourceGroup')]",
+            "apiVersion": "2019-10-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('netapp-volume-template')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "netAppAccounts_name": {
+                        "value": "[parameters('NetAppAccountName')]"
+                    },
+                    "netAppAccounts_pool": {
+                        "value": "[variables('netapp-capacity-name')]"
+                    },
+                    "netAppAccounts_volume": {
+                        "value": "[variables('netapp-volume-name')]"
+                    }
+                }
+            }
         }
 
     ],
@@ -442,6 +482,10 @@
         "green-hostPoolName": {
             "type": "string",
             "value": "[variables('hostpool_green')]"
+        },
+        "NetAppVolumeFQDN": {
+            "type": "string",
+            "value": "[reference(variables('netapp-volume-deployment')).outputs.NetAppVolumeFQDN]"
         }
 
     }

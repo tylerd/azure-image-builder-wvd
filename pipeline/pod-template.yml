@@ -41,6 +41,9 @@ parameters:
       - PRD
       - WVD
 
+  - name: regionCode
+    type: string
+
 stages:
 
   - template: deploy-pod-stage.yml
@@ -51,6 +54,7 @@ stages:
       targetRegion: ${{ parameters.targetRegion }}
       keyVaultName: ${{ format('{0}-KVL-{1}-{2}', parameters.environment, parameters.personaId, parameters.podId) }}
       environment: ${{ parameters.environment }}
+      regionCode: ${{ parameters.regionCode }}
 
   - template: deploy-host-pool-vms-stage.yml
     parameters:

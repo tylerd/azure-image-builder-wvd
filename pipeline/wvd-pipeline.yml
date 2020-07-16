@@ -92,3 +92,4 @@ stages:
         podResourceGroup: ${{ format('{0}-RGP-{1}-{2}', parameters.environment, parameters.personaId, pod.podId)}}
         targetRegion: ${{ parameters.primaryRegion }}
         targetContainer: ${{ parameters.targetContainer }}
+        regionCode: ${{ parameters.primaryRegionCode }}
