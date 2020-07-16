@@ -2,9 +2,6 @@ parameters:
   - name: resourceGroupName
   - name: location
   - name: templateFile
-  - name: includeSasToken
-    type: boolean
-    default: true
   - name: parameterArray
     type: object
     default: []
