@@ -13,13 +13,12 @@ parameters:
   - name: postDeploySteps
     type: stepList
     default: []
-  - name: azureConnectionName
-    type: string
-    default: AzDevOps2
 
 jobs:
   - job: ${{ parameters.jobName }}
     displayName: Deploy ${{ parameters.templateFile }}
+    variables:
+      - template: vars.yml
     steps:
       - ${{ parameters.preDeploySteps }}
       
@@ -27,7 +26,7 @@ jobs:
         name: Generate_SAS_Token
         displayName: Generate SAS Token
         inputs:
-          azureSubscription: ${{ parameters.azureConnectionName }}
+          azureSubscription: ${{ variables.azureConnectionName }}
           scriptType: inlineScript
           azurePowerShellVersion: "LatestVersion"
           inline: |
@@ -41,7 +40,7 @@ jobs:
         name: Deploy_Template
         displayName: Deploy Template to ${{ parameters.resourceGroupName }}
         inputs:
-          azureSubscription: ${{ parameters.azureConnectionName }}
+          azureSubscription: ${{ variables.azureConnectionName }}
           resourceGroupName: ${{ parameters.resourceGroupName }}
           location: ${{ parameters.location }}
           templateLocation: URL of the file
