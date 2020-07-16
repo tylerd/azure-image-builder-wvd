@@ -6,8 +6,8 @@ variables:
 #  - name: storageAccountResourceGroupName
 #    value: aib-devops-rg
 
-#  - name: azureConnectionName
-#    value: AzDevOPS
+  - name: azureConnectionName
+    value: AzDevOps2
 #  - name: SPNApplicationId
 #    value: 31e6399b-491f-4a38-acdb-38aeb0dfcbbd
 
