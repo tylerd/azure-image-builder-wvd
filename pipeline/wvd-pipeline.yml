@@ -79,6 +79,7 @@ stages:
       pods: ${{ parameters.pods}}
       NetAppResourceGroup: $(NetAppResourceGroup)
       targetRegion: ${{ parameters.primaryRegion }}
+      regionCode: ${{ parameters.primaryRegionCode }}
   - ${{ each pod in parameters.pods }}:
     - template: pod-template.yml
       parameters:

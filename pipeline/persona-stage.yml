@@ -7,6 +7,8 @@ parameters:
     type: string
   - name: targetRegion
     type: string
+  - name: regionCode
+    type: string
 
 stages:
   - stage: Deploy_Persona
@@ -16,6 +18,9 @@ stages:
         parameters:
           resourceGroupName: ${{ parameters.NetAppResourceGroup }}
           location: ${{ parameters.targetRegion }}
-          templateFile: arm-templates/new-persona.json
+          templateFile: arm-templates/New-NetApp-CapacityPool.json
           includeSasToken: false
+          parameterArray:
+            - netAppAccounts_name $(NetAppAccountName)
+            - netAppAccounts_pool ${{ parameters.personaId }}-${{ parameters.regionCode }}-CPOOL
 
