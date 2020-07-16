@@ -200,7 +200,8 @@
             "name": "[variables('secrets-deployment')]",
             "resourceGroup": "[resourceGroup().name]",
             "dependsOn": [
-                "[parameters('keyVaultName')]"
+                "[parameters('keyVaultName')]", 
+                "[variables('netapp-volume-deployment')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -246,6 +247,10 @@
                                 {
                                     "secretName": "netapp",
                                     "secretValue": "[variables('netapp-volume-name')]"
+                                },
+                                {
+                                    "secretName":"netappshare",
+                                    "secretValue":"[concat('\\',reference(variables('netapp-volume-deployment')).outputs.NetAppVolumeFQDN.value,'\\',variables('netapp-volume-name'))]"
                                 },
 
                                 {
