@@ -250,7 +250,7 @@
                                 },
                                 {
                                     "secretName":"netappshare",
-                                    "secretValue":"[concat('\\',reference(variables('netapp-volume-deployment')).outputs.NetAppVolumeFQDN.value,'\\',variables('netapp-volume-name'))]"
+                                    "secretValue":"[concat('\\\\',reference(variables('netapp-volume-deployment')).outputs.NetAppVolumeFQDN.value,'\\',variables('netapp-volume-name'))]"
                                 },
 
                                 {
