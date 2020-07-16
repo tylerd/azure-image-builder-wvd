@@ -1,5 +1,5 @@
 variables:
-  - group: wvd-devops
+#  - group: wvd-devops
 #  - name: storageAccountName
 #    value: azminlandevops
 
