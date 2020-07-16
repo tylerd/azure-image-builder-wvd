@@ -47,12 +47,13 @@
         }
     },
     "variables": {
-        "apiVersion": "2020-02-01"
+        "apiVersion": "2020-02-01",
+        "volumeResourceName": "[concat(parameters('netAppAccounts_name'), '/', parameters('netAppAccounts_pool'), '/',parameters('netAppAccounts_volume'))]"
     },
     "resources": [
         {
             "apiVersion": "[variables('apiVersion')]",
-            "name": "[concat(parameters('netAppAccounts_name'), '/', parameters('netAppAccounts_pool'), '/',parameters('netAppAccounts_volume'))]",
+            "name": "[variables('volumeResourceName')]",
             "type": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes",
             "location": "[parameters('location')]",
             "properties": {
@@ -68,7 +69,7 @@
     "outputs": {
         "NetAppVolumeFQDN": {
             "type": "string",
-            "value": "[reference(parameters('netAppAccounts_volume')).mountTargets[0].smbServerFQDN]"
+            "value": "[reference(variables('volumeResourceName')).mountTargets[0].smbServerFQDN]"
         }
     }
 }
