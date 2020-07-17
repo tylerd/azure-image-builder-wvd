@@ -38,6 +38,8 @@ stages:
             - subnetId $(subnetId)
             - netappshare $(netappShare)
             - desId $(diskEncryptKeyResourceId)
+            - personaID ${{ parameters.personaId }}
+            - podID ${{ parameters.podId }}
             - host-pool-resource-group ${{ parameters.podResourceGroup }}
             - HostPoolName $(hostPoolName)
             - workspaceId $(workspaceId)

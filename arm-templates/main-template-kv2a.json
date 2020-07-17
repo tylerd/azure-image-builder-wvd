@@ -32,6 +32,12 @@
             "type": "string",
             "defaultValue": "/subscriptions/1965c25a-b7fd-48b5-a393-c9e785c1c4d9/resourcegroups/azureminilab-la/providers/microsoft.operationalinsights/workspaces/azureminilab2019"
         },
+        "personaID":{
+            "type":"string"
+        },
+        "podID": {
+            "type":"string"
+        },
         "HostPoolName": {
             "type": "string",
             "defaultValue": "poolA"
@@ -116,7 +122,7 @@
         "extensions-dsc-addsessionhost-template": "[concat(uri(variables('baseUri'), 'extensions-dsc-addsessionhost.json'), variables('sasToken'))]",
 
         "hostpool-token-deployment-name": "[concat('get-hostpool-token-',parameters('utc-value'))]",
-        "rdsh-prefix": "[concat('WVD',variables('vmRegionCode'),take(uniqueString(parameters('HostPoolName')),6))]",
+        "rdsh-prefix": "[concat('WVD',variables('vmRegionCode'),parameters('personaID'),'p',parameters('podID'),'-')]",
         "availability-set-deployment-name": "[concat('compute-availabilitysets-',parameters('utc-value'))]",
         "network-iterfaces-deployment-name": "[concat('network-interfaces-',parameters('utc-value'))]",
         "virtual-machines-deployment-name": "[concat('virtual-machines-',parameters('utc-value'))]",
