@@ -26,6 +26,10 @@ stages:
             - environment ${{ parameters.environment }}
             - persona ${{ parameters.personaId }} 
             - pod ${{ parameters.podId }} 
+            - admin-account-user $(admin-account-user)
+            - domain $(domain)
+            - admin-account-password $(admin-account-password)
+            - oupath $(oupath)
             - workspaceId $(workspaceId) 
             - userGroupName $(userGroupName) 
             - userGroupObjectId $(userGroupObjectId) 
