@@ -28,13 +28,6 @@
             "type": "string",
             "defaultValue": "f303d02d-7596-421d-953d-1735ff2ca8e6"
         },
-        "admin-account-password": {
-            "type":"string"
-        },
-        "oupath": {"type": "string"},
-        "domain": {"type": "string"},
-        "admin-account-user": {"type": "string"},
-
         "workspaceId": {
             "type": "string"
         },
@@ -165,22 +158,22 @@
                             "secrets": [
                                 {
                                     "secretName": "admin-account-password",
-                                    "secretValue": "[parameters('admin-account-password')]",
+                                    "secretValue": "!R37fallacy1505",
                                     "contentType": "secretValue"
                                 },
                                 {
                                     "secretName": "ou-path",
-                                    "secretValue": "[parameters('oupath')]",
+                                    "secretValue": "CN=Computers",
                                     "contentType": "secretValue"
                                 },
                                 {
                                     "secretName": "domain",
-                                    "secretValue": "[parameters('domain')]",
+                                    "secretValue": "azureminilab.com",
                                     "contentType": "secretValue"
                                 },
                                 {
                                     "secretName": "admin-account-user",
-                                    "secretValue": "[parameters('admin-account-user')]",
+                                    "secretValue": "azadmin@azureminilab.com",
                                     "contentType": "secretValue"
                                 }
                             ]
