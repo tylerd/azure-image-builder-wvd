@@ -2,6 +2,7 @@ parameters:
   - name: resourceGroupName
   - name: location
   - name: templateFile
+  - name: azureConnectionName
   - name: parameterArray
     type: object
     default: []
@@ -24,7 +25,7 @@ jobs:
         name: Deploy_Template
         displayName: Deploy Template to ${{ parameters.resourceGroupName }}
         inputs:
-          azureSubscription: ${{ variables.azureConnectionName }}
+          azureSubscription: ${{ parameters.azureConnectionName }}
           resourceGroupName: ${{ parameters.resourceGroupName }}
           location: ${{ parameters.location }}
           templateLocation: Linked artifact
