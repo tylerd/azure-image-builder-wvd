@@ -6,12 +6,6 @@
             "type": "string",
             "defaultValue": "[resourceGroup().location]"
         },
-        "hostPoolToken": {
-            "type": "string",
-            "metadata": {
-                "description": "Host Pool Registration Token"
-            }
-        },
         "instanceCount": {
             "type": "int",
             "metadata": {
