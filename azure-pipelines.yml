@@ -39,7 +39,7 @@ steps:
       resourceGroupName: $(ResourceGroupName)
       location: $(ResourceGroupLocation)
       azureConnectionName: ${{ variables.azureConnectionName }}
-      templateFile: arm-templates/wvd.json
+      templateFile: arm-templates/wvd-hosts.json
       parameterArray:
         - vmNamePrefix "WVD-VM-"
         - useSharedImage false
