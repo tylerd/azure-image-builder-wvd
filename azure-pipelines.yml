@@ -10,6 +10,8 @@ variables:
   WorkspaceName: WVD-Public-Workspace
   HostPoolName: WVD-Public-HostPool
   AppGroupName: WVD-Public-AppGroup
+  ResourceGroupLocation: canadacentral
+  WVDResourceLocation: eastus2
 
 
 stages:
@@ -19,10 +21,11 @@ stages:
       - template: pipeline/deploy-local-template.yml
         parameters:
           resourceGroupName: $(ResourceGroupName)
-          location: canadacentral
+          location: $(ResourceGroupLocation)
           azureConnectionName: ${{ variables.azureConnectionName }}
           templateFile: arm-templates/wvd.json
           parameterArray:
+            - location $(WVDResourceLocation)
             - workspaceName $(WorkspaceName)
             - hostPoolName $(HostPoolName)
             - appGroupName $(AppGroupName)
