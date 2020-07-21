@@ -5,7 +5,7 @@ pr:
   - none
 
 variables:
-  azureConnection: AzDevOps
+  azureConnectionName: AzDevOps
   ResourceGroupName: WVD-Public-RG
   WorkspaceName: WVD-Public-Workspace
   HostPoolName: WVD-Public-HostPool
