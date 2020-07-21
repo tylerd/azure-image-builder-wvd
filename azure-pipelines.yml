@@ -6,6 +6,10 @@ pr:
 
 variables:
   azureConnection: AzDevOps
+  ResourceGroupName: WVD-Public-RG
+  WorkspaceName: WVD-Public-Workspace
+  HostPoolName: WVD-Public-HostPool
+  AppGroupName: WVD-Public-AppGroup
 
 
 stages:
