@@ -1,3 +1,8 @@
+#Required Pipeline Variables
+# AdminPassword [Secure]
+# SubnetId
+# WorkspaceResourceId
+
 trigger:
   - none
 
@@ -12,21 +17,34 @@ variables:
   AppGroupName: WVD-Public-AppGroup
   ResourceGroupLocation: canadacentral
   WVDResourceLocation: eastus2
+  AdminUserName: localadmin
 
 
-stages:
-  - stage: DeployWVD
-    displayName: Deploy WVD
-    jobs:
-      - template: pipeline/deploy-local-template.yml
-        parameters:
-          resourceGroupName: $(ResourceGroupName)
-          location: $(ResourceGroupLocation)
-          azureConnectionName: ${{ variables.azureConnectionName }}
-          templateFile: arm-templates/wvd.json
-          parameterArray:
-            - location $(WVDResourceLocation)
-            - workspaceName $(WorkspaceName)
-            - hostPoolName $(HostPoolName)
-            - appGroupName $(AppGroupName)
-          
+steps:
+  - template: pipeline/deploy-local-template-steps.yml
+    parameters:
+      name: WVD
+      resourceGroupName: $(ResourceGroupName)
+      location: $(ResourceGroupLocation)
+      azureConnectionName: ${{ variables.azureConnectionName }}
+      templateFile: arm-templates/wvd.json
+      parameterArray:
+        - location $(WVDResourceLocation)
+        - workspaceName $(WorkspaceName)
+        - hostPoolName $(HostPoolName)
+        - appGroupName $(AppGroupName)
+  - template: pipeline/deploy-local-template-steps.yml
+    parameters:
+      name: Hosts
+      resourceGroupName: $(ResourceGroupName)
+      location: $(ResourceGroupLocation)
+      azureConnectionName: ${{ variables.azureConnectionName }}
+      templateFile: arm-templates/wvd.json
+      parameterArray:
+        - vmNamePrefix "WVD-VM-"
+        - useSharedImage false
+        - adminUserName $(AdminUserName)
+        - adminPassword $(AdminPassword)
+        - subnetId $(SubnetId)
+        - workspaceResourceId $(WorkspaceResourceId)
+      

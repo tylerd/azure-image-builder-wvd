@@ -165,5 +165,10 @@
             ]
         }
     ],
-    "outputs": {}
+    "outputs": {
+        "HostPoolToken": {
+            "type": "string",
+            "value": "[reference(parameters('hostpoolName')).registrationInfo.token]"
+        }
+    }
 }
