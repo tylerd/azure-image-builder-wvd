@@ -20,11 +20,6 @@ parameters:
       - GREEN
     default: BLUE
 
-  - name: image
-    displayName: Image
-    type: string
-    default: PR01-WIN10-1909-0620
-
 variables:
   - template: pipeline/vars.yml
 
@@ -35,11 +30,7 @@ extends:
     personaName: Developers
     primaryRegion: canadacentral
     primaryRegionCode: CACN
-    image: ${{ parameters.image }}
-    primaryKeyVault: PR12-CACN-KVL
-    primaryNetAppInstance: WVD-CACN-NETAPP-PR12
-    primaryNetAppCapacity: PR12-CACN-CPOOL
-    primaryNetAppVolume: PR12-CACN-VOL
+    image: WIN10
     targetContainer: ${{ parameters.targetContainer }}
     pods:
       - podId: POD01

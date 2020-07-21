@@ -28,22 +28,6 @@ parameters:
     displayName: Persona Image
     type: string
 
-  - name: primaryKeyVault
-    displayName: Key Vault Resource Id  - Primary Region
-    type: string
-
-  - name: primaryNetAppInstance
-    displayName: NetApp Instance - Primary Region
-    type: string
-
-  - name: primaryNetAppCapacity
-    displayName: NetApp Capacity Pool - Primary Region
-    type: string
-
-  - name: primaryNetAppVolume
-    displayName: NetApp Capacity Pool - Primary Region
-    type: string
-
   - name: pods
     displayName: Pods
     type: object
