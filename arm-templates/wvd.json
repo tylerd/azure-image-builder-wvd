@@ -16,7 +16,8 @@
             "type": "string",
             "metadata": {
                 "description": "WVD Workspace Discription"
-            }
+            },
+            "defaultValue": "[parameters('workspaceName')]"
         },
         "hostpoolName": {
             "type": "string",
@@ -28,13 +29,15 @@
             "type": "string",
             "metadata": {
                 "description": "WVD Host Pool Friendly Name"
-            }
+            },
+            "defaultValue": "[parameters('hostpoolName')]"
         },
         "hostpoolDescription": {
             "type": "string",
             "metadata": {
                 "description": "WVD Host Pool Description"
-            }
+            },
+            "defaultValue": "[parameters('hostpoolName')]"
         },
         "hostpoolType": {
             "type": "string",

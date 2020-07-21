@@ -1,0 +1,24 @@
+trigger:
+  - none
+
+pr:
+  - none
+
+variables:
+  azureConnection: AzDevOps
+
+
+stages:
+  - stage: DeployWVD
+    displayName: Deploy WVD
+    jobs:
+      - template: pipeline/deploy-local-template.yml
+        parameters:
+          resourceGroupName: $(ResourceGroupName)
+          location: canadacentral
+          templateFile: arm-templates/wvd.json
+          parameterArray:
+            - workspaceName $(WorkspaceName)
+            - hostPoolName $(HostPoolName)
+            - appGroupName $(AppGroupName)
+          
