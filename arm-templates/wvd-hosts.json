@@ -238,5 +238,13 @@
             }
         }
     ],
-    "outputs": {}
+    "outputs": {
+        "VMs": {
+            "type": "array",
+            "copy": {
+                "count": "[parameters('instanceCount')]",
+                "input": "[concat(parameters('vmNamePrefix'), copyindex())]"
+            }
+        }
+    }
 }
