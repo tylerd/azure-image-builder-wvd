@@ -152,7 +152,8 @@
                 "count": "[parameters('instanceCount')]"
             },
             "dependsOn": [
-                "[concat(parameters('vmNamePrefix'),'-AVSET')]"
+                "[concat(parameters('vmNamePrefix'),'-AVSET')]",
+                "[concat(parameters('vmNamePrefix'), copyindex(), '-NIC')]"
             ],
             "properties": {
                 "hardwareProfile": {
