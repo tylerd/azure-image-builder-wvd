@@ -151,7 +151,9 @@
                 "name": "rdsh-vm-loop",
                 "count": "[parameters('instanceCount')]"
             },
-            "dependsOn": [],
+            "dependsOn": [
+                "[concat(parameters('vmNamePrefix'),'-AVSET')]"
+            ],
             "properties": {
                 "hardwareProfile": {
                     "vmSize": "[parameters('vmSize')]"
