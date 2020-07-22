@@ -41,7 +41,7 @@ steps:
       azureConnectionName: ${{ variables.azureConnectionName }}
       templateFile: arm-templates/wvd-hosts.json
       parameterArray:
-        - vmNamePrefix "WVD-VM-"
+        - vmNamePrefix "WVD-VM"
         - useSharedImage false
         - adminUserName $(AdminUserName)
         - adminPassword $(AdminPassword)

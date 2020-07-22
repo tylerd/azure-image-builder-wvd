@@ -157,7 +157,7 @@
                     "vmSize": "[parameters('vmSize')]"
                 },
                 "availabilitySet": {
-                    "id": "[concat(parameters('vmNamePrefix'),'-AVSET')]"
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets',concat(parameters('vmNamePrefix'),'-AVSET'))]"
                 },
                 "osProfile": {
                     "computerName": "[concat(parameters('vmNamePrefix'), copyindex())]",
