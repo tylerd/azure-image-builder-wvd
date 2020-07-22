@@ -18,6 +18,7 @@ variables:
   ResourceGroupLocation: canadacentral
   WVDResourceLocation: eastus2
   AdminUserName: localadmin
+  VmNamePrefix: WVD-VM
 
 
 steps:
@@ -41,7 +42,7 @@ steps:
       azureConnectionName: ${{ variables.azureConnectionName }}
       templateFile: arm-templates/wvd-hosts.json
       parameterArray:
-        - vmNamePrefix "WVD-VM"
+        - vmNamePrefix $(VmNamePrefix)
         - useSharedImage false
         - adminUserName $(AdminUserName)
         - adminPassword $(AdminPassword)
