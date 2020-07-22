@@ -25,8 +25,16 @@ steps:
       Write-Host $Env:OUTPUT_JSON
       $outputs = $Env:OUTPUT_JSON | ConvertFrom-Json
       $outputs.PSObject.Properties | ForEach-Object {
-        Write-Host "$($_.Name):$($_.Value.value)"
-        Write-Host "##vso[task.setvariable variable=$($_.Name);isOutput=true]$($_.Value.value)" 
+        if($_.Value.type -eq "String")
+        {
+          Write-Host "$($_.Name):$($_.Value.value)"
+          Write-Host "##vso[task.setvariable variable=$($_.Name);isOutput=true]$($_.Value.value)" 
+        } else {
+          $valStr = $_.Value.value | ConvertTo-Json -Compress
+          Write-Host "$($_.Name):$valStr"
+          Write-Host "##vso[task.setvariable variable=$($_.Name);isOutput=true]$valStr" 
+        }
+        
       }
     name: Output_${{ parameters.name }}
     env:

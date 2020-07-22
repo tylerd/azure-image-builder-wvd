@@ -47,4 +47,15 @@ steps:
         - adminPassword $(AdminPassword)
         - subnetId $(SubnetId)
         - workspaceResourceId $(WorkspaceResourceId)
+  - template: pipeline/deploy-local-template-steps.yml
+    parameters:
+      name: SessionHost
+      resourceGroupName: $(ResourceGroupName)
+      location: $(ResourceGroupLocation)
+      azureConnectionName: ${{ variables.azureConnectionName }}
+      templateFile: arm-templates/wvd-addsessionhost.json
+      parameterArray:
+        - VMs $(Output_Hosts.VMs)
+        - hostPoolName $(HostPoolName)
+        - hostPoolToken $(Output_WVD.hostPoolToken)
       
