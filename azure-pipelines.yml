@@ -29,6 +29,7 @@ steps:
       location: $(ResourceGroupLocation)
       azureConnectionName: ${{ variables.azureConnectionName }}
       templateFile: arm-templates/wvd.json
+      validate: true
       parameterArray:
         - location $(WVDResourceLocation)
         - workspaceName $(WorkspaceName)
@@ -41,6 +42,7 @@ steps:
       location: $(ResourceGroupLocation)
       azureConnectionName: ${{ variables.azureConnectionName }}
       templateFile: arm-templates/wvd-hosts.json
+      validate: true
       parameterArray:
         - vmNamePrefix $(VmNamePrefix)
         - useSharedImage false
@@ -55,6 +57,7 @@ steps:
       location: $(ResourceGroupLocation)
       azureConnectionName: ${{ variables.azureConnectionName }}
       templateFile: arm-templates/wvd-addsessionhost.json
+      validate: true
       parameterArray:
         - VMs $(Output_Hosts.VMs)
         - hostPoolName $(HostPoolName)

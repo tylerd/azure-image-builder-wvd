@@ -4,6 +4,8 @@ parameters:
   - name: location
   - name: templateFile
   - name: azureConnectionName
+  - name: validate
+    type: boolean
   - name: parameterArray
     type: object
     default: []
@@ -20,7 +22,8 @@ steps:
       csmFile: ${{parameters.templateFile}}
       overrideParameters: -${{ join(' -', parameters.parameterArray) }}
       deploymentOutputs: OutputsJson
-
+      ${{ if parameters.validate }}
+        deploymentMode: Validation
   - pwsh: |
       Write-Host $Env:OUTPUT_JSON
       $outputs = $Env:OUTPUT_JSON | ConvertFrom-Json
