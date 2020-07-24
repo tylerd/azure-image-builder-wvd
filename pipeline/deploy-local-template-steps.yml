@@ -41,6 +41,7 @@ steps:
         
       }
     name: Output_${{ parameters.name }}
+    condition: ${{ not(parameters.validate) }}
     env:
       OUTPUT_JSON: $(OutputsJson)
 
