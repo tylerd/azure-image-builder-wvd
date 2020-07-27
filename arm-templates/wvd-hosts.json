@@ -201,7 +201,8 @@
                 "count": "[parameters('instanceCount')]"
             },
             "dependsOn": [
-                "[concat(parameters('vmNamePrefix'), copyindex())]"
+                "[concat(parameters('vmNamePrefix'), copyindex())]",
+                "[concat(parameters('vmNamePrefix'), copyindex(), '/MMAExtension')]"
             ],
             "properties": {
                 "publisher": "Microsoft.Azure.Monitoring.DependencyAgent",
