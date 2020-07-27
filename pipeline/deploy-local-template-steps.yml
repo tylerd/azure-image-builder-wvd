@@ -6,6 +6,7 @@ parameters:
   - name: azureConnectionName
   - name: validate
     type: boolean
+    default: false
   - name: parameterArray
     type: object
     default: []
