@@ -173,7 +173,8 @@
                         "createOption": "FromImage",
                         "managedDisk": {
                             "storageAccountType": "[parameters('vmDiskType')]"
-                        }
+                        },
+                        "name": "[concat(parameters('vmNamePrefix'), copyindex(),'-OSDISK')]"
                     }
                 },
                 "networkProfile": {
