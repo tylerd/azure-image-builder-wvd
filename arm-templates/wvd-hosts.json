@@ -193,28 +193,6 @@
         },
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "apiVersion": "2019-12-01",
-            "name": "[concat(parameters('vmNamePrefix'), copyindex(), '/DependencyAgentWindows')]",
-            "location": "[resourceGroup().location]",
-            "copy": {
-                "name": "rdsh-vm-loop",
-                "count": "[parameters('instanceCount')]"
-            },
-            "dependsOn": [
-                "[concat(parameters('vmNamePrefix'), copyindex())]",
-                "[concat(parameters('vmNamePrefix'), copyindex(), '/MMAExtension')]"
-            ],
-            "properties": {
-                "publisher": "Microsoft.Azure.Monitoring.DependencyAgent",
-                "type": "DependencyAgentWindows",
-                "typeHandlerVersion": "[variables('daExtensionVersion')]",
-                "autoUpgradeMinorVersion": true,
-                "enableAutomaticUpgrade": true,
-                "settings": {}
-            }
-        },
-        {
-            "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "2017-12-01",
             "name": "[concat(parameters('vmNamePrefix'), copyindex(), '/MMAExtension')]",
             "location": "[resourceGroup().location]",
@@ -238,7 +216,30 @@
                     "workspaceKey": "[listKeys(parameters('workspaceResourceId'), '2015-03-20').primarySharedKey]"
                 }
             }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2019-12-01",
+            "name": "[concat(parameters('vmNamePrefix'), copyindex(), '/DependencyAgentWindows')]",
+            "location": "[resourceGroup().location]",
+            "copy": {
+                "name": "rdsh-vm-loop",
+                "count": "[parameters('instanceCount')]"
+            },
+            "dependsOn": [
+                "[concat(parameters('vmNamePrefix'), copyindex())]",
+                "[concat(parameters('vmNamePrefix'), copyindex(), '/MMAExtension')]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Monitoring.DependencyAgent",
+                "type": "DependencyAgentWindows",
+                "typeHandlerVersion": "[variables('daExtensionVersion')]",
+                "autoUpgradeMinorVersion": true,
+                "enableAutomaticUpgrade": true,
+                "settings": {}
+            }
         }
+
     ],
     "outputs": {
         "VMs": {
