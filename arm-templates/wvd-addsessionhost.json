@@ -30,7 +30,9 @@
         }
     },
     "functions": [],
-    "variables": {},
+    "variables": {
+        "dseConfigurationFunction": "[concat(substring(parameters('artifactsLocation'), add(1, lastIndexOf(parameters('artifactsLocation'), '/'))),'\\', 'AddSessionHost')]"
+    },
     "resources": [
         {
             "apiVersion": "2018-10-01",
